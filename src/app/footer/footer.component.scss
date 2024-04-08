@@ -1,0 +1,18 @@
+@media (max-width: 1024px) {
+  footer, header {
+    text-align: center;
+  }
+}
+
+footer{
+  position:inherit;
+  display: flex;
+  bottom:0;
+  right:0;
+  left:0;
+}
+header, .bg-dark {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

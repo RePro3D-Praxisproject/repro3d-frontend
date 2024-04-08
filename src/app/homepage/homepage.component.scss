@@ -1,0 +1,23 @@
+
+.container-fluid{
+  background-color:#ffff;
+}
+.img-fluid{
+  border-radius: 5px;
+}
+.bg-transparent {
+  background-color: transparent
+}
+
+.custom-jumbotron {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .custom-jumbotron {
+    text-align: center;
+    padding: 20px;
+  }
+}
