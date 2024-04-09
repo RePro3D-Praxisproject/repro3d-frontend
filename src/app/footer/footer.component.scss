@@ -6,12 +6,16 @@
 
 footer{
   position:inherit;
+  margin-top: auto;
+  padding: 20px 0;
+
   display: flex;
   bottom:0;
   right:0;
   left:0;
 }
 header, .bg-dark {
+  background-color: #343a40;
   display: flex;
   justify-content: space-between;
   align-items: center;
