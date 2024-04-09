@@ -4,13 +4,15 @@ import { RouterOutlet } from '@angular/router';
 import {HeaderComponent} from "./header/header.component";
 import {HomepageComponent} from "./homepage/homepage.component";
 import {FooterComponent} from "./footer/footer.component";
+import {ProductCardComponent} from "./product-card/product-card.component";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, HomepageComponent, FooterComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, HomepageComponent, FooterComponent,ProductCardComponent,FormsModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'repro3d-frontend';
