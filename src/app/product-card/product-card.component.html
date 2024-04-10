@@ -4,7 +4,7 @@
 
   <input type="text" [(ngModel)]="searchTerm" placeholder="Search products..." class="form-control mb-4">
 
-  <div class="row">
+  <div *ngIf="products" class="row">
     <!-- Use *ngFor here to iterate through filteredProducts and generate a card for each product -->
     <div class="col-sm-4 mb-4" *ngFor="let product of filteredProducts">
       <div class="card" style="width: 18rem;">
@@ -16,7 +16,7 @@
           <p class="card-text"><strong>Material:</strong> {{product.material}}</p>
           <p class="card-text"><strong>Dimensions:</strong> {{product.dimensions}}</p>
           <a href="#" class="btn btn-primary">Proceed to checkout</a>
-          <a href="#" class="btn btn-light">more</a>
+          <a  class="btn btn-light" [routerLink]="['/product-detail', product.id]" routerLinkActive="active">more</a>
         </div>
       </div>
     </div>
