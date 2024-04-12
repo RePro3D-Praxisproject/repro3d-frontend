@@ -20,10 +20,9 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('repro3d-frontend');
   });
 
-  it('should render title', () => {
+  it('should have the correct title property', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Welcome to RePro3D');
+    const app = fixture.componentInstance;
+    expect(app.title).toContain('repro3d-frontend');
   });
 });

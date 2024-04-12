@@ -1,11 +1,20 @@
 // product-data.service.ts
 import { Injectable } from '@angular/core';
 import {Product} from "../../product-card/product-card.component";
+//import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductDataService {
+  //private apiUrl = 'http://repro3dBackend/api/item'; // Backend URL
+  //constructor(private http: HttpClient) { }
+  // getAllProducts(): Observable<Product[]> {
+  //return this.http.get<Product[]>(this.apiUrl);
+  //}
+
+
+  constructor() { }
   private products: Product[] = [
     { id: 1, title: 'ReProRing', price: 126, buildTime: 'est. 1 Hour', material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/picture-page.png' , description:"This ring is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
     { id: 2, title: 'skull', price: 126, buildTime: 'est. 1 Hour', material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/skull-picture.jpg' , description:"This skull is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
@@ -19,4 +28,13 @@ export class ProductDataService {
   getProductById(id: number): Product | undefined {
     return this.products.find(product => product.id === id);
   }
+
+  getAllProducts(): Product[] {
+    return this.products;
+  }
+ /* addProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(this.apiUrl, product);
+  }*/
+
+
 }
