@@ -1,0 +1,86 @@
+<app-header></app-header>
+
+
+<div class="container">
+  <h2 class="page-title">Product management table</h2>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Size</th>
+      <th scope="col">Material</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of products; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ product.title }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.dimensions }}</td>
+      <td>{{ product.material }}</td>
+      <td><button class="btn btn-outline-success" (click)="openEditModal(product)">Edit</button></td>
+      <td><button class="btn btn-outline-danger" (click)="deleteProduct(product)">Delete</button></td>
+    </tr>
+    <!-- New Row for Adding Products -->
+    <tr>
+      <td colspan="7" class="text-center">
+        <button class="btn btn-outline-primary" (click)="openAddProductModal()">Add Product</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal" tabindex="-1" role="dialog" *ngIf="isModalOpen" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProductModalLabel">{{isNewProduct ? 'Add New Product' : 'Edit Product'}}</h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="productName">Name</label>
+            <input type="text" class="form-control" id="productName" [(ngModel)]="selectedProduct.title" name="title">
+          </div>
+          <div class="form-group">
+            <label for="productPrice">Price</label>
+            <input type="number" class="form-control" id="productPrice" [(ngModel)]="selectedProduct.price" name="price">
+          </div>
+          <div class="form-group">
+            <label for="productSize">Size</label>
+            <input type="text" class="form-control" id="productSize" [(ngModel)]="selectedProduct.dimensions" name="dimensions">
+          </div>
+          <div class="form-group">
+            <label for="productMaterial">Material</label>
+            <input type="text" class="form-control" id="productMaterial" [(ngModel)]="selectedProduct.material" name="material">
+          </div>
+          <div class="form-group">
+            <label for="productDescription">Description</label>
+            <textarea class="form-control" id="productDescription" [(ngModel)]="selectedProduct.description" name="description"></textarea>
+          </div>
+          <!-- File Input for Picture Upload -->
+          <div class="form-group">
+            <label for="productImage">Upload Image</label>
+            <input type="file" class="form-control-file" id="productImage" (change)="handleFileInput($event)">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="isNewProduct ? addProduct() : saveChanges()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
