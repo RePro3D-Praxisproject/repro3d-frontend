@@ -18,7 +18,7 @@ import {FormsModule} from "@angular/forms";
     NgIf
   ],
   templateUrl: './product-list-page.component.html',
-  styleUrls: ['./product-list-page.component.scss'] // Corrected from 'styleUrl' to 'styleUrls' and expects an array
+  styleUrls: ['./product-list-page.component.scss']
 })
 
 export class ProductListPageComponent implements OnInit {

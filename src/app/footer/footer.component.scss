@@ -1,22 +1,30 @@
-@media (max-width: 1024px) {
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  background-color: #343a40;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+@media (max-width: 800px) {
   footer, header {
     text-align: center;
   }
-}
-
-footer{
-  position:inherit;
-  margin-top: auto;
-  padding: 20px 0;
-
-  display: flex;
-  bottom:0;
-  right:0;
-  left:0;
-}
-header, .bg-dark {
-  background-color: #343a40;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
