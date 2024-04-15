@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Product} from "../product-card/product-card.component";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute, RouterLink, RouterLinkActive} from "@angular/router";
-import {ProductDataService} from "./service/product-data.service";
+import { Item } from '../../interfaces/item';
+import { OrderService } from '../../services/order-service.service';
+
 
 
 
@@ -23,19 +24,19 @@ import {ProductDataService} from "./service/product-data.service";
   styleUrl: './product.component.scss'
 })
 export class ProductComponent implements OnInit{
-  product?: Product;
+  product?: Item;
 
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductDataService
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
     const productIdString = this.route.snapshot.paramMap.get('id');
     if (productIdString) {
       const productId = +productIdString; // Convert string to number
-      this.product = this.productService.getProductById(productId);
+      this.product = this.orderService.getProductById(productId);
     }
   }
 }

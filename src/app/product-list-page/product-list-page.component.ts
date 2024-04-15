@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 //import { Router } from "@angular/router";
-import { Product } from "../product-card/product-card.component";
-import { ProductDataService } from '../product/service/product-data.service';
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import { OrderService } from '../../services/order-service.service';
+import { Item } from '../../interfaces/item';
 
 @Component({
   selector: 'app-product-list-page',
@@ -22,20 +22,20 @@ import {FormsModule} from "@angular/forms";
 })
 
 export class ProductListPageComponent implements OnInit {
-  products: Product[] = [];
+  products: Item[] = [];
   selectedProduct: { material: string; price: number; title: string; dimensions: string; description: string; } = { title: '', price: 0, dimensions: '', material: '' , description:''}; // Example initialization
   isModalOpen = false; // Controls the modal visibility
   protected isNewProduct: boolean = false;
 
   constructor(
-    private productDataService: ProductDataService
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
-    this.products = this.productDataService.getAllProducts();
+    this.products = this.orderService.getAllProducts();
   }
 
-  openEditModal(product: Product): void {
+  openEditModal(product: Item): void {
     this.selectedProduct = Object.assign({}, product);
     this.isModalOpen = true;
   }
@@ -59,7 +59,7 @@ export class ProductListPageComponent implements OnInit {
   }
 
 
-  deleteProduct(product: Product): void {
+  deleteProduct(product: Item): void {
     if (confirm("Are you sure you want to delete this product?")) {
       const index = this.products.indexOf(product);
       if (index > -1) {
@@ -81,7 +81,7 @@ export class ProductListPageComponent implements OnInit {
   }
 
   addProduct(): void {
-    this.products.push(<Product>this.selectedProduct);
+    this.products.push(<Item>this.selectedProduct);
     this.closeModal();
     // Optionally, send the new product to the backend and refresh the list
   }
