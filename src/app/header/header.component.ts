@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   navbarOpen = false;
   dropdownOpen = false;
 
@@ -18,4 +23,11 @@ export class HeaderComponent {
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
+
+  constructor(
+    public router: Router
+  ) { }
+  ngOnInit(): void {
+  }
+
 }

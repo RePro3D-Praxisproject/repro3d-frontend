@@ -1,18 +1,30 @@
-@media (max-width: 1024px) {
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  padding: 1em;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 100%;
+  background-color: #343a40;
+  color: #fff;
+  text-align: center;
+  bottom: 0;
+}
+
+@media (max-width: 800px) {
   footer, header {
     text-align: center;
   }
-}
-
-footer{
-  position:inherit;
-  display: flex;
-  bottom:0;
-  right:0;
-  left:0;
-}
-header, .bg-dark {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }

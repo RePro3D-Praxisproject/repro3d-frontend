@@ -1,0 +1,13 @@
+
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" [src]="product.imgUrl" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{product.title}}</h5>
+    <p class="card-text"><strong>Price:</strong> {{product.price}} Euro</p>
+    <p class="card-text"><strong>Build time:</strong> {{product.buildTime}}</p>
+    <p class="card-text"><strong>Material:</strong> {{product.material}}</p>
+    <p class="card-text"><strong>Dimensions:</strong> {{product.dimensions}}</p>
+    <a href="#" class="btn btn-primary">Proceed to checkout</a>
+    <a  class="btn btn-light" [routerLink]="['/product-detail', product.itemId]">more</a>
+  </div>
+</div>
