@@ -24,11 +24,11 @@ import { Item } from '../../interfaces/item';
 export class ProductListPageComponent implements OnInit {
   products: Item[] = [];
   selectedProduct: { material: string; price: number; title: string; dimensions: string; description: string; } = { title: '', price: 0, dimensions: '', material: '' , description:''}; // Example initialization
-  isModalOpen = false; // Controls the modal visibility
-  protected isNewProduct: boolean = false;
+  isModalOpen = false;
+  isNewProduct: boolean = false;
 
   constructor(
-    private orderService: OrderService
+    protected orderService: OrderService
   ) {}
 
   ngOnInit(): void {
@@ -39,38 +39,30 @@ export class ProductListPageComponent implements OnInit {
     this.selectedProduct = Object.assign({}, product);
     this.isModalOpen = true;
   }
+
   closeModal(): void {
     this.isModalOpen = false;
   }
+
   saveChanges(): void {
-    // Implement saving logic here
-    this.toggleModal(false); // Close the modal after saving changes
+    if (this.isNewProduct) {
+      this.orderService.createItem(<Item>this.selectedProduct);
+    } else {
+      this.orderService.updateItem(<Item>this.selectedProduct);
+    }
+    this.products = this.orderService.getAllProducts();
+    this.closeModal();
   }
 
   toggleModal(open: boolean): void {
     this.isModalOpen = open;
   }
+
   handleFileInput(event: Event): void {
     const element = event.currentTarget as HTMLInputElement;
     let files: FileList | null = element.files;
     if (files) {
       console.log('Selected file:', files[0]);
-    }
-  }
-
-
-  deleteProduct(product: Item): void {
-    if (confirm("Are you sure you want to delete this product?")) {
-      const index = this.products.indexOf(product);
-      if (index > -1) {
-        this.products.splice(index, 1); // Removes the product from the array
-
-        // Optionally, call a service to delete from the backend
-        // this.productDataService.deleteProduct(product.id).subscribe({
-        //   next: () => console.log('Product deleted successfully'),
-        //   error: (err) => console.error('Error deleting product:', err)
-        // });
-      }
     }
   }
 
@@ -80,10 +72,6 @@ export class ProductListPageComponent implements OnInit {
     this.isNewProduct = true;
   }
 
-  addProduct(): void {
-    this.products.push(<Item>this.selectedProduct);
-    this.closeModal();
-    // Optionally, send the new product to the backend and refresh the list
-  }
+
 
 }

@@ -1,5 +1,4 @@
 
-
 <div class="container">
   <h2 class="page-title">Product management table</h2>
   <table class="table table-striped">
@@ -14,7 +13,7 @@
       <th scope="col"></th>
     </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="products && products.length > 0">
     <tr *ngFor="let product of products; let i = index">
       <th scope="row">{{ i + 1 }}</th>
       <td>{{ product.title }}</td>
@@ -22,9 +21,8 @@
       <td>{{ product.dimensions }}</td>
       <td>{{ product.material }}</td>
       <td><button class="btn btn-outline-success" (click)="openEditModal(product)">Edit</button></td>
-      <td><button class="btn btn-outline-danger" (click)="deleteProduct(product)">Delete</button></td>
+      <td><button class="btn btn-outline-danger" (click)="orderService.deleteItem(product.itemId)">Delete</button></td>
     </tr>
-    <!-- New Row for Adding Products -->
     <tr>
       <td colspan="7" class="text-center">
         <button class="btn btn-outline-primary" (click)="openAddProductModal()">Add Product</button>
@@ -76,7 +74,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="isNewProduct ? addProduct() : saveChanges()">Save Changes</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
       </div>
     </div>
   </div>
