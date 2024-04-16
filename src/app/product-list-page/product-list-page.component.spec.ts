@@ -1,77 +1,74 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProductListPageComponent } from './product-list-page.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import {ActivatedRoute} from "@angular/router";
-import {of} from "rxjs";
-import {Product} from "../product-card/product-card.component";
+import { of } from 'rxjs';
+import { ProductListPageComponent } from './product-list-page.component';
+import { OrderService } from '../../services/order-service.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Item } from '../../interfaces/item';
 
 describe('ProductListPageComponent', () => {
   let component: ProductListPageComponent;
   let fixture: ComponentFixture<ProductListPageComponent>;
-  let mockActivatedRoute;
+  let mockOrderService: any;
+  let mockItems: Item[];
 
-  beforeEach(async () => {
-    // Setup mock ActivatedRoute
-    mockActivatedRoute = {
-      snapshot: {
-        paramMap: {
-          get: (key: string) => 'value' // Simulate route params
-        }
-      },
-      params: of({id: 123})
-    };
+  beforeEach(waitForAsync(() => {
+    mockItems = [
+      { itemId: 1, title: 'Product 1',buildTime:60, price: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product', imgUrl: 'url1' },
+      { itemId: 2, title: 'Product 2',buildTime:60, price: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product', imgUrl: 'url2' }
+    ];
 
-    await TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        ProductListPageComponent
-      ],
-      providers: [
-        { provide: ActivatedRoute, useValue: mockActivatedRoute } // Provide the mock ActivatedRoute
-      ],
+    mockOrderService = jasmine.createSpyObj('OrderService', ['getAllProducts', 'createItem', 'updateItem', 'deleteItem']);
+    mockOrderService.getAllProducts.and.returnValue(of(mockItems));
+
+    TestBed.configureTestingModule({
+      imports: [FormsModule, ProductListPageComponent],
+      providers: [{ provide: OrderService, useValue: mockOrderService }],
       schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
-    const product: Product = { id: 2, title: 'Another Product', price: 200, dimensions: '50x50x50', material: 'Plastic', description: 'Another description', buildTime: 'est. 2 Hours', imgUrl: 'another_link' };
-
-    fixture = TestBed.createComponent(ProductListPageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges(); // Initialize component and run ngOnInit if implemented
-  });
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(ProductListPageComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();  // Trigger initial data binding and ngOnInit
+    });
+  }));
 
   it('should create the component', () => {
-    expect(component).toBeTruthy(); // Checks if the component instance was created
+    expect(component).toBeTruthy();
   });
 
-  it('should toggle modal open and close', () => {
-    expect(component.isModalOpen).toBeFalse(); // Initial state should be false
-    component.toggleModal(true); // Open modal
-    expect(component.isModalOpen).toBeTrue(); // Check if modal state is true
-    component.toggleModal(false); // Close modal
-    expect(component.isModalOpen).toBeFalse(); // Check if modal state is back to false
-  });
-
-  it('should open the modal with a selected product when openEditModal is called', () => {
-    const product: Product = { id: 2, title: 'Another Product', price: 200, dimensions: '50x50x50', material: 'Plastic', description: 'Another description', buildTime: 'est. 2 Hours', imgUrl: 'another_link' };
+  it('should save changes when an existing product is edited', () => {
+    const product = { ...mockItems[0], price: 110 };
     component.openEditModal(product);
-    expect(component.selectedProduct).toEqual(product);
-    expect(component.isModalOpen).toBeTrue();
+    component.saveChanges();
+    expect(mockOrderService.updateItem).toHaveBeenCalledWith(component.selectedProduct);
   });
 
+  it('should save changes when a new product is added', () => {
+    component.openAddProductModal();
+    component.selectedProduct = { title: 'New Product', price: 150, dimensions: '15x15x15', material: 'Plastic', description: 'New description' };
+    component.saveChanges();
+    expect(mockOrderService.createItem).toHaveBeenCalledWith(component.selectedProduct);
+  });
 
-  it('should add a new product when addProduct is called', () => {
-    component.addProduct();
-    expect(component.products.length).toBe(6);
+  it('should close the modal', () => {
+    component.openAddProductModal();
+    component.closeModal();
     expect(component.isModalOpen).toBeFalse();
   });
 
-  it('should open the modal with a selected product when openEditModal is called', () => {
-    const product: Product = { id: 2, title: 'Another Product', price: 200, dimensions: '50x50x50', material: 'Plastic', description: 'Another description', buildTime: 'est. 2 Hours', imgUrl: 'another_link' };
+  it('should open the add product modal', () => {
+    component.openAddProductModal();
+    expect(component.selectedProduct).toEqual(jasmine.objectContaining({ title: '', price: 0 }));
+    expect(component.isModalOpen).toBeTrue();
+    expect(component.isNewProduct).toBeTrue();
+  });
+
+  it('should open the edit modal with a product', () => {
+    const product = mockItems[0];
     component.openEditModal(product);
-    expect(component.selectedProduct).toEqual(product);
+    expect(component.selectedProduct).toEqual(jasmine.objectContaining({ title: 'Product 1' }));
     expect(component.isModalOpen).toBeTrue();
   });
+
+
 });
