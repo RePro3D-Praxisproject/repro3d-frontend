@@ -6,6 +6,5 @@ export interface Item {
     material: string,
     dimensions: string,
     description: string,
-    // TODO remove this
     imgUrl: string
 }
