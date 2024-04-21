@@ -10,7 +10,8 @@ import { NgIf } from '@angular/common';
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
-    NgIf
+    NgIf,
+    
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'

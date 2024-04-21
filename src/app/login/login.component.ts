@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, HttpClientTestingModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
