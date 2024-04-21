@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { ProductListPageComponent } from './product-list-page.component';
-import { OrderService } from '../../services/order-service.service';
+import { OrderService } from '../shared/services/order.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { Item } from '../../interfaces/item';
+import { Item } from '../shared/interfaces/item';
 
 describe('ProductListPageComponent', () => {
   let component: ProductListPageComponent;
