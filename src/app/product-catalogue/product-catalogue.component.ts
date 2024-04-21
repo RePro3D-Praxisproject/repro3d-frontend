@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductCardComponent } from "../product-card/product-card.component";
-import { OrderService } from '../../services/order-service.service';
+import { OrderService } from '../shared/services/order.service';
 import { NgForOf } from '@angular/common';
 
 @Component({

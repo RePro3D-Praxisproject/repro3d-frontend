@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
+import { AuthService } from '../../app/shared/services/auth.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +9,9 @@ import {Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/route
   imports: [
     RouterLink,
     RouterLinkActive,
-    RouterOutlet
+    RouterOutlet,
+    NgIf,
+    
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -25,9 +29,12 @@ export class HeaderComponent implements OnInit{
   }
 
   constructor(
-    public router: Router
+    public router: Router,
+    public authService: AuthService
   ) { }
+
   ngOnInit(): void {
+    this.authService.isLoggedIn()
   }
 
 }

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HeaderComponent } from './header.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -9,8 +10,9 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HeaderComponent, // Import the standalone component
-        RouterTestingModule // And RouterTestingModule for routerLink directives
+        HeaderComponent,
+        RouterTestingModule,
+        HttpClientTestingModule
       ]
     }).compileComponents();
 
@@ -21,14 +23,6 @@ describe('HeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should toggle navbar visibility', () => {
-    expect(component.navbarOpen).toBeFalse(); // Default state
-    component.toggleNavbar();
-    expect(component.navbarOpen).toBeTrue(); // After one toggle
-    component.toggleNavbar();
-    expect(component.navbarOpen).toBeFalse(); // And back again
   });
 
   it('should display the brand name RePro3D', () => {

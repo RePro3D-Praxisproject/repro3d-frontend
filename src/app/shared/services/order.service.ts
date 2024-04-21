@@ -1,12 +1,15 @@
-// product-data.service.ts
 import { Injectable } from '@angular/core';
 import { Item } from '../interfaces/item';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
+
+    constructor(private httpClient: HttpClient) {}
+
     public products: Item[] = [
         { itemId: 1, title: 'ReProRing', price: 126, buildTime: 60, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/picture-page.png' , description:"This ring is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
         { itemId: 2, title: 'skull', price: 126, buildTime: 60, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/skull-picture.jpg' , description:"This skull is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
