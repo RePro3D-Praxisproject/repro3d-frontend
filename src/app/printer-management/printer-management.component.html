@@ -13,13 +13,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Example Printer</td>
-      <td>192.168.1.100</td>
-      <td>xyz123</td>
-      <td><button class="btn btn-outline-success">Edit</button></td>
-      <td><button class="btn btn-outline-danger">Delete</button></td>
+    <tr *ngFor="let printer of printers; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ printer.name }}</td>
+      <td>{{ printer.ip_addr }}</td>
+      <td>{{ printer.apikey }}</td>
+      <td><button class="btn btn-outline-success" (click)="onEditPrinter(printer)">Edit</button></td>
+      <td><button class="btn btn-outline-danger" (click)="deletePrinter(printer.printer_id)">Delete</button></td>
     </tr>
     <tr>
       <td colspan="6" class="text-center">
@@ -30,37 +30,36 @@
   </table>
 </div>
 
-<!-- Modal -->
-<div class="modal fade show" *ngIf="isModalOpen" tabindex="-1" role="dialog" aria-labelledby="addPrinterModalLabel" aria-modal="true" style="display: block;">
-  <div class="modal-dialog" role="document">ö
+<!-- Modal for Adding/Editing Printers -->
+<div class="modal fade" [class.show]="isModalOpen" tabindex="-1" role="dialog" aria-labelledby="addPrinterModalLabel" [attr.aria-modal]="isModalOpen ? 'true' : null" [ngStyle]="{'display': isModalOpen ? 'block' : 'none'}">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addPrinterModalLabel">Add Printer</h5>
+        <h5 class="modal-title" id="addPrinterModalLabel">{{ currentPrinter.printer_id ? 'Edit Printer' : 'Add Printer' }}</h5>
         <button type="button" class="close" (click)="toggleModal(false)" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form (ngSubmit)="currentPrinter.printer_id ? updatePrinter(currentPrinter) : addPrinter(currentPrinter)">
           <div class="form-group">
             <label for="printer-name" class="col-form-label">Printer Name:</label>
-            <input type="text" class="form-control" id="printer-name">
+            <input type="text" class="form-control" id="printer-name" [(ngModel)]="currentPrinter.name" name="name" required>
           </div>
           <div class="form-group mb-3">
             <label class="form-label">IP Address</label>
-            <input type="text" class="form-control" data-inputmask="'alias': 'ip'" />
+            <input type="text" class="form-control" [(ngModel)]="currentPrinter.ip_addr" name="ip_addr" required>
             <small class="text-muted">e.g "123.123.123.123"</small>
-
           </div>
           <div class="form-group">
             <label for="printer-apikey" class="col-form-label">API Key:</label>
-            <input type="text" class="form-control" id="printer-apikey">
+            <input type="text" class="form-control" id="printer-apikey" [(ngModel)]="currentPrinter.apikey" name="apikey" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="toggleModal(false)">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
           </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="toggleModal(false)">Close</button>
-        <button type="button" class="btn btn-primary" id="verify-button">Verify</button>
       </div>
     </div>
   </div>
