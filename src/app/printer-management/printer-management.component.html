@@ -1,0 +1,67 @@
+<h3>Printer management</h3>
+
+<div class="container">
+  <table class="table table-sm table-responsive">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Printer Name</th>
+      <th scope="col">IP</th>
+      <th scope="col">APIKey</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Example Printer</td>
+      <td>192.168.1.100</td>
+      <td>xyz123</td>
+      <td><button class="btn btn-outline-success">Edit</button></td>
+      <td><button class="btn btn-outline-danger">Delete</button></td>
+    </tr>
+    <tr>
+      <td colspan="6" class="text-center">
+        <button class="btn btn-outline-primary" (click)="toggleModal(true)">Add Printer</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade show" *ngIf="isModalOpen" tabindex="-1" role="dialog" aria-labelledby="addPrinterModalLabel" aria-modal="true" style="display: block;">
+  <div class="modal-dialog" role="document">ö
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addPrinterModalLabel">Add Printer</h5>
+        <button type="button" class="close" (click)="toggleModal(false)" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="printer-name" class="col-form-label">Printer Name:</label>
+            <input type="text" class="form-control" id="printer-name">
+          </div>
+          <div class="form-group mb-3">
+            <label class="form-label">IP Address</label>
+            <input type="text" class="form-control" data-inputmask="'alias': 'ip'" />
+            <small class="text-muted">e.g "123.123.123.123"</small>
+
+          </div>
+          <div class="form-group">
+            <label for="printer-apikey" class="col-form-label">API Key:</label>
+            <input type="text" class="form-control" id="printer-apikey">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="toggleModal(false)">Close</button>
+        <button type="button" class="btn btn-primary" id="verify-button">Verify</button>
+      </div>
+    </div>
+  </div>
+</div>
