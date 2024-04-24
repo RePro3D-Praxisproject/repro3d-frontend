@@ -4,6 +4,7 @@ import { AuthService } from '../../app/shared/services/auth.service';
 import { NgIf } from '@angular/common';
 import { AuthResponse } from '../shared/interfaces/auth-response';
 
+
 @Component({
   selector: 'app-header',
   standalone: true,

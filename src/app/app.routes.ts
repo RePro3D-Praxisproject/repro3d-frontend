@@ -7,6 +7,7 @@ import { ProductCatalogueComponent } from './product-catalogue/product-catalogue
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
+
 export const routes: Routes = [
   {path: '', component: HomepageComponent  },
   {path: 'products', component: ProductCatalogueComponent },

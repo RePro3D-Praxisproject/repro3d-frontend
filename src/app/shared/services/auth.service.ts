@@ -4,10 +4,6 @@ import { catchError, Observable, of, throwError } from 'rxjs';
 import { AuthResponse } from '../interfaces/auth-response';
 import { User } from '../interfaces/user';
 
-
-
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -32,8 +28,7 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
-
-  
+ 
   /**
    * Generic error handling method.
    * @param error An error object.
