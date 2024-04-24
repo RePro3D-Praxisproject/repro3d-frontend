@@ -7,12 +7,12 @@ import {FooterComponent} from "./footer/footer.component";
 import {ProductCardComponent} from "./product-card/product-card.component";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-//import {BrowserModule} from "@angular/platform-browser";
+import {PrinterManagementComponent} from "./printer-management/printer-management.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule,HeaderComponent, HomepageComponent, FooterComponent,ProductCardComponent,FormsModule, HttpClientModule],
+  imports: [CommonModule, RouterOutlet, FormsModule,HeaderComponent, HomepageComponent, FooterComponent,ProductCardComponent,FormsModule, HttpClientModule, PrinterManagementComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 

@@ -22,8 +22,9 @@ import {FormsModule} from "@angular/forms";
 export class PrinterManagementComponent implements OnInit{
   printers: Printer[] = [];
   isModalOpen: boolean = false;
+  isDeleteModalOpen: boolean = false;
   currentPrinter: Printer = new Printer();
-
+  currentPrinterId: number | undefined;
   constructor(private printerService: PrinterService) {
 
   }
@@ -75,6 +76,10 @@ export class PrinterManagementComponent implements OnInit{
     this.toggleModal(true);
   }*/
 
+  onEditPrinter(printer: Printer) {
+    this.currentPrinter = { ...printer };
+    this.toggleModal(true);
+  }
   ngOnInit(): void {
     this.loadAllPrinters();
 
@@ -84,22 +89,35 @@ export class PrinterManagementComponent implements OnInit{
     this.printers = this.printerService.getAllPrinters();
   }
 
-  addPrinter(printer: Printer): void {
+  addPrinter(printer: Printer) {
     this.printerService.createPrinter(printer);
     this.loadAllPrinters();
+    this.toggleModal(false);
   }
 
-  updatePrinter(printer: Printer): void {
+  updatePrinter(printer: Printer) {
     this.printerService.updatePrinter(printer);
     this.loadAllPrinters();
+    this.toggleModal(false);
   }
 
-  deletePrinter(id: number | undefined): void {
+  onDeletePrinter(id: number | undefined) {
+    this.currentPrinterId = id;
+    this.toggleDeleteModal(true);
+  }
+
+  toggleDeleteModal(open: boolean) {
+    this.isDeleteModalOpen = open;
+  }
+
+  confirmDelete(id: number | undefined) {
     this.printerService.deletePrinter(id);
     this.loadAllPrinters();
+    this.toggleDeleteModal(false);
+  }
+  onAddPrinter(): void {
+    this.currentPrinter = new Printer();  // Reset currentPrinter for a new entry
+    this.toggleModal(true);
   }
 
-  onEditPrinter(printer: Printer) {
-
-  }
 }
