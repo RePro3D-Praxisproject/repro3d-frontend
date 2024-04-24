@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import { AuthService } from '../../app/shared/services/auth.service';
 import { NgIf } from '@angular/common';
+import { AuthResponse } from '../shared/interfaces/auth-response';
 
 @Component({
   selector: 'app-header',
@@ -35,6 +36,10 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit(): void {
     this.authService.isLoggedIn()
+  }
+
+  getUserData(): AuthResponse {
+    return JSON.parse(localStorage.getItem('userdata')!);
   }
 
 }
