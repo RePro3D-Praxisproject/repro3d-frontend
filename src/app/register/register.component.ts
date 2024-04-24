@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { User } from '../shared/interfaces/user'
 import { hashSync } from 'bcryptjs';
 import { NgIf } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, HttpClientTestingModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
