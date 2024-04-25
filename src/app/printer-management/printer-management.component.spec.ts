@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PrinterManagementComponent } from './printer-management.component';
-import { PrinterService } from '../../services/printer-service.service';
-import { Printer } from '../../interfaces/printer';
+import { PrinterService } from '../shared/services/printer.service';
+import { Printer } from '../shared/interfaces/printer';
 import { FormsModule } from '@angular/forms';
 import {of} from "rxjs";
 
