@@ -12,6 +12,6 @@ export const routes: Routes = [
   {path: 'products', component: ProductCatalogueComponent },
   {path: 'product-detail/:id', component: ProductComponent },
   {path: 'product-list', component: ProductListPageComponent },
-  {path: 'printer-management', component: PrinterManagementComponent }
+  {path: 'printer-management', component: PrinterManagementComponent },
   {path: 'login', component: LoginComponent }
 ];
