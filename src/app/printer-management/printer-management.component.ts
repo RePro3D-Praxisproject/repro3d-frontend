@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
-import {PrinterService} from "../../services/printer-service.service";
-import {Printer} from "../../interfaces/printer";
+import {PrinterService} from "../shared/services/printer.service";
+import {Printer} from "../shared/interfaces/printer";
 import {FormsModule} from "@angular/forms";
 
 
@@ -25,7 +25,8 @@ export class PrinterManagementComponent implements OnInit{
   isDeleteModalOpen: boolean = false;
   currentPrinter: Printer = new Printer();
   currentPrinterId: number | undefined;
-  constructor(private printerService: PrinterService) {
+
+  constructor(public printerService: PrinterService) {
 
   }
 
@@ -81,23 +82,17 @@ export class PrinterManagementComponent implements OnInit{
     this.toggleModal(true);
   }
   ngOnInit(): void {
-    this.loadAllPrinters();
-
-  }
-
-  loadAllPrinters(): void {
-    this.printers = this.printerService.getAllPrinters();
+    this.printerService.loadAllPrinters();
+    this.printers = this.printerService.getAllPrinters()
   }
 
   addPrinter(printer: Printer) {
     this.printerService.createPrinter(printer);
-    this.loadAllPrinters();
     this.toggleModal(false);
   }
 
   updatePrinter(printer: Printer) {
-    this.printerService.updatePrinter(printer);
-    this.loadAllPrinters();
+    this.printerService.updatePrinter(printer.printer_id, printer);
     this.toggleModal(false);
   }
 
@@ -112,7 +107,6 @@ export class PrinterManagementComponent implements OnInit{
 
   confirmDelete(id: number | undefined) {
     this.printerService.deletePrinter(id);
-    this.loadAllPrinters();
     this.toggleDeleteModal(false);
   }
   onAddPrinter(): void {
