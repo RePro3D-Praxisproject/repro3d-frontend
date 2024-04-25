@@ -13,7 +13,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let printer of printers; let i = index">
+    <tr *ngFor="let printer of this.printerService.getAllPrinters(); let i = index">
       <th scope="row">{{ i + 1 }}</th>
       <td>{{ printer.name }}</td>
       <td>{{ printer.ip_addr }}</td>
