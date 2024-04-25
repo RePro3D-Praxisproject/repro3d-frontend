@@ -3,7 +3,7 @@ import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
 import {FormsModule} from "@angular/forms";
 import { RouterLink } from "@angular/router";
-import { Item } from "../../interfaces/item";
+import { Item } from "../shared/interfaces/item";
 
 @Component({
   selector: 'app-product-card',

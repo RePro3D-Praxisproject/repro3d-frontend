@@ -2,10 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductComponent } from './product.component';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-//import { of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {OrderService} from "../../services/order-service.service";
-//import { Product } from "../product-card/product-card.component";
+import {OrderService} from "../shared/services/order.service";
 
 describe('ProductComponent', () => {
   let component: ProductComponent;

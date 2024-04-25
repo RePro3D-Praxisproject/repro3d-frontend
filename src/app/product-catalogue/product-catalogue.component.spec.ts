@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductCatalogueComponent } from './product-catalogue.component';
-import { OrderService } from '../../services/order-service.service';
+import { OrderService } from '../shared/services/order.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProductCatalogueComponent', () => {
   let component: ProductCatalogueComponent;
@@ -10,7 +11,8 @@ describe('ProductCatalogueComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ProductCatalogueComponent
+        ProductCatalogueComponent,
+        HttpClientTestingModule,
       ],
       providers: [
         { provide: OrderService, useValue: mockOrderService }

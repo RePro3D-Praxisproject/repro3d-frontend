@@ -35,17 +35,11 @@
 
     </ul>
     <ul class="navbar-nav" id="navbarInput">
-      <li class="nav-item m-0 p-2">
-        <input class="form-control " type="search" placeholder="Username" aria-label="Search">
+      <li *ngIf="!authService.isLoggedIn()" class="nav-item m-0 p-2">
+        <a class="btn btn-outline-success" href="/login">Log in</a>
       </li>
-      <li class="nav-item m-0 p-2">
-        <input class="form-control" type="search" placeholder="Password" aria-label="Search">
-      </li>
-      <li class="nav-item m-0 p-2">
-        <button class="btn btn-outline-success" type="submit">Log in</button>
-      </li>
-      <li class="nav-item m-0 p-2">
-        <a class="nav-link active " href="#">Logout</a>
+      <li *ngIf="authService.isLoggedIn()" class="nav-item m-0 p-2">
+        <a class="btn btn-danger " href="" (click)="authService.logout()">Logout</a>
       </li>
     </ul>
 

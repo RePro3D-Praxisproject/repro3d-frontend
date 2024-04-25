@@ -4,8 +4,8 @@ import { FooterComponent } from "../footer/footer.component";
 //import { Router } from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import { OrderService } from '../../services/order-service.service';
-import { Item } from '../../interfaces/item';
+import { OrderService } from '../shared/services/order.service';
+import { Item } from '../shared/interfaces/item';
 
 @Component({
   selector: 'app-product-list-page',

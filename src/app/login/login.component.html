@@ -1,0 +1,29 @@
+<div class="container mt-5 ">
+    <div class="row justify-content-center align-items-center">
+      
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Login
+          </div>
+          <div class="card-body">
+            <form [formGroup]="this.loginFormGroup">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" formControlName="username" (keyup.enter)="onSubmit()">
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" formControlName="password" (keyup.enter)="onSubmit()">
+              </div>
+              <button type="submit" class="btn btn-primary" (click)="onSubmit()">Login</button>
+            </form>
+          </div>
+        </div>
+        <div *ngIf="this.loginFailed" class="alert alert-danger" role="alert">
+          Invalid email or password. Please enter a valid email address and password combination to continue.
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -3,8 +3,8 @@ import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute, RouterLink, RouterLinkActive} from "@angular/router";
-import { Item } from '../../interfaces/item';
-import { OrderService } from '../../services/order-service.service';
+import { Item } from '../shared/interfaces/item';
+import { OrderService } from '../shared/services/order.service';
 
 
 
