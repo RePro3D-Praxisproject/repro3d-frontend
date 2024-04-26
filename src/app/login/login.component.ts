@@ -35,6 +35,7 @@ export class LoginComponent {
           localStorage.setItem('email', this.loginFormGroup.getRawValue().username);
           localStorage.setItem('password', this.loginFormGroup.getRawValue().password);
           console.log('Login successful');
+          this.router.navigate(["/"])
         },
         error => {
           this.loginFailed = true;
