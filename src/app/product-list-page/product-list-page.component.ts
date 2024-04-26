@@ -48,7 +48,7 @@ export class ProductListPageComponent implements OnInit {
     if (this.isNewProduct) {
       this.orderService.createItem(<Item>this.selectedProduct);
     } else {
-     // this.orderService.updateItem(<Item>this.selectedProduct);
+      this.orderService.updateItem(<Item>this.selectedProduct);
     }
     this.products = this.orderService.getAllProducts();
     this.closeModal();

@@ -5,6 +5,7 @@ import { ProductListPageComponent } from './product-list-page.component';
 import { OrderService } from '../shared/services/order.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Item } from '../shared/interfaces/item';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProductListPageComponent', () => {
   let component: ProductListPageComponent;
@@ -14,15 +15,15 @@ describe('ProductListPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockItems = [
-      { itemId: 1, title: 'Product 1',buildTime:60, price: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product', imgUrl: 'url1' },
-      { itemId: 2, title: 'Product 2',buildTime:60, price: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product', imgUrl: 'url2' }
+      { item_id: 1, title: 'Product 1',est_time:60, price: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product', imgUrl: 'url1' },
+      { item_id: 2, title: 'Product 2',est_time:60, price: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product', imgUrl: 'url2' }
     ];
 
     mockOrderService = jasmine.createSpyObj('OrderService', ['getAllProducts', 'createItem', 'updateItem', 'deleteItem']);
     mockOrderService.getAllProducts.and.returnValue(of(mockItems));
 
     TestBed.configureTestingModule({
-      imports: [FormsModule, ProductListPageComponent],
+      imports: [FormsModule, ProductListPageComponent, HttpClientTestingModule],
       providers: [{ provide: OrderService, useValue: mockOrderService }],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents().then(() => {

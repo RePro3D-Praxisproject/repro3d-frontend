@@ -19,8 +19,8 @@ export class OrderService {
 
     ];
 
-    public updateItem(id: number, item: Item): void {
-      this.http.put(`${API_URL}/${id}`, item).subscribe(
+    public updateItem(item: Item): void {
+      this.http.put(`${API_URL}/${item.item_id}`, item).subscribe(
         _ => {
           this.loadAllItems();
         }
