@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { AuthResponse } from '../interfaces/auth-response';
 import { User } from '../interfaces/user';
+import { API_URL } from '../constants/apiurl.constant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiURL = 'http://localhost:8765';
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +23,7 @@ export class AuthService {
       'Authorization': 'Basic ' + btoa(email + ':' + password),
       'Content-Type': 'application/json'
     });
-    return this.http.get<any>(`${this.apiURL}/user/email/${email}`, { headers: headers })
+    return this.http.get<any>(`${API_URL}/user/email/${email}`, { headers: headers })
       .pipe(
         catchError(this.handleError)
       );
@@ -35,7 +35,7 @@ export class AuthService {
    * @returns {void}
    */
   handleError(error: { error: { message: any; }; status: any; message: any; }) {
-    if (this.isLoggedIn())this.logout();
+    if (this.isLoggedIn()) this.logout();
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Client-side error
@@ -63,7 +63,7 @@ export class AuthService {
    * @returns An observable boolean indicating whether the user is registered successfully or not.
    */
   register(user: User): Observable<any> {
-    return this.http.post<any>(`${this.apiURL}/user`, user)
+    return this.http.post<any>(`${API_URL}/user`, user)
       .pipe(
         catchError(this.handleError)
       );

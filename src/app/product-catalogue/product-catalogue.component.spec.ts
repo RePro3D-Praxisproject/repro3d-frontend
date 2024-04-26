@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('ProductCatalogueComponent', () => {
   let component: ProductCatalogueComponent;
   let fixture: ComponentFixture<ProductCatalogueComponent>;
-  let mockOrderService = jasmine.createSpyObj('OrderService', ['getAllProducts']);
+  let mockOrderService = jasmine.createSpyObj('OrderService', ['loadAllItems']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
