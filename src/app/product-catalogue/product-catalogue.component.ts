@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductCardComponent } from "../product-card/product-card.component";
 import { OrderService } from '../shared/services/order.service';
 import { NgForOf } from '@angular/common';
@@ -10,8 +10,11 @@ import { NgForOf } from '@angular/common';
     styleUrl: './product-catalogue.component.scss',
     imports: [ProductCardComponent, NgForOf]
 })
-export class ProductCatalogueComponent {
+export class ProductCatalogueComponent implements OnInit {
   constructor (public orderService: OrderService) {}
 
+  ngOnInit(): void {
+    this.orderService.loadAllItems()
+  }
   
 }
