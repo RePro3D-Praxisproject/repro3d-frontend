@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'; 
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   public readonly loginFormGroup: FormGroup;
 
@@ -34,7 +34,9 @@ export class LoginComponent {
         data => {
           localStorage.setItem('email', this.loginFormGroup.getRawValue().username);
           localStorage.setItem('password', this.loginFormGroup.getRawValue().password);
+          localStorage.setItem('userdata', JSON.stringify(data));
           console.log('Login successful');
+          this.router.navigate(['/']);
         },
         error => {
           this.loginFailed = true;
@@ -45,5 +47,12 @@ export class LoginComponent {
     }
       
   }
+
+  ngOnInit(): void {
+      if (this.authService.isLoggedIn()) {
+        this.router.navigate(['/']);
+      }
+  }
+
 
 }

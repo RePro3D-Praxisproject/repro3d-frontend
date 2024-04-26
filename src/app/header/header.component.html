@@ -36,7 +36,13 @@
     </ul>
     <ul class="navbar-nav" id="navbarInput">
       <li *ngIf="!authService.isLoggedIn()" class="nav-item m-0 p-2">
-        <a class="btn btn-outline-success" href="/login">Log in</a>
+        <a class="btn btn-success" href="/login">Log in</a>
+      </li>
+      <li *ngIf="!authService.isLoggedIn()" class="nav-item m-0 p-2">
+        <a class="btn btn-warning" href="/register">Register</a>
+      </li>
+      <li *ngIf="authService.isLoggedIn()" class="nav-item m-0 p-2">
+        <p>Logged in as {{ getUserData().data.email }}</p>
       </li>
       <li *ngIf="authService.isLoggedIn()" class="nav-item m-0 p-2">
         <a class="btn btn-danger " href="" (click)="authService.logout()">Logout</a>

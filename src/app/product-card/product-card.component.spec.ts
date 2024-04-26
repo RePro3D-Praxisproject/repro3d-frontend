@@ -20,13 +20,13 @@ describe('ProductCardComponent', () => {
     component = fixture.componentInstance;
     // Set up mock input data
     component.product = {
-      itemId: 1,
+      item_id: 1,
       title: 'Test Product',
       price: 100,
       dimensions: '10x10x10',
       material: 'Plastic',
       description: 'Test Description',
-      buildTime: 120,
+      est_time: 120,
       imgUrl: 'skull-picture.jpg'
     };
     fixture.detectChanges();
