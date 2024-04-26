@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthResponse } from '../interfaces/auth-response';
 import { User } from '../interfaces/user';
+import { API_URL } from '../constants/apiurl.constant';
 
 
 
@@ -11,7 +12,6 @@ import { User } from '../interfaces/user';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiURL = 'http://localhost:8765';
 
   constructor(private http: HttpClient) { }
 
@@ -20,7 +20,7 @@ export class AuthService {
       'Authorization': 'Basic ' + btoa(email + ':' + password),
       'Content-Type': 'application/json'
     });
-    return this.http.get<any>(`${this.apiURL}/user`, { headers: headers })
+    return this.http.get<any>(`${API_URL}/user`, { headers: headers })
       .pipe(
         catchError(this.handleError)
       );
