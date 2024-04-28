@@ -44,31 +44,31 @@
         <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]="this.productEditFormGroup">
           <div class="form-group">
             <label for="productName">Name</label>
-            <input type="text" class="form-control" id="productName" [(ngModel)]="selectedProduct.name" name="title">
+            <input type="text" class="form-control" id="productName" formControlName="productName" [(ngModel)]="selectedProduct.name" name="title">
           </div>
           <div class="form-group">
             <label for="productPrice">Price</label>
-            <input type="number" class="form-control" id="productPrice" [(ngModel)]="selectedProduct.cost" name="price">
+            <input type="number" class="form-control" id="productPrice" formControlName="productPrice" [(ngModel)]="selectedProduct.cost" name="price">
           </div>
           <div class="form-group">
             <label for="productSize">Size</label>
-            <input type="text" class="form-control" id="productSize" [(ngModel)]="selectedProduct.dimensions" name="dimensions">
+            <input type="text" class="form-control" id="productSize" formControlName="productSize" [(ngModel)]="selectedProduct.dimensions" name="dimensions">
           </div>
           <div class="form-group">
             <label for="productMaterial">Material</label>
-            <input type="text" class="form-control" id="productMaterial" [(ngModel)]="selectedProduct.material" name="material">
+            <input type="text" class="form-control" id="productMaterial" formControlName="productMaterial" [(ngModel)]="selectedProduct.material" name="material">
           </div>
           <div class="form-group">
             <label for="productDescription">Description</label>
-            <textarea class="form-control" id="productDescription" [(ngModel)]="selectedProduct.description" name="description"></textarea>
+            <textarea class="form-control" id="productDescription" formControlName="productDescription" [(ngModel)]="selectedProduct.description" name="description"></textarea>
           </div>
           <!-- File Input for Picture Upload -->
           <div class="form-group">
             <label for="productImage">Upload Image</label>
-            <input type="file" class="form-control-file" id="productImage" (change)="handleFileInput($event)">
+            <input type="file" class="form-control-file" id="productImage" formControlName="productImage" (change)="handleFileInput($event)">
           </div>
         </form>
       </div>
