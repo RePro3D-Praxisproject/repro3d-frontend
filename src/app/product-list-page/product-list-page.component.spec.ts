@@ -15,8 +15,8 @@ describe('ProductListPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockItems = [
-      { item_id: 1, title: 'Product 1',est_time:60, cost: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product', imgUrl: 'url1' },
-      { item_id: 2, title: 'Product 2',est_time:60, cost: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product', imgUrl: 'url2' }
+      { item_id: 1, name: 'Product 1',est_time:60, cost: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product', imgUrl: 'url1' },
+      { item_id: 2, name: 'Product 2',est_time:60, cost: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product', imgUrl: 'url2' }
     ];
 
     mockOrderService = jasmine.createSpyObj('OrderService', ['getAllProducts', 'createItem', 'updateItem', 'deleteItem']);
