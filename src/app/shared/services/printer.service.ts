@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
 import {Printer, PrinterResponse} from "../interfaces/printer";
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { API_URL } from '../constants/apiurl.constant';
 
 
 @Injectable({
@@ -12,14 +13,12 @@ import { HttpClient } from '@angular/common/http';
 export class PrinterService {
 
   constructor(private http: HttpClient) {}
-
-  private apiUrl = 'http://localhost:8070/printer';
   public printers: Printer[] = [];
 
 
 
   public createPrinter(printer: Printer): void {
-    this.http.post(`${this.apiUrl}`, printer).subscribe(
+    this.http.post(`${API_URL}/printer`, printer).subscribe(
       _ => {
         this.loadAllPrinters();
       }
@@ -31,7 +30,7 @@ export class PrinterService {
   }
 
   public loadAllPrinters(): void {
-    this.http.get<PrinterResponse>(`${this.apiUrl}`).subscribe(
+    this.http.get<PrinterResponse>(`${API_URL}/printer`).subscribe(
       printers =>  {
         this.printers = printers.data;
         console.log(this.printers)
@@ -40,11 +39,11 @@ export class PrinterService {
   }
 
   public getPrinterById(id: number): Observable<Printer> {
-    return this.http.get<Printer>(`${this.apiUrl}/${id}`);
+    return this.http.get<Printer>(`${API_URL}/printer/${id}`);
   }
 
   public updatePrinter(id: number | undefined, printer: Printer) {
-    this.http.put(`${this.apiUrl}/${id}`, printer).subscribe(
+    this.http.put(`${API_URL}/printer/${id}`, printer).subscribe(
       _ => {
         this.loadAllPrinters();
       }
@@ -52,7 +51,7 @@ export class PrinterService {
   }
 
   public deletePrinter(id: number | undefined): void {
-    this.http.delete(`${this.apiUrl}/${id}`).subscribe(
+    this.http.delete(`${API_URL}/printer/${id}`).subscribe(
       _ => {
         this.loadAllPrinters();
       }
