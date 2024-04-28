@@ -7,14 +7,15 @@ import { ProductCatalogueComponent } from './product-catalogue/product-catalogue
 import {PrinterManagementComponent} from "./printer-management/printer-management.component";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from './auth.guard';
 
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent  },
   {path: 'products', component: ProductCatalogueComponent },
   {path: 'product-detail/:id', component: ProductComponent },
-  {path: 'product-list', component: ProductListPageComponent },
-  {path: 'printer-management', component: PrinterManagementComponent },
+  {path: 'product-list', component: ProductListPageComponent, canActivate: [AuthGuard]},
+  {path: 'printer-management', component: PrinterManagementComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent }
 
 ];

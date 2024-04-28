@@ -6,6 +6,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import { OrderService } from '../shared/services/order.service';
 import { Item } from '../shared/interfaces/item';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-product-list-page',
@@ -27,12 +28,13 @@ export class ProductListPageComponent implements OnInit {
   isNewProduct: boolean = false;
 
   constructor(
-    public orderService: OrderService
+    public orderService: OrderService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.orderService.loadAllItems();
-    
+    console.log(this.authService.getMyRole())
   }
 
   openEditModal(product: Item): void {
