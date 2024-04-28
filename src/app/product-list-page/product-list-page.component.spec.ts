@@ -15,8 +15,14 @@ describe('ProductListPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockItems = [
-      { item_id: 1, name: 'Product 1',est_time:60, cost: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product', imgUrl: 'url1' },
-      { item_id: 2, name: 'Product 2',est_time:60, cost: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product', imgUrl: 'url2' }
+      {
+        item_id: 1, name: 'Product 1', est_time: 60, cost: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product',
+        file_ref: ''
+      },
+      {
+        item_id: 2, name: 'Product 2', est_time: 60, cost: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product',
+        file_ref: ''
+      }
     ];
 
     mockOrderService = jasmine.createSpyObj('OrderService', ['getAllProducts', 'createItem', 'updateItem', 'deleteItem']);
@@ -46,7 +52,7 @@ describe('ProductListPageComponent', () => {
 
   it('should save changes when a new product is added', () => {
     component.openAddProductModal();
-    component.selectedProduct = { title: 'New Product', price: 150, dimensions: '15x15x15', material: 'Plastic', description: 'New description' };
+    component.selectedProduct = { name: 'New Product', cost: 150, dimensions: '15x15x15', material: 'Plastic', description: 'New description' };
     component.saveChanges();
     expect(mockOrderService.createItem).toHaveBeenCalledWith(component.selectedProduct);
   });
@@ -59,7 +65,7 @@ describe('ProductListPageComponent', () => {
 
   it('should open the add product modal', () => {
     component.openAddProductModal();
-    expect(component.selectedProduct).toEqual(jasmine.objectContaining({ title: '', price: 0 }));
+    expect(component.selectedProduct).toEqual(jasmine.objectContaining({ name: '', price: 0 }));
     expect(component.isModalOpen).toBeTrue();
     expect(component.isNewProduct).toBeTrue();
   });
@@ -67,7 +73,7 @@ describe('ProductListPageComponent', () => {
   it('should open the edit modal with a product', () => {
     const product = mockItems[0];
     component.openEditModal(product);
-    expect(component.selectedProduct).toEqual(jasmine.objectContaining({ title: 'Product 1' }));
+    expect(component.selectedProduct).toEqual(jasmine.objectContaining({ name: 'Product 1' }));
     expect(component.isModalOpen).toBeTrue();
   });
 
