@@ -3,9 +3,10 @@ import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 //import { Router } from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import { OrderService } from '../shared/services/order.service';
 import { Item } from '../shared/interfaces/item';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-product-list-page',
@@ -15,6 +16,7 @@ import { Item } from '../shared/interfaces/item';
     FooterComponent,
     NgForOf,
     FormsModule,
+    ReactiveFormsModule,
     NgIf
   ],
   templateUrl: './product-list-page.component.html',
@@ -22,17 +24,29 @@ import { Item } from '../shared/interfaces/item';
 })
 
 export class ProductListPageComponent implements OnInit {
-  products: Item[] = [];
-  selectedProduct: { material: string; price: number; title: string; dimensions: string; description: string; } = { title: '', price: 0, dimensions: '', material: '' , description:''}; // Example initialization
+  selectedProduct: { material: string; cost: number; name: string; dimensions: string; description: string; } = { name: '', cost: 0, dimensions: '', material: '' , description:''}; // Example initialization
   isModalOpen = false;
   isNewProduct: boolean = false;
+  productEditFormGroup: FormGroup;
 
   constructor(
-    protected orderService: OrderService
-  ) {}
+    public orderService: OrderService,
+    private authService: AuthService,
+    private formBuilder: FormBuilder
+  ) {
+    this.productEditFormGroup = this.formBuilder.group({
+      productName: ['', [Validators.required]],
+      productPrice: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      productSize: ['', Validators.required],
+      productMaterial: ['', Validators.required],
+      productDescription: ['', Validators.required],
+      productImage: [''],
+    });
+  }
 
   ngOnInit(): void {
-    this.products = this.orderService.getAllProducts();
+    this.orderService.loadAllItems();
+    console.log(this.authService.getMyRole())
   }
 
   openEditModal(product: Item): void {
@@ -45,12 +59,17 @@ export class ProductListPageComponent implements OnInit {
   }
 
   saveChanges(): void {
+    if (!this.productEditFormGroup.valid) {
+      console.log(this.productEditFormGroup)
+      console.log("not valid")
+      return;
+    }
     if (this.isNewProduct) {
       this.orderService.createItem(<Item>this.selectedProduct);
     } else {
       this.orderService.updateItem(<Item>this.selectedProduct);
     }
-    this.products = this.orderService.getAllProducts();
+    this.orderService.loadAllItems();
     this.closeModal();
   }
 
@@ -67,7 +86,7 @@ export class ProductListPageComponent implements OnInit {
   }
 
   openAddProductModal(): void {
-    this.selectedProduct = { title: '', price: 0, dimensions: '', material: '', description:'' };
+    this.selectedProduct = { name: '', cost: 0, dimensions: '', material: '', description:'' };
     this.isModalOpen = true;
     this.isNewProduct = true;
   }

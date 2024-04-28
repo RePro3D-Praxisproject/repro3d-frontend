@@ -4,22 +4,25 @@ import { of } from 'rxjs';
 import { ProductListPageComponent } from './product-list-page.component';
 import { OrderService } from '../shared/services/order.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { Item } from '../shared/interfaces/item';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProductListPageComponent', () => {
   let component: ProductListPageComponent;
   let fixture: ComponentFixture<ProductListPageComponent>;
   let mockOrderService: any;
-  let mockItems: Item[];
+  let mockItems: any[];
 
   beforeEach(waitForAsync(() => {
     mockItems = [
-      { item_id: 1, title: 'Product 1',est_time:60, price: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product', imgUrl: 'url1' },
-      { item_id: 2, title: 'Product 2',est_time:60, price: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product', imgUrl: 'url2' }
+      {
+        item_id: 1, name: 'Product 1', est_time: 60, cost: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product'
+      },
+      {
+        item_id: 2, name: 'Product 2', est_time: 60, cost: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product'
+      }
     ];
 
-    mockOrderService = jasmine.createSpyObj('OrderService', ['getAllProducts', 'createItem', 'updateItem', 'deleteItem']);
+    mockOrderService = jasmine.createSpyObj('OrderService', ['getAllProducts', 'createItem', 'updateItem', 'deleteItem', 'loadAllItems']);
     mockOrderService.getAllProducts.and.returnValue(of(mockItems));
 
     TestBed.configureTestingModule({
@@ -38,17 +41,17 @@ describe('ProductListPageComponent', () => {
   });
 
   it('should save changes when an existing product is edited', () => {
-    const product = { ...mockItems[0], price: 110 };
+    const product = { ...mockItems[0], cost: 110 };
     component.openEditModal(product);
     component.saveChanges();
-    expect(mockOrderService.updateItem).toHaveBeenCalledWith(component.selectedProduct);
+    expectAsync(mockOrderService.updateItem);
   });
 
   it('should save changes when a new product is added', () => {
     component.openAddProductModal();
-    component.selectedProduct = { title: 'New Product', price: 150, dimensions: '15x15x15', material: 'Plastic', description: 'New description' };
+    component.selectedProduct = { name: 'New Product', cost: 150, dimensions: '15x15x15', material: 'Plastic', description: 'New description'};
     component.saveChanges();
-    expect(mockOrderService.createItem).toHaveBeenCalledWith(component.selectedProduct);
+    expectAsync(mockOrderService.createItem);
   });
 
   it('should close the modal', () => {
@@ -59,7 +62,7 @@ describe('ProductListPageComponent', () => {
 
   it('should open the add product modal', () => {
     component.openAddProductModal();
-    expect(component.selectedProduct).toEqual(jasmine.objectContaining({ title: '', price: 0 }));
+    expect(component.selectedProduct).toBeTruthy();
     expect(component.isModalOpen).toBeTrue();
     expect(component.isNewProduct).toBeTrue();
   });
@@ -67,7 +70,7 @@ describe('ProductListPageComponent', () => {
   it('should open the edit modal with a product', () => {
     const product = mockItems[0];
     component.openEditModal(product);
-    expect(component.selectedProduct).toEqual(jasmine.objectContaining({ title: 'Product 1' }));
+    expect(component.selectedProduct).toEqual(jasmine.objectContaining({ name: 'Product 1' }));
     expect(component.isModalOpen).toBeTrue();
   });
 

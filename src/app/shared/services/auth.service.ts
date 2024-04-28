@@ -4,6 +4,7 @@ import { catchError, Observable, of, throwError } from 'rxjs';
 import { AuthResponse } from '../interfaces/auth-response';
 import { User } from '../interfaces/user';
 import { API_URL } from '../constants/apiurl.constant';
+import { Role } from '../interfaces/role';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,15 @@ export class AuthService {
       return false;
     }
     return true;
+  }
+
+  getMyRole(): Role | undefined {
+    if (localStorage.getItem('userdata')) {
+      if (localStorage.getItem('userdata') !== null){
+        return JSON.parse(localStorage.getItem('userdata')!).data.role;
+      }
+    }
+    return undefined;
   }
 }
 

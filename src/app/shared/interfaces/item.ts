@@ -1,12 +1,12 @@
 export interface Item {
     item_id: number,
-    title: string,
-    price: number,
-    est_time: number,
-    material: string,
-    dimensions: string,
+    name: string,
     description: string,
-    imgUrl: string
+    est_time: number,
+    dimensions: string,
+    file_ref: string,
+    material: string,
+    cost: number,
 }
 
 export interface ItemResponse {

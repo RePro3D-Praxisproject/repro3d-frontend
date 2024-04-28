@@ -1,15 +1,15 @@
 <div class="container" *ngIf="product">
-  <h2 class="page-title">{{product.title}}</h2>
+  <h2 class="page-title">{{product.name}}</h2>
   <div class="row align-items-center">
     <!-- Image on the left -->
     <div class="col-md-6">
-      <img class="img-fluid" [src]="'assets/'+product.item_id+'.png'" alt="{{product.title}}">
+      <img class="img-fluid" [src]="'assets/'+product.item_id+'.png'" alt="{{product.name}}">
     </div>
 
     <!-- Product information on the right -->
     <div class="col-md-6">
-      <h5><strong>{{product.title}}</strong></h5>
-      <p><strong>Price:</strong> {{product.price}} Euro</p>
+      <h5><strong>{{product.name}}</strong></h5>
+      <p><strong>Price:</strong> {{product.cost}} Euro</p>
       <p><strong>Build time:</strong> {{product.est_time}}</p>
       <p><strong>Material:</strong> {{product.material}}</p>
       <p><strong>Dimensions:</strong> {{product.dimensions}}</p>
