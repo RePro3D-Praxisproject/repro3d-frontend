@@ -52,7 +52,7 @@ export class OrderService {
     }
 
     public createItem(newItem: Item): void {
-      this.http.post(`${API_URL}`, newItem).subscribe(
+      this.http.post(`${API_URL}/item`, newItem).subscribe(
         _ => {
           this.loadAllItems();
         }
