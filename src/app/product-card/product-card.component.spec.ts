@@ -22,7 +22,7 @@ describe('ProductCardComponent', () => {
     component.product = {
       item_id: 1,
       title: 'Test Product',
-      price: 100,
+      cost: 100,
       dimensions: '10x10x10',
       material: 'Plastic',
       description: 'Test Description',

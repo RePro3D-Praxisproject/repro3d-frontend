@@ -1,7 +1,7 @@
 export interface Item {
     item_id: number,
-    title: string,
-    price: number,
+    name: string,
+    cost: number,
     est_time: number,
     material: string,
     dimensions: string,

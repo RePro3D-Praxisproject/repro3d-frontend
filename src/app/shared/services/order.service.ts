@@ -11,11 +11,11 @@ export class OrderService {
     constructor(private http: HttpClient) {}
 
     public products: Item[] = [
-        { item_id: 1, title: 'ReProRing', price: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/picture-page.png' , description:"This ring is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
-        { item_id: 2, title: 'skull', price: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/skull-picture.jpg' , description:"This skull is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
-        { item_id: 3, title: 'John the thinker', price: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/john-picture.jpg', description:"This john is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
-        { item_id: 4, title: 'baby yoda', price: 150, est_time: 120, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/babyYoda-picture.jpg', description:"This baby yoda is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
-        { item_id: 5, title: 'dice', price: 140, est_time: 180, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/dice-picture.jpg' , description:"This dice is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that"},
+        { item_id: 1, name: 'ReProRing', cost: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/picture-page.png' , description:"This ring is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
+        { item_id: 2, name: 'skull', cost: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/skull-picture.jpg' , description:"This skull is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
+        { item_id: 3, name: 'John the thinker', cost: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/john-picture.jpg', description:"This john is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
+        { item_id: 4, name: 'baby yoda', cost: 150, est_time: 120, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/babyYoda-picture.jpg', description:"This baby yoda is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that" },
+        { item_id: 5, name: 'dice', cost: 140, est_time: 180, material: 'ABS', dimensions: '209 x 209 x 400', imgUrl: 'assets/dice-picture.jpg' , description:"This dice is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that"},
 
     ];
 
@@ -36,7 +36,7 @@ export class OrderService {
     }
 
     public getItemByName(name: String):Item | undefined{
-        return this.products.find(item => item.title.toLowerCase() === name.toLowerCase())
+        return this.products.find(item => item.name.toLowerCase() === name.toLowerCase())
     }
 
     public deleteItem(id: number):void{

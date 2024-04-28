@@ -13,11 +13,11 @@
       <th scope="col"></th>
     </tr>
     </thead>
-    <tbody *ngIf="products && products.length > 0">
-    <tr *ngFor="let product of products; let i = index">
-      <th scope="row">{{ i + 1 }}</th>
-      <td>{{ product.title }}</td>
-      <td>{{ product.price }}</td>
+    <tbody *ngIf="this.orderService.getAllProducts() && this.orderService.getAllProducts().length > 0">
+    <tr *ngFor="let product of this.orderService.getAllProducts()">
+      <th scope="row">{{ product.item_id }}</th>
+      <td>{{ product.name }}</td>
+      <td>{{ product.cost }}</td>
       <td>{{ product.dimensions }}</td>
       <td>{{ product.material }}</td>
       <td><button class="btn btn-outline-success" (click)="openEditModal(product)">Edit</button></td>
@@ -47,11 +47,11 @@
         <form>
           <div class="form-group">
             <label for="productName">Name</label>
-            <input type="text" class="form-control" id="productName" [(ngModel)]="selectedProduct.title" name="title">
+            <input type="text" class="form-control" id="productName" [(ngModel)]="selectedProduct.name" name="title">
           </div>
           <div class="form-group">
             <label for="productPrice">Price</label>
-            <input type="number" class="form-control" id="productPrice" [(ngModel)]="selectedProduct.price" name="price">
+            <input type="number" class="form-control" id="productPrice" [(ngModel)]="selectedProduct.cost" name="price">
           </div>
           <div class="form-group">
             <label for="productSize">Size</label>

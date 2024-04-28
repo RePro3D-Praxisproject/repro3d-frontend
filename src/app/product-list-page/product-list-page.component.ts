@@ -22,17 +22,17 @@ import { Item } from '../shared/interfaces/item';
 })
 
 export class ProductListPageComponent implements OnInit {
-  products: Item[] = [];
-  selectedProduct: { material: string; price: number; title: string; dimensions: string; description: string; } = { title: '', price: 0, dimensions: '', material: '' , description:''}; // Example initialization
+  selectedProduct: { material: string; cost: number; name: string; dimensions: string; description: string; } = { name: '', cost: 0, dimensions: '', material: '' , description:''}; // Example initialization
   isModalOpen = false;
   isNewProduct: boolean = false;
 
   constructor(
-    protected orderService: OrderService
+    public orderService: OrderService
   ) {}
 
   ngOnInit(): void {
-    this.products = this.orderService.getAllProducts();
+    this.orderService.loadAllItems();
+    
   }
 
   openEditModal(product: Item): void {
@@ -50,7 +50,7 @@ export class ProductListPageComponent implements OnInit {
     } else {
       this.orderService.updateItem(<Item>this.selectedProduct);
     }
-    this.products = this.orderService.getAllProducts();
+    this.orderService.loadAllItems();
     this.closeModal();
   }
 
@@ -67,7 +67,7 @@ export class ProductListPageComponent implements OnInit {
   }
 
   openAddProductModal(): void {
-    this.selectedProduct = { title: '', price: 0, dimensions: '', material: '', description:'' };
+    this.selectedProduct = { name: '', cost: 0, dimensions: '', material: '', description:'' };
     this.isModalOpen = true;
     this.isNewProduct = true;
   }
