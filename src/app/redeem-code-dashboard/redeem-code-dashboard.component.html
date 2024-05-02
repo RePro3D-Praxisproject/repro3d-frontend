@@ -1,0 +1,28 @@
+<h3>Redeem code Dashboard</h3>
+<div class="container">
+  <button class="btn btn-primary mb-3" (click)="generateCode()">Generate Redeem Code</button>
+  <table class="table table-sm table-responsive">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Id</th>
+      <th scope="col">Redeem Code</th>
+      <th scope="col">Used</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let code of redeemCodes; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ code.rc_id }}</td>
+      <td>{{ code.rc_code }}</td>
+      <td>{{ code.used ? 'Yes' : 'No' }}</td>
+      <td>
+        <button class="btn btn-success btn-sm" (click)="validateCode(code.rc_code)">Validate</button>
+        <button class="btn btn-info btn-sm" (click)="editCode(code)">Edit</button>
+        <button class="btn btn-danger btn-sm" (click)="deleteCode(code.rc_id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
