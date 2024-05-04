@@ -1,28 +1,52 @@
-<h3>Redeem code Dashboard</h3>
-<div class="container">
+<div class="container text-center">
+  <h3 class="mb-3">Redeem Code Dashboard</h3>
   <button class="btn btn-primary mb-3" (click)="generateCode()">Generate Redeem Code</button>
-  <table class="table table-sm table-responsive">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Id</th>
-      <th scope="col">Redeem Code</th>
-      <th scope="col">Used</th>
-      <th scope="col">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let code of redeemCodes; let i = index">
-      <th scope="row">{{ i + 1 }}</th>
-      <td>{{ code.rc_id }}</td>
-      <td>{{ code.rc_code }}</td>
-      <td>{{ code.used ? 'Yes' : 'No' }}</td>
-      <td>
-        <button class="btn btn-success btn-sm" (click)="validateCode(code.rc_code)">Validate</button>
-        <button class="btn btn-info btn-sm" (click)="editCode(code)">Edit</button>
-        <button class="btn btn-danger btn-sm" (click)="deleteCode(code.rc_id)">Delete</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+
+  <div *ngIf="isLoading" class="spinner-border text-primary" role="status">
+    <span class="sr-only"></span>
+  </div>
+
+
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="onPageChange(currentPage - 1)">Previous</a>
+      </li>
+      <li class="page-item" *ngFor="let page of [].constructor(Math.ceil(totalItems / itemsPerPage)) | slice:0:5; let idx = index" [class.active]="currentPage === idx + 1">
+        <a class="page-link" (click)="onPageChange(idx + 1)">{{ idx + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === Math.ceil(totalItems / itemsPerPage)">
+        <a class="page-link"  (click)="onPageChange(currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="table-responsive" *ngIf="!isLoading">
+
+    <table class="table table-sm">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Id</th>
+        <th scope="col">Redeem Code</th>
+        <th scope="col">Used</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let code of redeemCodes | slice: (currentPage - 1) * itemsPerPage : currentPage * itemsPerPage; let i = index">
+        <th scope="row">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</th>
+        <td>{{ code.rc_id }}</td>
+        <td>{{ code.rc_code }}</td>
+        <td>{{ code.used ? 'Yes' : 'No' }}</td>
+        <td>
+          <button class="btn btn-success btn-sm" (click)="validateCode(code.rc_code)">Validate</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteCode(code.rc_id)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+
+  </div>
 </div>
