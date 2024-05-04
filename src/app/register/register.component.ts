@@ -18,24 +18,49 @@ export class RegisterComponent {
 
   public registrationSuccess: boolean = false;
   public registrationFailed: boolean = false;
+  public errorMsg: string = "";
 
-  public readonly registerFormGroup: FormGroup;
+  public registerFormGroup: FormGroup;
 
   constructor(private readonly formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerFormGroup = this.formBuilder.group({
-      email: ['', Validators.email],
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[.][a-zA-Z0-9-.]+$')]],
       fname: ['', Validators.required],
-      address: ['', Validators.required],
-      password: ['', Validators.required],
-      password_conf: ['', Validators.required]
+      address: ['', [Validators.required, Validators.minLength(1)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      password_conf: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
   onSubmit() {
     this.registrationFailed = false;
     this.registrationSuccess = false;
+    
     if (this.registerFormGroup.invalid) {
-      alert('Invalid input');
+      console.log(this.registerFormGroup)
+      switch ("INVALID") {
+        case this.registerFormGroup.controls['email'].status:
+          this.errorMsg = "Email is invalid.";
+          break;
+        case this.registerFormGroup.controls['fname'].status:
+          this.errorMsg = "Full Name is empty.";
+          break;
+        case this.registerFormGroup.controls['address'].status:
+          this.errorMsg = "Billing Address is empty.";
+          break;
+        case this.registerFormGroup.controls['password'].status:
+          this.errorMsg = "Password is invalid.";
+          break;
+        case this.registerFormGroup.controls['password_conf'].status:
+          this.errorMsg = "Passwords do not match.";
+          break;
+      }
+      
+      this.registrationFailed = true;
+    } else if (this.registerFormGroup.getRawValue().password !== this.registerFormGroup.getRawValue().password_conf) {
+      this.errorMsg = "Passwords do not match."
+      this.registrationFailed = true;
+      return;
     } else {
       const registeringUser: User = {
         userId: null,
@@ -45,8 +70,6 @@ export class RegisterComponent {
           roleId: 2,
           roleName: ""
         },
-        // including this is probably a VERY BAD IDEA
-        passwordHash: hashSync(this.registerFormGroup.getRawValue().password)
       }
       console.log(registeringUser);
       this.authService.register(registeringUser).subscribe(
@@ -62,5 +85,10 @@ export class RegisterComponent {
         }
       );
     }
+  }
+
+  validateEmail(): boolean {
+    console.log("asdasd")
+    return !new RegExp("/^[a-zA-Z0-9. _%+-]+@[a-zA-Z0-9. -]+\\. [a-zA-Z]{2,}$/").test(this.registerFormGroup.getRawValue()["email"]);
   }
 }
