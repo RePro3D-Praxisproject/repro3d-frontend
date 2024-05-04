@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {catchError, map, Observable, of, throwError} from 'rxjs';
+import {catchError, map, Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { API_URL } from '../constants/apiurl.constant';
 import {RedeemCodes, RedeemCodeResponse} from "../interfaces/redeem-codes";
@@ -12,25 +12,7 @@ import {RedeemCodes, RedeemCodeResponse} from "../interfaces/redeem-codes";
 export class redeemCodeService {
   constructor(private http: HttpClient) {}
 
-  public redeemCodes: RedeemCodes[] = [
-    {rc_id:123,rc_code:'xyz', used:false},
-    {rc_id:123,rc_code:'xyz', used:false},
-
-    {rc_id:123,rc_code:'xyz', used:true},
-    {rc_id:123,rc_code:'xyz', used:true},
-    {rc_id:123,rc_code:'xyz', used:true},
-    {rc_id:123,rc_code:'xyz', used:true},
-    {rc_id:123,rc_code:'xyz', used:false},
-    {rc_id:123,rc_code:'xyz', used:false},
-    {rc_id:123,rc_code:'xyz', used:false},
-    {rc_id:123,rc_code:'xyz', used:false},
-    {rc_id:123,rc_code:'xyz', used:false},
-    {rc_id:123,rc_code:'xyz', used:false},
-    {rc_id:123,rc_code:'xyz', used:false}
-
-
-
-
+  public redeemCode: RedeemCodes[] = [
   ];
 
 
@@ -43,15 +25,10 @@ export class redeemCodeService {
 
   }
 
-
-  loadAllRedeemCodes(): void {
-    this.http.get<RedeemCodeResponse>(`${API_URL}/redeem-code`).subscribe(
-      redeemCodes => {
-        this.redeemCodes = redeemCodes.data;
-        console.log(this.redeemCodes);
-
-      }
-    )
+  loadAllRedeemCodes(): Observable<RedeemCodes[]> {
+    return this.http.get<RedeemCodeResponse>(`${API_URL}/redeem-code`).pipe(
+      map(response => response.data)
+    );
   }
 
   public generateRedeemCode(): void {

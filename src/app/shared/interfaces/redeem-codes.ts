@@ -1,7 +1,8 @@
+
 export class RedeemCodes {
   rc_id?:number;
   rc_code?:string;
-  used?:boolean;
+  used?:number;
 
 
 }
