@@ -70,7 +70,7 @@ export class RegisterComponent {
           roleId: 2,
           roleName: ""
         },
-        password_hash: this.registerFormGroup.getRawValue().password
+        passwordHash: this.registerFormGroup.getRawValue().password
       }
       console.log(registeringUser);
       this.authService.register(registeringUser).subscribe(
