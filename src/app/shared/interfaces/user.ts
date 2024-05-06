@@ -5,5 +5,4 @@ export interface User {
     email: string;
     billingAddress: string;
     role: Role | null;
-    passwordHash: string;
 }

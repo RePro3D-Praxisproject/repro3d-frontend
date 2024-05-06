@@ -16,6 +16,6 @@ export const routes: Routes = [
   {path: 'product-detail/:id', component: ProductComponent },
   {path: 'product-list', component: ProductListPageComponent, canActivate: [AuthGuard]},
   {path: 'printer-management', component: PrinterManagementComponent, canActivate: [AuthGuard]},
-  {path: 'login', component: LoginComponent }
-
+  {path: 'login', component: LoginComponent },
+  {path: 'register', component: RegisterComponent }
 ];
