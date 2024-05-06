@@ -28,6 +28,10 @@ export class RedeemCodeDashboardComponent implements OnInit {
     this.loadRedeemCodes();
   }
 
+  refreshPage(): void {
+    this.loadRedeemCodes();
+  }
+
   loadRedeemCodes(): void {
     this.isLoading = true;
     this.redeemCodeService.loadAllRedeemCodes().subscribe(codes => {
@@ -41,6 +45,7 @@ export class RedeemCodeDashboardComponent implements OnInit {
   }
   onPageChange(page: number): void {
     this.currentPage = page;
+    this.refreshPage();
   }
 
   validateCode(code: string | undefined): void {
@@ -71,7 +76,7 @@ export class RedeemCodeDashboardComponent implements OnInit {
       this.redeemCodeService.deleteRedeemCode(id);
       this.isLoading = false;
       this.loadRedeemCodes();
-
+      this.refreshPage();
     }
   }
 

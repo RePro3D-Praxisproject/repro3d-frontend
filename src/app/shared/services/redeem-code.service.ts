@@ -12,8 +12,7 @@ import {RedeemCodes, RedeemCodeResponse} from "../interfaces/redeem-codes";
 export class redeemCodeService {
   constructor(private http: HttpClient) {}
 
-  public redeemCode: RedeemCodes[] = [
-  ];
+
 
 
   public createRedeemCode(redeemCode: RedeemCodes): void{
@@ -26,8 +25,16 @@ export class redeemCodeService {
   }
 
   loadAllRedeemCodes(): Observable<RedeemCodes[]> {
+    console.log('Calling API');
     return this.http.get<RedeemCodeResponse>(`${API_URL}/redeem-code`).pipe(
-      map(response => response.data)
+      map(response => {
+        console.log('API response:', response);
+        return response.data;
+      }),
+      catchError(error => {
+        console.error('API error:', error);
+        return throwError(() => new Error('Error fetching redeem codes'));
+      })
     );
   }
 
@@ -36,7 +43,10 @@ export class redeemCodeService {
       response => {
         console.log('Generated Redeem Code:', response);
         this.loadAllRedeemCodes();  // Optionally refresh list
-      }
+      },catchError(error => {
+      console.error('generate error:', error);
+      return throwError(error);
+    })
     );
   }
 
@@ -58,7 +68,10 @@ export class redeemCodeService {
     this.http.put(`${API_URL}/redeem-code/${id}`,redeemCode).subscribe(
       _ =>{
         this.loadAllRedeemCodes();
-      }
+      },catchError(error => {
+        console.error('update error:', error);
+        return throwError(error);
+      })
 
     )
   }
@@ -67,7 +80,10 @@ export class redeemCodeService {
     this.http.delete(`${API_URL}/redeem-code/${id}`).subscribe(
       _ =>{
         this.loadAllRedeemCodes();
-      }
+      },catchError(error => {
+        console.error('delete error:', error);
+        return throwError(error);
+      })
     )
   }
 
