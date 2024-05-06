@@ -10,7 +10,7 @@
             <form [formGroup]="this.registerFormGroup">
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="email" name="email" formControlName="email" (keyup.enter)="onSubmit()">
+                <input type="text" class="form-control" id="email" name="email" formControlName="email" (keyup.enter)="onSubmit()" required>
               </div>
               <div class="mb-3">
                 <label for="fname" class="form-label">Full Name</label>
@@ -26,7 +26,7 @@
               </div>
               <div class="mb-3">
                 <label for="password_conf" class="form-label">Password Again</label>
-                <input type="password_conf" class="form-control" id="password_conf" name="password_conf" formControlName="password_conf" (keyup.enter)="onSubmit()">
+                <input type="password" class="form-control" id="password_conf" name="password_conf" formControlName="password_conf" (keyup.enter)="onSubmit()">
               </div>
               <button type="submit" class="btn btn-primary" (click)="onSubmit()">Register</button>
             </form>
@@ -36,7 +36,7 @@
           The registration has been completed. Proceed to logging in.
         </div>
         <div *ngIf="this.registrationFailed" class="alert alert-danger" role="alert">
-          Registration failed. The email is already registered.
+          {{ errorMsg }}
         </div>
       </div>
     </div>
