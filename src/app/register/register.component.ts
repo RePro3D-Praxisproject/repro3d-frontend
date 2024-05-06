@@ -62,7 +62,7 @@ export class RegisterComponent {
       this.registrationFailed = true;
       return;
     } else {
-      const registeringUser: User = {
+      const registeringUser = {
         userId: null,
         email: this.registerFormGroup.getRawValue().email,
         billingAddress: this.registerFormGroup.getRawValue().fname,
@@ -70,6 +70,7 @@ export class RegisterComponent {
           roleId: 2,
           roleName: ""
         },
+        password_hash: this.registerFormGroup.getRawValue().password
       }
       console.log(registeringUser);
       this.authService.register(registeringUser).subscribe(
@@ -81,6 +82,7 @@ export class RegisterComponent {
         error => {
           console.log(error);
           this.registrationFailed = true;
+          this.errorMsg = "Internal error."
           console.log(this.registrationFailed);
         }
       );
