@@ -77,6 +77,9 @@ export class RegisterComponent {
         data => {
           if (data.success) {
             this.registrationSuccess = true;
+            setTimeout(() => {
+              this.router.navigate(['login']);
+            }, 3000);
           }
         },
         error => {
