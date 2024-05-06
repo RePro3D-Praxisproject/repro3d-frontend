@@ -1,10 +1,11 @@
-import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush, tick, waitForAsync } from '@angular/core/testing';
 import { RegisterComponent } from './register.component';
 import { ReactiveFormsModule, FormsModule, FormBuilder, Validators } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../shared/services/auth.service';
 import { of, throwError } from 'rxjs';
+import { LoginComponent } from '../login/login.component';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -14,7 +15,8 @@ describe('RegisterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule],
+      imports: [ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule.withRoutes(
+        [{path: 'login', component: LoginComponent}])],
       providers: [AuthService]
     })
     .compileComponents();
@@ -74,6 +76,7 @@ describe('RegisterComponent', () => {
     tick();
     fixture.detectChanges();
     expect(component.registrationSuccess).toBeTrue();
+    flush();
   }));
 
 
