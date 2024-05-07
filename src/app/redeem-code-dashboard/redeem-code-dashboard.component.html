@@ -37,10 +37,10 @@
       <tr *ngFor="let code of redeemCodes | slice: (currentPage - 1) * itemsPerPage : currentPage * itemsPerPage; let i = index">
         <th scope="row">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</th>
         <td>{{ code.rc_id }}</td>
-        <td>{{ code.rc_code }}</td>
+        <td>{{ code.rcCode }}</td>
         <td>{{ code.used ? 'Yes' : 'No' }}</td>
         <td>
-          <button class="btn btn-success btn-sm" (click)="validateCode(code.rc_code)">Validate</button>
+          <button class="btn btn-success btn-sm" (click)="validateCode(code.rcCode)">Validate</button>
           <button class="btn btn-danger btn-sm" (click)="deleteCode(code.rc_id)">Delete</button>
         </td>
       </tr>

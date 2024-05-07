@@ -1,7 +1,7 @@
 
 export class RedeemCodes {
   rc_id?:number;
-  rc_code?:string;
+  rcCode?:string;
   used?:number;
 
 
