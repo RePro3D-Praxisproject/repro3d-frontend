@@ -39,23 +39,26 @@
         </button>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="currentPrinter.printer_id ? updatePrinter(currentPrinter) : addPrinter(currentPrinter)">
+        <form [formGroup]="this.printerFormGroup">
           <div class="form-group">
             <label for="printer-name" class="col-form-label">Printer Name:</label>
-            <input type="text" class="form-control" id="printer-name" [(ngModel)]="currentPrinter.name" name="name" required>
+            <input type="text" class="form-control" id="printer-name" formControlName="printerName" name="name" required>
           </div>
           <div class="form-group mb-3">
             <label class="form-label">IP Address</label>
-            <input type="text" class="form-control" [(ngModel)]="currentPrinter.ip_addr" name="ip_addr" required>
-            <small class="text-muted">e.g. "123.123.123.123"</small>
+            <input type="text" class="form-control" name="ip_addr" formControlName="ipAddress" required>
+            <small class="text-muted">e.g. "192.168.1.100"</small>
           </div>
           <div class="form-group">
             <label for="printer-apikey" class="col-form-label">API Key:</label>
-            <input type="text" class="form-control" id="printer-apikey" [(ngModel)]="currentPrinter.apikey" name="apikey" required>
+            <input type="text" class="form-control" id="printer-apikey" name="apikey" formControlName="apiKey" required>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" (click)="toggleModal(false)">Close</button>
-            <button type="submit" class="btn btn-primary">{{ currentPrinter.printer_id ? 'Update Printer' : 'Add Printer' }}</button>
+            <button type="submit" class="btn btn-primary" (click)="onSubmit()">{{ currentPrinterId ? 'Update Printer' : 'Add Printer' }}</button>
+          </div>
+          <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
+            {{ errorMsg }}
           </div>
         </form>
       </div>
