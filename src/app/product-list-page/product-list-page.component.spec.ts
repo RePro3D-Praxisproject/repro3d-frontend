@@ -49,7 +49,7 @@ describe('ProductListPageComponent', () => {
 
   it('should save changes when a new product is added', () => {
     component.openAddProductModal();
-    component.selectedProduct = { name: 'New Product', cost: 150, dimensions: '15x15x15', material: 'Plastic', description: 'New description'};
+    component.selectedProduct = { name: 'New Product', cost: 150, dimensions: '15x15x15', material: 'Plastic', description: 'New description', est_time: 1, file_ref: "", image_url: "", item_id: 0};
     component.saveChanges();
     expectAsync(mockOrderService.createItem);
   });
@@ -73,6 +73,6 @@ describe('ProductListPageComponent', () => {
     expect(component.selectedProduct).toEqual(jasmine.objectContaining({ name: 'Product 1' }));
     expect(component.isModalOpen).toBeTrue();
   });
-
+  
 
 });

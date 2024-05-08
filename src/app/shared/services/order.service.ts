@@ -14,23 +14,23 @@ export class OrderService {
     public products: Item[] = [
         {
           item_id: 1, name: 'ReProRing', cost: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', description: "This ring is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that",
-          file_ref: ''
+          file_ref: '', image_url: ""
         },
         {
           item_id: 2, name: 'skull', cost: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', description: "This skull is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that",
-          file_ref: ''
+          file_ref: '', image_url: ""
         },
         {
           item_id: 3, name: 'John the thinker', cost: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', description: "This john is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that",
-          file_ref: ''
+          file_ref: '', image_url: ""
         },
         {
           item_id: 4, name: 'baby yoda', cost: 150, est_time: 120, material: 'ABS', dimensions: '209 x 209 x 400', description: "This baby yoda is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that",
-          file_ref: ''
+          file_ref: '', image_url: ""
         },
         {
           item_id: 5, name: 'dice', cost: 140, est_time: 180, material: 'ABS', dimensions: '209 x 209 x 400', description: "This dice is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that",
-          file_ref: ''
+          file_ref: '', image_url: ""
         },
 
     ];
