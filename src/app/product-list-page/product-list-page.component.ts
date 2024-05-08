@@ -24,10 +24,11 @@ import { AuthService } from '../shared/services/auth.service';
 })
 
 export class ProductListPageComponent implements OnInit {
-  selectedProduct: { material: string; cost: number; name: string; dimensions: string; description: string; } = { name: '', cost: 0, dimensions: '', material: '' , description:''}; // Example initialization
+  selectedProduct: Item = { item_id: 0, name: '', cost: 0, dimensions: '', material: '' , description:'', est_time: 0, file_ref: "", image_url: ""}; // Example initialization
   isModalOpen = false;
   isNewProduct: boolean = false;
   productEditFormGroup: FormGroup;
+  errorMsg: string = "";
 
   constructor(
     public orderService: OrderService,
@@ -37,10 +38,11 @@ export class ProductListPageComponent implements OnInit {
     this.productEditFormGroup = this.formBuilder.group({
       productName: ['', [Validators.required]],
       productPrice: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
-      productSize: ['', Validators.required],
+      productSize: ['', [Validators.required, Validators.pattern(/^\d+\s*\s*x\s*\d+\s*\s*x\s*\d+\s*$/)]],
       productMaterial: ['', Validators.required],
       productDescription: ['', Validators.required],
-      productImage: [''],
+      productFileRef: ['', Validators.required],
+      productImage: ['', Validators.required],
     });
   }
 
@@ -59,9 +61,31 @@ export class ProductListPageComponent implements OnInit {
   }
 
   saveChanges(): void {
+    this.errorMsg = "";
     if (!this.productEditFormGroup.valid) {
       console.log(this.productEditFormGroup)
       console.log("not valid")
+      switch ("INVALID") {
+        case this.productEditFormGroup.controls['productName'].status:
+          this.errorMsg = "Product name is empty.";
+          break;
+        case this.productEditFormGroup.controls['productPrice'].status:
+          this.errorMsg = "Product privce is invalid.";
+          break;
+        case this.productEditFormGroup.controls['productSize'].status:
+          console.log(this.productEditFormGroup.controls['productSize'])
+          this.errorMsg = "Product size is invalid. It should by ? x ? x ? (in millimeters)";
+          break;
+        case this.productEditFormGroup.controls['productMaterial'].status:
+          this.errorMsg = "Product material is empty.";
+          break;
+        case this.productEditFormGroup.controls['productDescription'].status:
+          this.errorMsg = "Product description is empty.";
+          break;
+        case this.productEditFormGroup.controls['productImage'].status:
+          this.errorMsg = "Product image is empty.";
+          break;
+      }
       return;
     }
     if (this.isNewProduct) {
@@ -86,11 +110,11 @@ export class ProductListPageComponent implements OnInit {
   }
 
   openAddProductModal(): void {
-    this.selectedProduct = { name: '', cost: 0, dimensions: '', material: '', description:'' };
+    this.selectedProduct = { item_id: 0, name: '', cost: 0, dimensions: '', material: '' , description:'', est_time: 0, file_ref: "", image_url: ""};
     this.isModalOpen = true;
     this.isNewProduct = true;
   }
 
-
+  
 
 }

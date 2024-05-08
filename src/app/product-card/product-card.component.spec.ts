@@ -27,7 +27,8 @@ describe('ProductCardComponent', () => {
       material: 'Plastic',
       description: 'Test Description',
       est_time: 120,
-      file_ref: ''
+      file_ref: '',
+      image_url: ""
     };
     fixture.detectChanges();
   });
