@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 //import { Router } from "@angular/router";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, SlicePipe} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import { OrderService } from '../shared/services/order.service';
 import { Item } from '../shared/interfaces/item';
@@ -17,7 +17,8 @@ import { AuthService } from '../shared/services/auth.service';
     NgForOf,
     FormsModule,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    SlicePipe
   ],
   templateUrl: './product-list-page.component.html',
   styleUrls: ['./product-list-page.component.scss']
@@ -29,6 +30,9 @@ export class ProductListPageComponent implements OnInit {
   isNewProduct: boolean = false;
   productEditFormGroup: FormGroup;
   errorMsg: string = "";
+
+  products: Item[] = [];
+
 
   constructor(
     public orderService: OrderService,
@@ -44,11 +48,28 @@ export class ProductListPageComponent implements OnInit {
       productFileRef: ['', Validators.required],
       productImage: ['', Validators.required],
     });
+    this.fetchProducts();
   }
 
   ngOnInit(): void {
     this.orderService.loadAllItems();
-    console.log(this.authService.getMyRole())
+    this.fetchProducts();
+  }
+
+  fetchProducts(): void {
+    this.orderService.getAllProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+        this.orderService.totalItems = data.length;
+      },
+      error: (err) => console.error('Error fetching products', err)
+    });
+  }
+
+  onItemsPerPageChange(newSize: number): void {
+    this.orderService.itemsPerPage = newSize;
+    this.orderService.currentPage = 1; // Reset to first page
+    this.fetchProducts();
   }
 
   openEditModal(product: Item): void {
@@ -95,6 +116,11 @@ export class ProductListPageComponent implements OnInit {
     }
     this.orderService.loadAllItems();
     this.closeModal();
+  }
+
+  deleteItem(id: number): void {
+    this.orderService.deleteItem(id);
+    this.fetchProducts();
   }
 
   toggleModal(open: boolean): void {

@@ -1,6 +1,11 @@
 
 <div class="container">
   <h2 class="page-title">Product management table</h2>
+  <select class="form-select" [(ngModel)]="this.orderService.itemsPerPage" (change)="onItemsPerPageChange(this.orderService.itemsPerPage)">
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+  </select>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -13,15 +18,15 @@
       <th scope="col"></th>
     </tr>
     </thead>
-    <tbody *ngIf="this.orderService.getAllProducts() && this.orderService.getAllProducts().length > 0">
-    <tr *ngFor="let product of this.orderService.getAllProducts()">
+    <tbody *ngIf="products && this.orderService.totalItems > 0">
+    <tr *ngFor="let product of this.orderService.products| slice: (this.orderService.currentPage-1) * this.orderService.itemsPerPage : this.orderService.currentPage * this.orderService.itemsPerPage">
       <th scope="row">{{ product.item_id }}</th>
       <td>{{ product.name }}</td>
       <td>{{ product.cost }}</td>
       <td>{{ product.dimensions }}</td>
       <td>{{ product.material }}</td>
       <td><button class="btn btn-outline-success" (click)="openEditModal(product)">Edit</button></td>
-      <td><button class="btn btn-outline-danger" (click)="orderService.deleteItem(product.item_id)">Delete</button></td>
+      <td><button class="btn btn-outline-danger" (click)="deleteItem(product.item_id)">Delete</button></td>
     </tr>
     <tr>
       <td colspan="7" class="text-center">
@@ -30,6 +35,17 @@
     </tr>
     </tbody>
   </table>
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="this.orderService.currentPage === 1">
+        <button class="page-link" (click)="this.orderService.currentPage = this.orderService.currentPage > 1 ? this.orderService.currentPage - 1 : 1">Previous</button>
+      </li>
+      <li class="page-item" [class.disabled]="this.orderService.currentPage === (this.orderService.totalItems / this.orderService.itemsPerPage)">
+        <button class="page-link" (click)="this.orderService.currentPage = this.orderService.currentPage < this.orderService.totalItems / this.orderService.itemsPerPage ? this.orderService.currentPage + 1 : this.orderService.currentPage">Next</button>
+      </li>
+    </ul>
+  </nav>
+  
 </div>
 
 
