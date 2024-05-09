@@ -1,6 +1,6 @@
 export class Printer {
   printer_id?: number;
-  name?: string;
+  name?: string | undefined;
   location?: string;
   ip_addr?: string;
   apikey?: string;
