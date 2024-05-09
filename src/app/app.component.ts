@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {HeaderComponent} from "./header/header.component";
@@ -8,6 +8,7 @@ import {ProductCardComponent} from "./product-card/product-card.component";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {PrinterManagementComponent} from "./printer-management/printer-management.component";
+import { OrderService } from './shared/services/order.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,13 @@ import {PrinterManagementComponent} from "./printer-management/printer-managemen
   styleUrl: './app.component.scss',
 
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  
+  constructor(public orderService: OrderService) {}
+
   title = 'repro3d-frontend';
+
+  ngOnInit(): void {
+    this.orderService.loadAllItems();
+  }
 }
