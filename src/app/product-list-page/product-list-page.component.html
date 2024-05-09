@@ -18,7 +18,7 @@
       <th scope="col"></th>
     </tr>
     </thead>
-    <tbody *ngIf="products && this.orderService.products.length > 0">
+    <tbody *ngIf="products && this.orderService.totalItems > 0">
     <tr *ngFor="let product of this.orderService.products| slice: (this.orderService.currentPage-1) * this.orderService.itemsPerPage : this.orderService.currentPage * this.orderService.itemsPerPage">
       <th scope="row">{{ product.item_id }}</th>
       <td>{{ product.name }}</td>
