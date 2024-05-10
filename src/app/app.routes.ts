@@ -8,6 +8,7 @@ import {PrinterManagementComponent} from "./printer-management/printer-managemen
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './auth.guard';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
 export const routes: Routes = [
@@ -17,5 +18,6 @@ export const routes: Routes = [
   {path: 'product-list', component: ProductListPageComponent, canActivate: [AuthGuard]},
   {path: 'printer-management', component: PrinterManagementComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent },
-  {path: 'register', component: RegisterComponent }
+  {path: 'register', component: RegisterComponent },
+  {path: 'checkout/:id', component: CheckoutComponent}
 ];
