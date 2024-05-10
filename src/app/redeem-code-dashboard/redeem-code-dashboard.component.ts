@@ -20,6 +20,7 @@ import {FormsModule} from "@angular/forms";
 
 export class RedeemCodeDashboardComponent implements OnInit {
   redeemCodes: RedeemCodes[] = [];
+  filteredRedeemCodes: RedeemCodes[] = [];
   isLoading: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 10;
@@ -45,6 +46,22 @@ export class RedeemCodeDashboardComponent implements OnInit {
     }, 1000);
   }
 
+  applyFilter(filter: string): void {
+    switch (filter) {
+      case 'valid':
+        this.filteredRedeemCodes = this.redeemCodes.filter(code => code.used);
+        break;
+      case 'invalid':
+        this.filteredRedeemCodes = this.redeemCodes.filter(code => !code.used);
+        break;
+      default:
+        this.filteredRedeemCodes = this.redeemCodes;
+        break;
+    }
+    this.totalItems = this.filteredRedeemCodes.length;
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.currentPage = 1;
+  }
 
   toggleModal(open: boolean): void {
     this.isModalOpen = open;
