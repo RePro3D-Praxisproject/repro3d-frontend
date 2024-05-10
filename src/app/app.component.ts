@@ -8,11 +8,12 @@ import {ProductCardComponent} from "./product-card/product-card.component";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {PrinterManagementComponent} from "./printer-management/printer-management.component";
+import {OrderHistoryComponent} from "./order-history/order-history.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule,HeaderComponent, HomepageComponent, FooterComponent,ProductCardComponent,FormsModule, HttpClientModule, PrinterManagementComponent],
+  imports: [CommonModule, RouterOutlet, FormsModule,HeaderComponent, HomepageComponent, FooterComponent,ProductCardComponent,FormsModule, HttpClientModule, PrinterManagementComponent,OrderHistoryComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 
