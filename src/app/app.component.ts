@@ -10,6 +10,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {PrinterManagementComponent} from "./printer-management/printer-management.component";
 
 import {RedeemCodeDashboardComponent} from "./redeem-code-dashboard/redeem-code-dashboard.component";
+import {OrderService} from "./shared/services/order.service";
 
 
 @Component({
@@ -21,7 +22,7 @@ import {RedeemCodeDashboardComponent} from "./redeem-code-dashboard/redeem-code-
 
 })
 export class AppComponent implements OnInit {
-  
+
   constructor(public orderService: OrderService) {}
 
   title = 'repro3d-frontend';
