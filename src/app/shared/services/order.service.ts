@@ -64,6 +64,11 @@ export class OrderService {
       )
     }
 
+    public getItemByIdAsync(id: number): Observable<any> {
+      return this.http.get<ItemResponse>(`${API_URL}/item/${id}`);
+    }
+
+
     getProductById(id: number): Item | undefined {
         return this.products.find(product => product.item_id === id);
     }
