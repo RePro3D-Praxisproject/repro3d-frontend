@@ -1,0 +1,20 @@
+<div class="container">
+    <div *ngIf="product" class="card" style="width: 18rem;">
+      <img class="card-img-top" [src]="product.image_url" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text"><strong>Price:</strong> {{product.cost}} Euro</p>
+        <p class="card-text"><strong>Build time:</strong> {{product.est_time}}</p>
+        <p class="card-text"><strong>Material:</strong> {{product.material}}</p>
+        <p class="card-text"><strong>Dimensions:</strong> {{product.dimensions}}</p>
+      </div>
+    </div>
+    <div class="additional-content">
+      <p>You are about to order this product.</p>
+      <p>E-Mail: {{userData.data.email}}</p>
+      <p>Billing Address: {{userData.data.billingAddress}}</p>
+      <button class="btn btn-success">Confirm</button>
+      <button class="btn btn-danger">Cancel</button>
+    </div>
+</div>
+  
