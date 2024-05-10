@@ -6,6 +6,7 @@ export interface Item {
     dimensions: string,
     file_ref: string,
     material: string,
+    image_url: string,
     cost: number,
 }
 

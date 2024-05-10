@@ -5,20 +5,25 @@ import { ProductListPageComponent } from './product-list-page.component';
 import { OrderService } from '../shared/services/order.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Item } from '../shared/interfaces/item';
 
 describe('ProductListPageComponent', () => {
   let component: ProductListPageComponent;
   let fixture: ComponentFixture<ProductListPageComponent>;
   let mockOrderService: any;
-  let mockItems: any[];
+  let mockItems: Item[];
 
   beforeEach(waitForAsync(() => {
     mockItems = [
       {
-        item_id: 1, name: 'Product 1', est_time: 60, cost: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product'
+        item_id: 1, name: 'Product 1', est_time: 60, cost: 100, dimensions: '10x10x10', material: 'Metal', description: 'A metal product',
+        file_ref: '',
+        image_url: ''
       },
       {
-        item_id: 2, name: 'Product 2', est_time: 60, cost: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product'
+        item_id: 2, name: 'Product 2', est_time: 60, cost: 200, dimensions: '20x20x20', material: 'Wood', description: 'A wooden product',
+        file_ref: '',
+        image_url: ''
       }
     ];
 
@@ -26,30 +31,39 @@ describe('ProductListPageComponent', () => {
     mockOrderService.getAllProducts.and.returnValue(of(mockItems));
 
     TestBed.configureTestingModule({
-      imports: [FormsModule, ProductListPageComponent, HttpClientTestingModule],
-      providers: [{ provide: OrderService, useValue: mockOrderService }],
+      imports: [
+        FormsModule,
+        HttpClientTestingModule,
+        ProductListPageComponent
+      ],
+      declarations: [
+      ],
+      providers: [
+        { provide: OrderService, useValue: mockOrderService }
+      ],
       schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(ProductListPageComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();  // Trigger initial data binding and ngOnInit
-    });
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ProductListPageComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   }));
 
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should save changes when an existing product is edited', () => {
+  it('should save changes when an existing product is edited', async () => {
     const product = { ...mockItems[0], cost: 110 };
     component.openEditModal(product);
     component.saveChanges();
     expectAsync(mockOrderService.updateItem);
   });
+  
 
   it('should save changes when a new product is added', () => {
     component.openAddProductModal();
-    component.selectedProduct = { name: 'New Product', cost: 150, dimensions: '15x15x15', material: 'Plastic', description: 'New description'};
+    component.selectedProduct = { name: 'New Product', cost: 150, dimensions: '15x15x15', material: 'Plastic', description: 'New description', est_time: 1, file_ref: "", image_url: "", item_id: 0};
     component.saveChanges();
     expectAsync(mockOrderService.createItem);
   });
@@ -73,6 +87,6 @@ describe('ProductListPageComponent', () => {
     expect(component.selectedProduct).toEqual(jasmine.objectContaining({ name: 'Product 1' }));
     expect(component.isModalOpen).toBeTrue();
   });
-
+  
 
 });
