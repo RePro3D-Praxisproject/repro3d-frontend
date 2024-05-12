@@ -31,4 +31,12 @@ export class CheckoutComponent implements OnInit {
       }
     )
   }
+
+  placeOrder() {
+    this.orderService.createOrder(this.product).subscribe(
+      _ => {
+        console.log("Order Placed")
+      }
+    )
+  }
 }

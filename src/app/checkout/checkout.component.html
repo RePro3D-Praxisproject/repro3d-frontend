@@ -13,7 +13,9 @@
       <p>You are about to order this product.</p>
       <p>E-Mail: {{userData.data.email}}</p>
       <p>Billing Address: {{userData.data.billingAddress}}</p>
-      <button class="btn btn-success">Confirm</button>
+      <label for="redeem_code" class="form-label">Redeem Code</label>
+      <input type="text" class="form-control" id="redeem_code" name="redeem_code" formControlName="redeem_code">
+      <button class="btn btn-success" (click)="placeOrder()">Confirm</button>
       <button class="btn btn-danger">Cancel</button>
     </div>
 </div>
