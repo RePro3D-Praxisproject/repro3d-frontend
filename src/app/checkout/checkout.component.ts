@@ -3,11 +3,14 @@ import { Item } from '../shared/interfaces/item';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../shared/services/order.service';
 import { NgIf } from '@angular/common';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
   imports: [
+    FormsModule, 
+    ReactiveFormsModule,
     NgIf
   ],
   templateUrl: './checkout.component.html',
@@ -16,10 +19,15 @@ import { NgIf } from '@angular/common';
 export class CheckoutComponent implements OnInit {
   product!: Item;
   userData = JSON.parse(localStorage.getItem('userdata')!);
+  checkoutForm = this.formBuilder.group({
+    redeem_code: ''
+  });
+  errorMsg: string = "";
 
   constructor(
     private route: ActivatedRoute,
-    public orderService: OrderService
+    public orderService: OrderService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -33,9 +41,13 @@ export class CheckoutComponent implements OnInit {
   }
 
   placeOrder() {
-    this.orderService.createOrder(this.product).subscribe(
+    this.errorMsg = "";
+    this.orderService.createOrder(this.product, this.checkoutForm.getRawValue().redeem_code!).subscribe(
       _ => {
-        console.log("Order Placed")
+        console.log("Order Placed");
+      },
+      error => {
+        this.errorMsg = error.error.message;
       }
     )
   }
