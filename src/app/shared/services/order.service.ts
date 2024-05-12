@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from '../constants/apiurl.constant';
 import { AuthService } from './auth.service';
 import { Observable, of } from 'rxjs';
+import { FormBuilder } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,9 @@ export class OrderService {
     public itemsPerPage: number = 10;
     public currentPage: number = 1;
     public totalItems: number = 0; 
+
+    
+
 
     public updateItem(item: Item): void {
       if (!this.authService.isLoggedIn()) {
@@ -75,5 +79,14 @@ export class OrderService {
 
     getAllProducts(): Observable<Item[]> {
         return of(this.products);
+    }
+
+    createOrder(product: Item, redeem_code: string): Observable<any> {
+      const requestBody = {
+        orderDate: new Date().toISOString().slice(0, 10),
+        user_id: JSON.parse(localStorage.getItem('userdata')!).data.userId,
+        redeemCode: redeem_code
+      }
+      return this.http.post<any>(`${API_URL}/order`, requestBody);
     }
 }
