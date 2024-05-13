@@ -17,11 +17,14 @@
         <label for="redeem_code" class="form-label">Redeem Code</label>
         <input type="text" class="form-control" id="redeem_code" name="redeem_code" formControlName="redeem_code">
         <button class="btn btn-success" (click)="placeOrder()">Confirm</button>
-        <button class="btn btn-danger">Cancel</button>
+        <a class="btn btn-danger" href="/products">Cancel</a>
       </form>
       <br>
       <div *ngIf="this.errorMsg" class="alert alert-danger" role="alert">
         {{ errorMsg }}
+      </div>
+      <div *ngIf="this.successMsg" class="alert alert-success" role="alert">
+        {{ successMsg }}
       </div>
     </div>
     

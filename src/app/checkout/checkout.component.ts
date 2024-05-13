@@ -23,7 +23,7 @@ export class CheckoutComponent implements OnInit {
     redeem_code: ''
   });
   errorMsg: string = "";
-
+  successMsg: string = "";
   constructor(
     private route: ActivatedRoute,
     public orderService: OrderService,
@@ -42,9 +42,10 @@ export class CheckoutComponent implements OnInit {
 
   placeOrder() {
     this.errorMsg = "";
-    this.orderService.createOrder(this.product, this.checkoutForm.getRawValue().redeem_code!).subscribe(
+    this.successMsg = ""
+    this.orderService.createOrder([this.product], this.checkoutForm.getRawValue().redeem_code!).subscribe(
       _ => {
-        console.log("Order Placed");
+        this.successMsg = "Order successfully placed."
       },
       error => {
         this.errorMsg = error.error.message;
