@@ -1,44 +1,88 @@
+
+.mb-3{
+
+    display: block;
+    margin: 0 auto;
+}
+
 .container {
-  width: 90%;
-  max-height: 90vh;
-  margin: 1rem auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
+  display: flex; -direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
   overflow-y: auto;
 }
 
-.text-center {
-  text-align: center;
-}
 
 .table-responsive {
+  display: block;
   width: 100%;
   overflow-x: auto;
-}
-
-h, td {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
+  margin-top: 20px;
 }
 
 table {
   width: 100%;
-  margin-top: 20px;
+  table-layout: fixed;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  justify-content: center;
+  margin: 20px 0;
+
+.page-item {
+  margin: 0 10px;
+}
+
+
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-primary, .btn-secondary, .btn-danger, .btn-sm {
+  border: none;
+  color: white;
 }
 
 .btn-primary {
-  margin-bottom: 20px;
+  background-color: #007bff;
 }
 
-button {
-  margin: 2px;
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 14px;
 }
 
 
-nav {
-  margin-top: 20px;
-}
+.select {
+  height: 38px;
+  font-size: 16px;
+  padding: 4px 8px;
+  margin: 5px;
+
+}}
