@@ -1,52 +1,34 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import { RedeemCodeDashboardComponent } from './redeem-code-dashboard.component';
-import { redeemCodeService } from '../shared/services/redeem-code.service';
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { of } from 'rxjs';
-import { RedeemCodes } from "../shared/interfaces/redeem-codes";
+import { BillingService } from '../shared/services/billing.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgClass, NgForOf, NgIf, SlicePipe } from "@angular/common";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('RedeemCodeDashboardComponent', () => {
   let component: RedeemCodeDashboardComponent;
   let fixture: ComponentFixture<RedeemCodeDashboardComponent>;
-  let mockRedeemCodeService: jasmine.SpyObj<redeemCodeService>;
-  let mockRedeemCodes: RedeemCodes[] = [
-    { rc_id: 1, rcCode: "CODE1", used: 0 },
-    { rc_id: 2, rcCode: "CODE2", used: 1 }
-  ];
+  let mockBillingService: jasmine.SpyObj<BillingService>;
 
   beforeEach(async () => {
-    mockRedeemCodeService = jasmine.createSpyObj('redeemCodeService', [
-      'getAllRedeemCodes',
-      'loadAllRedeemCodes',
-      'validateRedeemCode',
-      'generateCode',
-      'createRedeemCode',
-      'deleteRedeemCode'
-    ]);
-    mockRedeemCodeService.validateRedeemCode.and.returnValue(of({
-      success: "true",
-      message: "Redeem code is active.",
-      data: []
-    }))
-    mockRedeemCodeService.loadAllRedeemCodes.and.callFake(() => {
-      mockRedeemCodeService.getAllRedeemCodes.and.returnValue(mockRedeemCodes);
-      component.redeemCodes = mockRedeemCodes;
+    // Create a spy object for BillingService with stubbed methods
+    mockBillingService = jasmine.createSpyObj('BillingService', ['loadAllRedeemCodes'], {
+      itemsPerPage: 10,
+      currentPage: 1
     });
+
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        RedeemCodeDashboardComponent // Import the standalone component here
+        NgForOf, NgIf, SlicePipe, FormsModule, ReactiveFormsModule, NgClass,
+        RedeemCodeDashboardComponent, HttpClientTestingModule,
       ],
       providers: [
-        { provide: redeemCodeService, useValue: mockRedeemCodeService }
+        { provide: BillingService, useValue: mockBillingService }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(RedeemCodeDashboardComponent);
     component = fixture.componentInstance;
-
-
-
     fixture.detectChanges();
   });
 
@@ -54,18 +36,9 @@ describe('RedeemCodeDashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load redeem codes on init', () => {
-    component.ngOnInit();
-    expect(mockRedeemCodeService.loadAllRedeemCodes).toHaveBeenCalled();
-    expect(component.redeemCodes).toEqual(mockRedeemCodes);
+  it('should call loadAllRedeemCodes on initialization', () => {
+    expect(mockBillingService.loadAllRedeemCodes).toHaveBeenCalled();
   });
 
-
-  it('should handle redeem code validation', () => {
-    component.validateCode('CODE1');
-    expect(mockRedeemCodeService.validateRedeemCode).toHaveBeenCalledWith('CODE1');
-    expect(component.validationMessage).toEqual('Redeem code is active.');
-    expect(component.isValid).toBeTrue();
-  });
 
 });

@@ -1,84 +1,40 @@
-<div class="container text-center">
-  <h3 class="mb-3">Redeem Code Dashboard</h3>
-  <button class="btn btn-primary mb-3" (click)="generateCode()">Generate Redeem Code</button>
-
-  <!-- Filter Dropdown -->
-  <div class="btn-group mb-3">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Filter Redeem Codes
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" (click)="applyFilter('all')">All</a></li>
-      <li><a class="dropdown-item" (click)="applyFilter('valid')">Valid</a></li>
-      <li><a class="dropdown-item" (click)="applyFilter('invalid')">Invalid</a></li>
-    </ul>
-  </div>
-
-  <div *ngIf="isLoading" class="spinner-border text-primary" role="status">
-    <span class="sr-only"></span>
-  </div>
-
-  <!-- Pagination -->
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item" [class.disabled]="currentPage === 1">
-        <a class="page-link" (click)="currentPage > 1 && onPageChange(currentPage - 1)">Previous</a>
-      </li>
-      <li class="page-item" *ngFor="let page of [].constructor(totalPages); let idx = index" [class.active]="currentPage === idx + 1">
-        <a class="page-link" (click)="onPageChange(idx + 1)">{{ idx + 1 }}</a>
-      </li>
-      <li class="page-item" [class.disabled]="currentPage === totalPages">
-        <a class="page-link" (click)="currentPage < totalPages && onPageChange(currentPage + 1)">Next</a>
-      </li>
-    </ul>
-  </nav>
-
-  <!-- Table -->
-  <div class="table-responsive" *ngIf="!isLoading">
-
-    <div class="table-responsive" *ngIf="!isLoading">
-      <table class="table table-sm">
-        <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Id</th>
-          <th scope="col">Redeem Code</th>
-          <th scope="col">Used</th>
-          <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let code of filteredRedeemCodes; let i = index">
-          <th scope="row">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</th>
-          <td>{{ code.rc_id }}</td>
-          <td>{{ code.rcCode }}</td>
-          <td>{{ code.used ? 'Yes' : 'No' }}</td>
-          <td>
-            <button class="btn btn-success btn-sm" (click)="validateCode(code.rcCode)">Validate</button>
-            <button class="btn btn-danger btn-sm" (click)="deleteCode(code.rc_id)">Delete</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-
-<!-- Validation Modal -->
-<div class="modal fade" [class.show]="isModalOpen" [style.display]="isModalOpen ? 'block' : 'none'" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="!isModalOpen" (click)="toggleModal(false)">
-  <div class="modal-dialog" (click)="$event.stopPropagation()">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="validationModalLabel">Redeem Code Validation</h5>
-        <button type="button" class="btn-close" (click)="toggleModal(false)" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        {{ validationMessage }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="toggleModal(false)">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+<button class="btn btn-primary mb-3" (click)="this.billingService.generateRedeemCode()">Generate Redeem Code</button>
+<select class="form-select" [(ngModel)]="this.billingService.itemsPerPage" (change)="onItemsPerPageChange(this.billingService.itemsPerPage)">
+  <option value="10">10</option>
+  <option value="20">20</option>
+  <option value="50">50</option>
+</select>
+<ul class="pagination">
+  <li id="prev" class="page-item" >
+    <button [class.disabled]="this.billingService.currentPage === 1" class="page-link" (click)="this.billingService.currentPage = this.billingService.currentPage > 1 ? this.billingService.currentPage - 1 : 1">Previous</button>
+  </li>
+  <li class="page-item" [class.disabled]="this.billingService.currentPage === (this.billingService.totalItems / this.billingService.itemsPerPage)">
+    <button class="page-link" (click)="this.billingService.currentPage = this.billingService.currentPage < this.billingService.totalItems / this.billingService.itemsPerPage ? this.billingService.currentPage + 1 : this.billingService.currentPage">Next</button>
+  </li>
+</ul>
+<div class="table table-sm">
+  <table class="table table-sm">
+    <thead>
+    <tr>
+      <th scope="col">Redeem Code</th>
+      <th scope="col">Status</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let redeemCode of (this.billingService.redeemCodes| slice: (this.billingService.currentPage-1) * this.billingService.itemsPerPage : this.billingService.currentPage * this.billingService.itemsPerPage)">
+      <td>{{ redeemCode.rcCode }}</td>
+      <td>{{ redeemCode.used ? 'Invalid' : 'Valid' }}</td>
+      <td>
+        <button class="btn btn-sm" [ngClass]="redeemCode.used ? 'btn-success' : 'btn-secondary'"
+          (click)="this.billingService.toggleValidation(redeemCode)">
+          {{ redeemCode.used ? 'Validate' : 'Invalidate' }}
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="this.billingService.deleteRedeemCode(redeemCode)">
+          Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
