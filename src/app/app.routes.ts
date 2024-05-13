@@ -24,7 +24,7 @@ export const routes: Routes = [
   {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
   {path: 'webshop-offline', component: WebshopOfflineComponent},
   {path: 'login', component: LoginComponent },
-  {path: 'redeem-code', component: RedeemCodeDashboardComponent },
+  {path: 'redeem-code', component: RedeemCodeDashboardComponent, canActivate: [AdminGuard]},
   {path: 'register', component: RegisterComponent },
   {path: 'checkout/:id', component: CheckoutComponent, canActivate: [AdminGuard, UserGuard, WebshopToggledGuard]}
 ];

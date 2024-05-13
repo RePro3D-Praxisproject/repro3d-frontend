@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-center">
             <a class="btn btn-primary btn-lg m-2" routerLink="/printer-management" routerLinkActive="active">Manage Printers</a>
             <a class="btn btn-secondary btn-lg m-2" routerLink="/product-list" routerLinkActive="active">Manage Products</a>
-            <button class="btn btn-info btn-lg m-2" disabled>User Management</button>
+            <a class="btn btn-secondary btn-lg m-2" routerLink="/redeem-code" routerLinkActive="active">Manage Redeem codes</a>
             <button class="btn btn-info btn-lg m-2" (click)="toggleWebshop()">{{ isWebshopEnabled ? 'Disable' : 'Enable' }} Webshop</button>
         </div>
     </div>
