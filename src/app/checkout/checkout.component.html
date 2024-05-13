@@ -1,0 +1,32 @@
+<div class="container">
+    <div *ngIf="product" class="card" style="width: 18rem;">
+      <img class="card-img-top" [src]="product.image_url" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text"><strong>Price:</strong> {{product.cost}} Euro</p>
+        <p class="card-text"><strong>Build time:</strong> {{product.est_time}}</p>
+        <p class="card-text"><strong>Material:</strong> {{product.material}}</p>
+        <p class="card-text"><strong>Dimensions:</strong> {{product.dimensions}}</p>
+      </div>
+    </div>
+    <div class="additional-content">
+      <form [formGroup]="this.checkoutForm">
+        <p>You are about to order this product.</p>
+        <p>E-Mail: {{userData.data.email}}</p>
+        <p>Billing Address: {{userData.data.billingAddress}}</p>
+        <label for="redeem_code" class="form-label">Redeem Code</label>
+        <input type="text" class="form-control" id="redeem_code" name="redeem_code" formControlName="redeem_code">
+        <button class="btn btn-success" (click)="placeOrder()">Confirm</button>
+        <a class="btn btn-danger" href="/products">Cancel</a>
+      </form>
+      <br>
+      <div *ngIf="this.errorMsg" class="alert alert-danger" role="alert">
+        {{ errorMsg }}
+      </div>
+      <div *ngIf="this.successMsg" class="alert alert-success" role="alert">
+        {{ successMsg }}
+      </div>
+    </div>
+    
+</div>
+  

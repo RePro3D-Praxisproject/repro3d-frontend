@@ -35,7 +35,7 @@ export class ProductComponent implements OnInit{
   ngOnInit(): void {
     const productIdString = this.route.snapshot.paramMap.get('id');
     if (productIdString) {
-      const productId = +productIdString; // Convert string to number
+      const productId = +productIdString;
       this.product = this.orderService.getProductById(productId);
     }
   }

@@ -7,8 +7,30 @@
     max-width: 1000px;
   }
 
-  .page-title {
-    text-align: center;
+.page-title {
+  text-align: center;
+
+}
   
-  }
-  
+.container {
+  align-content: center;
+}
+
+.nav-container {
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+  width: 30%;
+  padding: 10px;
+
+}
+
+select {
+  max-width: fit-content;
+  margin: 0 auto;
+}
+
+ul {
+  max-width: fit-content;
+  margin: 0 auto;
+}
