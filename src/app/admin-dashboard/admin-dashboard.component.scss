@@ -1,25 +1,67 @@
-.admin-dashboard .jumbotron {
-    background-color: #f8f9fa;
-    padding: 2rem 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+.admin-dashboard {
+    .jumbotron {
+      background-color: #f8f9fa;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      margin-bottom: 2rem;
+      text-align: center;
+
+      h1 {
+        margin-bottom: 2rem;
+      }
+
+      hr {
+        margin-bottom: 2rem;
+      }
+    }
+
+    .d-flex {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      max-width: 900px; 
+      margin: 20px auto;
+      gap: 15px;
+
+      .btn {
+        flex: 1 1 47%;
+        margin: 5px;
+        padding: 2.25rem; 
+        text-align: center;
+        font-size: 1.8rem; 
+        border: none;
+        border-radius: 0.25rem;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          box-shadow: 0 6px 12px rgba(0,0,0,0.1); 
+          transform: translateY(-3px); 
+        }
+
+        &:active {
+          box-shadow: inset 0 3px 6px rgba(0,0,0,0.2);
+        }
+      }
+
+      .btn-manage-printers { background-color: #007bff; }
+      .btn-manage-products { background-color: #6c757d; }
+      .btn-manage-redeem-codes { background-color: #17a2b8; }
+      .btn-enable-webshop { background-color: #28a745; } 
+      .btn-disable-webshop { background-color: #dc3545; } 
+    }
   }
-  
-  .admin-dashboard h1,
-  .admin-dashboard p {
-    text-align: center;
+
+  @media (max-width: 768px) {
+    .admin-dashboard .d-flex {
+      flex-direction: column;
+      .btn {
+        flex: 0 0 100%; 
+      }
+    }
   }
-  
-  .admin-dashboard .d-flex {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .admin-dashboard .btn {
-    flex: 0 0 calc(50% - 20px);
-    margin: 10px;
-    padding: 1.5rem 2rem;
-    text-align: center;
-  }
-  

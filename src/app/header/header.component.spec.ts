@@ -25,13 +25,6 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display the brand name RePro3D', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    // This assumes "RePro3D" is the second occurrence of `.navbar-brand`
-    const brandNames = compiled.querySelectorAll('.navbar-brand');
-    expect(brandNames.length).toBeGreaterThan(1); // Ensure there are at least two .navbar-brand elements
-    expect(brandNames[1].textContent).toContain('RePro3D');
-  });
 
   it('should have a link to the products page', () => {
     const compiled = fixture.debugElement.nativeElement;

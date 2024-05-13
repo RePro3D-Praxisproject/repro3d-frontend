@@ -1,14 +1,14 @@
 <div class="admin-dashboard">
     <div class="jumbotron">
-      <h1 class="display-4">Admin Dashboard</h1>
-      <hr class="my-4">
-  
-      <!-- Navigation buttons -->
-      <div class="d-flex justify-content-center">
-        <a class="btn btn-primary btn-lg m-2" routerLink="/printer-management" routerLinkActive="active">Manage Printers</a>
-        <a class="btn btn-secondary btn-lg m-2" routerLink="/product-list" routerLinkActive="active">Manage Products</a>
-        <button class="btn btn-info btn-lg m-2" disabled>User Management (Coming Soon)</button>
-        <button class="btn btn-info btn-lg m-2" disabled>Toggle Webshop (Coming Soon)</button>
-      </div>
+        <h1 class="display-4">Admin Dashboard</h1>
+        <hr class="my-4">
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-manage-printers" routerLink="/printer-management" routerLinkActive="active">Manage Printers</a>
+            <a class="btn btn-manage-products" routerLink="/product-list" routerLinkActive="active">Manage Products</a>
+            <a class="btn btn-manage-redeem-codes" routerLink="/redeem-code" routerLinkActive="active">Manage Redeem codes</a>
+            <button class="btn" [class.btn-enable-webshop]="!isWebshopEnabled" [class.btn-disable-webshop]="isWebshopEnabled" (click)="toggleWebshop()">
+                {{ isWebshopEnabled ? 'Disable' : 'Enable' }} Webshop
+            </button>
+        </div>
     </div>
 </div>
