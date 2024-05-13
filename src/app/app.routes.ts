@@ -7,17 +7,18 @@ import { ProductCatalogueComponent } from './product-catalogue/product-catalogue
 import {PrinterManagementComponent} from "./printer-management/printer-management.component";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { AuthGuard } from './auth.guard';
-import {OrderHistoryComponent} from "./order-history/order-history.component";
+import { AdminGuard } from './shared/guards/admin.guard';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { UserGuard } from './shared/guards/user.guard';
 
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent  },
   {path: 'products', component: ProductCatalogueComponent },
   {path: 'product-detail/:id', component: ProductComponent },
-  {path: 'product-list', component: ProductListPageComponent, canActivate: [AuthGuard]},
-  {path: 'printer-management', component: PrinterManagementComponent, canActivate: [AuthGuard]},
+  {path: 'product-list', component: ProductListPageComponent, canActivate: [AdminGuard]},
+  {path: 'printer-management', component: PrinterManagementComponent, canActivate: [AdminGuard]},
   {path: 'login', component: LoginComponent },
   {path: 'register', component: RegisterComponent },
-  {path: 'receipt', component: OrderHistoryComponent },
+  {path: 'checkout/:id', component: CheckoutComponent, canActivate: [AdminGuard, UserGuard]}
 ];

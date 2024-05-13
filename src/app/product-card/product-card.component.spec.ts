@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ProductCardComponent } from './product-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProductCardComponent', () => {
   let component: ProductCardComponent;
@@ -13,6 +14,7 @@ describe('ProductCardComponent', () => {
         ProductCardComponent,
         RouterTestingModule,
         FormsModule,
+        HttpClientTestingModule
       ]
     }).compileComponents();
 
@@ -27,7 +29,8 @@ describe('ProductCardComponent', () => {
       material: 'Plastic',
       description: 'Test Description',
       est_time: 120,
-      file_ref: ''
+      file_ref: '',
+      image_url: ""
     };
     fixture.detectChanges();
   });

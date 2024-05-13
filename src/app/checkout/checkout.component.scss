@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: start; /* Align items from the start vertically */
+    gap: 20px; /* Adds space between the card and the additional content */
+    padding: 20px; /* Adds padding around the container */
+  }
+  
+  .card {
+    /* Width is already set to 18rem in the inline style, you can remove it from inline and manage here if needed */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds subtle shadow for better visibility */
+    border: 1px solid #ccc; /* Adds a border around the card */
+  }
+  
+  .additional-content {
+    flex-grow: 1; /* Allows this div to take up the remaining space */
+    max-width: 200px; /* Sets a maximum width for the content area */
+  }
+  
+  .btn {
+    margin-top: 10px; /* Adds space between buttons */
+    width: 100%; /* Makes buttons full width of their container */
+  }
+  

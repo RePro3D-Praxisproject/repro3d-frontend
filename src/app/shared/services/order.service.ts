@@ -3,6 +3,8 @@ import { Item, ItemResponse } from '../interfaces/item';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from '../constants/apiurl.constant';
 import { AuthService } from './auth.service';
+import { Observable, of } from 'rxjs';
+import { FormBuilder } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -11,29 +13,10 @@ export class OrderService {
 
     constructor(private http: HttpClient, private authService: AuthService) {}
 
-    public products: Item[] = [
-        {
-          item_id: 1, name: 'ReProRing', cost: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', description: "This ring is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that",
-          file_ref: ''
-        },
-        {
-          item_id: 2, name: 'skull', cost: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', description: "This skull is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that",
-          file_ref: ''
-        },
-        {
-          item_id: 3, name: 'John the thinker', cost: 126, est_time: 60, material: 'ABS', dimensions: '209 x 209 x 400', description: "This john is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that",
-          file_ref: ''
-        },
-        {
-          item_id: 4, name: 'baby yoda', cost: 150, est_time: 120, material: 'ABS', dimensions: '209 x 209 x 400', description: "This baby yoda is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that",
-          file_ref: ''
-        },
-        {
-          item_id: 5, name: 'dice', cost: 140, est_time: 180, material: 'ABS', dimensions: '209 x 209 x 400', description: "This dice is the first product of the ReProd3d production and have so much value to us! if you print this item you will get 50 percent discount for that",
-          file_ref: ''
-        },
-
-    ];
+    public products: Item[] = [];
+    public itemsPerPage: number = 10;
+    public currentPage: number = 1;
+    public totalItems: number = 0; 
 
     public updateItem(item: Item): void {
       if (!this.authService.isLoggedIn()) {
@@ -51,6 +34,10 @@ export class OrderService {
       );
     }
 
+    /**
+     * Creates a new item.
+     * @param newItem {Item} The new item to be created
+     */
     public createItem(newItem: Item): void {
       this.http.post(`${API_URL}/item`, newItem).subscribe(
         _ => {
@@ -59,15 +46,21 @@ export class OrderService {
       );
     }
 
+    /**
+     * Gets an item based on the name/title.
+     * @param name {String} The name of the item to get.
+     * @returns {Item | undefined}
+     */
     public getItemByName(name: String):Item | undefined{
         return this.products.find(item => item.name.toLowerCase() === name.toLowerCase())
     }
 
     public deleteItem(id: number):void{
-        const index = this.products.findIndex(item =>item.item_id===id)
-        if(index > -1){
-          this.products.splice(index,1)
+      this.http.delete(`${API_URL}/item/${id}`).subscribe(
+         _ =>  {
+          this.loadAllItems();
         }
+      )
 
     }
 
@@ -75,16 +68,34 @@ export class OrderService {
       this.http.get<ItemResponse>(`${API_URL}/item`).subscribe(
         items =>  {
           this.products = items.data;
+          this.totalItems = this.products.length
           console.log(this.products)
         }
       )
     }
 
+    public getItemByIdAsync(id: number): Observable<any> {
+      return this.http.get<ItemResponse>(`${API_URL}/item/${id}`);
+    }
+
+
     getProductById(id: number): Item | undefined {
         return this.products.find(product => product.item_id === id);
     }
 
-    getAllProducts(): Item[] {
-        return this.products;
+    getAllProducts(): Observable<Item[]> {
+        return of(this.products);
+    }
+
+    createOrder(products: Item[], redeem_code: string): Observable<any> {
+      const requestBody = {
+        order: {
+          orderDate: new Date().toISOString().slice(0, 10),
+          user_id: JSON.parse(localStorage.getItem('userdata')!).data.userId,
+          redeemCode: redeem_code
+        },
+        items: products
+      }
+      return this.http.post<any>(`${API_URL}/order/place`, requestBody);
     }
 }

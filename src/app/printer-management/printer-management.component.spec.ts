@@ -1,64 +1,107 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { PrinterManagementComponent } from './printer-management.component';
+import { ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { PrinterService } from '../shared/services/printer.service';
-import { Printer } from '../shared/interfaces/printer';
-import { FormsModule } from '@angular/forms';
-import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { By } from '@angular/platform-browser';
+import { throwError } from 'rxjs';
 
 describe('PrinterManagementComponent', () => {
   let component: PrinterManagementComponent;
-  let fixture: ComponentFixture<any>;
-  let printerServiceMock: any;
-  const mockPrinters: Printer[] = [
-    { printer_id: 1, name: 'Printer One', location: 'Office', ip_addr: '192.168.1.1', apikey: 'key1' },
-    { printer_id: 2, name: 'Printer Two', location: 'Lab', ip_addr: '192.168.1.2', apikey: 'key2' }
+  let fixture: ComponentFixture<PrinterManagementComponent>;
+  let printerService: PrinterService;
+  let mockPrinters = [
+    { printer_id: 1, name: 'Printer A', ip_addr: '192.168.1.1', apikey: 'key1' },
+    { printer_id: 2, name: 'Printer B', ip_addr: '192.168.1.2', apikey: 'key2' }
   ];
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [],
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule, PrinterManagementComponent],
+      providers: [PrinterService]
+    })
+    .compileComponents();
+  });
 
   beforeEach(() => {
-    printerServiceMock = jasmine.createSpyObj('PrinterService', ['getAllPrinters', 'createPrinter', 'updatePrinter', 'deletePrinter', 'loadAllPrinters']);
-    printerServiceMock.getAllPrinters.and.returnValue(mockPrinters);
-    printerServiceMock.loadAllPrinters.and.stub(); // Stub loadAllPrinters to prevent error
-
-    TestBed.configureTestingModule({
-      imports: [FormsModule, HttpClientTestingModule],
-      providers: [{ provide: PrinterService, useValue: printerServiceMock }],
-    }).compileComponents();
-
     fixture = TestBed.createComponent(PrinterManagementComponent);
     component = fixture.componentInstance;
+    printerService = TestBed.inject(PrinterService);
+    spyOn(printerService, 'loadAllPrinters').and.callThrough();
     fixture.detectChanges();
   });
 
-  it('should load printers on initialization', () => {
-    expect(printerServiceMock.loadAllPrinters).toHaveBeenCalled(); // Check if loadAllPrinters is called
-    expect(component.printers).toEqual(mockPrinters);
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('should open and close the modal for adding a printer', () => {
-    expect(component.isModalOpen).toBeFalse();
+  it('should load printers on init', () => {
+    expect(printerService.loadAllPrinters).toHaveBeenCalled();
+  });
+
+  it('should open modal to add printer', () => {
     component.onAddPrinter();
+    expect(component.isModalOpen).toBeTrue();
+    expect(component.currentPrinter).toEqual(jasmine.any(Object));
+    fixture.detectChanges();
+    const modalElement = fixture.debugElement.query(By.css('.modal')).nativeElement;
+    expect(modalElement.style.display).toBe('block');
+  });
+
+  it('should close modal on toggleModal', () => {
+    component.toggleModal(true);
     expect(component.isModalOpen).toBeTrue();
     component.toggleModal(false);
     expect(component.isModalOpen).toBeFalse();
   });
 
-  it('should add a printer when submitted', () => {
-    const newPrinter: Printer = { printer_id: 3, name: 'Printer Three', location: 'Home Office', ip_addr: '192.168.1.3', apikey: 'key3' };
-    printerServiceMock.createPrinter.and.returnValue(of(newPrinter));
-    component.addPrinter(newPrinter);
-    expect(printerServiceMock.createPrinter).toHaveBeenCalledWith(newPrinter);
+  it('should call updatePrinter on form submit with existing printer', fakeAsync(() => {
+    component.currentPrinterId = 1; // Mock existing printer id
+    component.printerFormGroup = component.formBuilder.group({
+      printerName: ['Example Printer', [Validators.required]],
+      ipAddress: ['10.1.1.10', [Validators.required, 
+        Validators.pattern('(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)')]],
+      apiKey: ['apikey1', [Validators.required]]
+    })
+    spyOn(component, 'updatePrinter').and.callThrough();
+    component.onSubmit();
+    tick();
+    expect(component.updatePrinter).toHaveBeenCalled();
+  }));
+
+  it('should call addPrinter on form submit with new printer', fakeAsync(() => {
+    component.currentPrinterId = undefined; // No existing printer
+    component.printerFormGroup = component.formBuilder.group({
+      printerName: ['Example Printer', [Validators.required]],
+      ipAddress: ['10.1.1.10', [Validators.required, 
+        Validators.pattern('(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)')]],
+      apiKey: ['apikey1', [Validators.required]]
+    })
+    spyOn(component, 'addPrinter').and.callThrough();
+    component.onSubmit();
+    tick();
+    expect(component.addPrinter).toHaveBeenCalled();
+  }));
+
+  it('should handle form errors', () => {
+    component.printerFormGroup.controls['printerName'].setValue('');
+    component.onSubmit();
+    expect(component.errorMsg).toContain('Printer name is empty or invalid');
   });
 
-  it('should call update on an existing printer', () => {
-    const updatedPrinter = { ...mockPrinters[0], name: 'Updated Printer One' };
-    component.updatePrinter(updatedPrinter);
-    expect(printerServiceMock.updatePrinter).toHaveBeenCalledWith(updatedPrinter.printer_id, updatedPrinter); // Adjusted expectation to match the actual call
+  it('should close delete confirmation modal', () => {
+    component.toggleDeleteModal(true);
+    expect(component.isDeleteModalOpen).toBeTrue();
+    component.toggleDeleteModal(false);
+    expect(component.isDeleteModalOpen).toBeFalse();
   });
 
-  it('should delete a printer', () => {
-    const printerId = mockPrinters[0].printer_id;
-    component.confirmDelete(printerId);
-    expect(printerServiceMock.deletePrinter).toHaveBeenCalledWith(printerId);
-  });
+  it('should delete printer and refresh list', fakeAsync(() => {
+    const testPrinterId = 123;
+    spyOn(printerService, 'deletePrinter');
+    component.confirmDelete(testPrinterId);
+    tick();
+    expect(printerService.deletePrinter).toHaveBeenCalledWith(testPrinterId);
+    expect(printerService.loadAllPrinters).toHaveBeenCalled();
+  }));
 });

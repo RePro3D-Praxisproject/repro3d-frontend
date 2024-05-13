@@ -4,6 +4,8 @@ import {FooterComponent} from "../footer/footer.component";
 import {FormsModule} from "@angular/forms";
 import { RouterLink } from "@angular/router";
 import { Item } from "../shared/interfaces/item";
+import { AuthService } from '../shared/services/auth.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-product-card',
@@ -13,6 +15,7 @@ import { Item } from "../shared/interfaces/item";
     FooterComponent,
     FormsModule,
     RouterLink,
+    NgIf
   ],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
@@ -22,6 +25,6 @@ export class ProductCardComponent {
 
   @Input({required: true}) product!: Item;
 
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
 }
