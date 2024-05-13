@@ -15,7 +15,7 @@
       <p><strong>Dimensions:</strong> {{product.dimensions}}</p>
       <p><strong>Description:</strong> {{product.description}}</p>
 
-      <a href="#" class="btn btn-primary">Proceed to checkout</a>
+      <a [href]="'/checkout/'+product.item_id" class="btn btn-primary">Proceed to checkout</a>
     </div>
   </div>
 </div>
