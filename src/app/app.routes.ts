@@ -5,7 +5,6 @@ import {ProductListPageComponent} from "./product-list-page/product-list-page.co
 import { ProductCatalogueComponent } from './product-catalogue/product-catalogue.component';
 import {PrinterManagementComponent} from "./printer-management/printer-management.component";
 import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './auth.guard';
 import {RedeemCodeDashboardComponent} from "./redeem-code-dashboard/redeem-code-dashboard.component";
 import { RegisterComponent } from './register/register.component';
 import { AdminGuard } from './shared/guards/admin.guard';

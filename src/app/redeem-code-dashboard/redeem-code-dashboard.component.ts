@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NgClass, NgForOf, NgIf, SlicePipe} from "@angular/common";
+import {CommonModule, NgClass, NgForOf, NgIf, SlicePipe} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BillingService} from "../shared/services/billing.service";
 
@@ -10,7 +10,9 @@ import {BillingService} from "../shared/services/billing.service";
     NgForOf,
     NgIf,
     SlicePipe,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './redeem-code-dashboard.component.html',
   styleUrl: './redeem-code-dashboard.component.scss'
