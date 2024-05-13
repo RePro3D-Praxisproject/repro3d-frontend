@@ -10,15 +10,20 @@ import { RegisterComponent } from './register/register.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { UserGuard } from './shared/guards/user.guard';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { WebshopToggledGuard } from './shared/guards/webshop-toggled.guard';
+import { WebshopOfflineComponent } from './webshop-offline/webshop-offline.component';
 
 
 export const routes: Routes = [
-  {path: '', component: HomepageComponent  },
-  {path: 'products', component: ProductCatalogueComponent },
-  {path: 'product-detail/:id', component: ProductComponent },
+  {path: '', component: HomepageComponent , canActivate: [WebshopToggledGuard]},
+  {path: 'products', component: ProductCatalogueComponent, canActivate: [WebshopToggledGuard] },
+  {path: 'product-detail/:id', component: ProductComponent, canActivate: [WebshopToggledGuard]},
   {path: 'product-list', component: ProductListPageComponent, canActivate: [AdminGuard]},
   {path: 'printer-management', component: PrinterManagementComponent, canActivate: [AdminGuard]},
+  {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
+  {path: 'webshop-offline', component: WebshopOfflineComponent},
   {path: 'login', component: LoginComponent },
   {path: 'register', component: RegisterComponent },
-  {path: 'checkout/:id', component: CheckoutComponent, canActivate: [AdminGuard, UserGuard]}
+  {path: 'checkout/:id', component: CheckoutComponent, canActivate: [AdminGuard, UserGuard, WebshopToggledGuard]}
 ];
