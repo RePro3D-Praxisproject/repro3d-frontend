@@ -8,7 +8,6 @@
       </a>
     </div>
   </nav>
-  <a class="navbar-brand" href="#">RePro3D</a>
   <button class="navbar-toggler" type="button" (click)="toggleNavbar()" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -16,25 +15,20 @@
   <div class="collapse navbar-collapse" [class.show]="navbarOpen" id="navbarSupportedContent">
   <ul class="navbar-nav mr-auto me-auto">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Home</a>
+        <a class="nav-link" routerLink="/" routerLinkActive="active">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  routerLink="/products" routerLinkActive="active">Models</a>
+        <a class="nav-link" routerLink="/products" routerLinkActive="active">Models</a>
       </li>
-    <li class="nav-item">
-
-        <a class="nav-link" href="/redeem-code">Billing service</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" routerLink="/product-list" routerLinkActive="active">Manage product</a>
-
-    </li>
-
-
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/printer-management" routerLinkActive="active">printer management</a>
-    </li>
-
+      <li class="nav-item dropdown" *ngIf="authService.isLoggedIn() && authService.getMyRole()?.roleId === 1">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Extras
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/admin-dashboard" routerLinkActive="active">Admin Dashboard</a>
+        </div>
+      </li>
+      
     </ul>
     <ul class="navbar-nav" id="navbarInput">
       <li *ngIf="!authService.isLoggedIn()" class="nav-item m-0 p-2">
