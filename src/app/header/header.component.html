@@ -16,22 +16,20 @@
   <div class="collapse navbar-collapse" [class.show]="navbarOpen" id="navbarSupportedContent">
   <ul class="navbar-nav mr-auto me-auto">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Home</a>
+        <a class="nav-link" routerLink="/" routerLinkActive="active">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  routerLink="/products" routerLinkActive="active">Models</a>
+        <a class="nav-link" routerLink="/products" routerLinkActive="active">Models</a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" *ngIf="authService.isLoggedIn() && authService.getMyRole()?.roleId === 1">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          More information
+          Extras
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/AboutUs">About us</a>
-          <a class="dropdown-item" routerLink="/product-list" routerLinkActive="active">Manage product</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="/printer-management" routerLinkActive="active">printer management</a>
+          <a class="dropdown-item" routerLink="/admin-dashboard" routerLinkActive="active">Admin Dashboard</a>
         </div>
       </li>
+      
 
     </ul>
     <ul class="navbar-nav" id="navbarInput">
