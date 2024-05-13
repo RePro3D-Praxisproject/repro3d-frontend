@@ -18,9 +18,6 @@ export class OrderService {
     public currentPage: number = 1;
     public totalItems: number = 0; 
 
-    
-
-
     public updateItem(item: Item): void {
       if (!this.authService.isLoggedIn()) {
         return;
@@ -37,6 +34,10 @@ export class OrderService {
       );
     }
 
+    /**
+     * Creates a new item.
+     * @param newItem {Item} The new item to be created
+     */
     public createItem(newItem: Item): void {
       this.http.post(`${API_URL}/item`, newItem).subscribe(
         _ => {
@@ -45,6 +46,11 @@ export class OrderService {
       );
     }
 
+    /**
+     * Gets an item based on the name/title.
+     * @param name {String} The name of the item to get.
+     * @returns {Item | undefined}
+     */
     public getItemByName(name: String):Item | undefined{
         return this.products.find(item => item.name.toLowerCase() === name.toLowerCase())
     }
@@ -81,12 +87,15 @@ export class OrderService {
         return of(this.products);
     }
 
-    createOrder(product: Item, redeem_code: string): Observable<any> {
+    createOrder(products: Item[], redeem_code: string): Observable<any> {
       const requestBody = {
-        orderDate: new Date().toISOString().slice(0, 10),
-        user_id: JSON.parse(localStorage.getItem('userdata')!).data.userId,
-        redeemCode: redeem_code
+        order: {
+          orderDate: new Date().toISOString().slice(0, 10),
+          user_id: JSON.parse(localStorage.getItem('userdata')!).data.userId,
+          redeemCode: redeem_code
+        },
+        items: products
       }
-      return this.http.post<any>(`${API_URL}/order`, requestBody);
+      return this.http.post<any>(`${API_URL}/order/place`, requestBody);
     }
 }
