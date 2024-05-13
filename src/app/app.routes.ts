@@ -7,15 +7,20 @@ import {PrinterManagementComponent} from "./printer-management/printer-managemen
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import {RedeemCodeDashboardComponent} from "./redeem-code-dashboard/redeem-code-dashboard.component";
-
+import { RegisterComponent } from './register/register.component';
+import { AdminGuard } from './shared/guards/admin.guard';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { UserGuard } from './shared/guards/user.guard';
 
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent  },
   {path: 'products', component: ProductCatalogueComponent },
   {path: 'product-detail/:id', component: ProductComponent },
-  {path: 'product-list', component: ProductListPageComponent, canActivate: [AuthGuard]},
-  {path: 'printer-management', component: PrinterManagementComponent, canActivate: [AuthGuard]},
+  {path: 'product-list', component: ProductListPageComponent, canActivate: [AdminGuard]},
+  {path: 'printer-management', component: PrinterManagementComponent, canActivate: [AdminGuard]},
   {path: 'login', component: LoginComponent },
-  {path: 'redeem-code', component: RedeemCodeDashboardComponent }
+  {path: 'redeem-code', component: RedeemCodeDashboardComponent },
+  {path: 'register', component: RegisterComponent },
+  {path: 'checkout/:id', component: CheckoutComponent, canActivate: [AdminGuard, UserGuard]}
 ];

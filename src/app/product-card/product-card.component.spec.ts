@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ProductCardComponent } from './product-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProductCardComponent', () => {
   let component: ProductCardComponent;
@@ -13,6 +14,7 @@ describe('ProductCardComponent', () => {
         ProductCardComponent,
         RouterTestingModule,
         FormsModule,
+        HttpClientTestingModule
       ]
     }).compileComponents();
 
