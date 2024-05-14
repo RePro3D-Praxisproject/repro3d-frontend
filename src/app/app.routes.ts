@@ -10,6 +10,7 @@ import { RegisterComponent } from './register/register.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { UserGuard } from './shared/guards/user.guard';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { WebshopToggledGuard } from './shared/guards/webshop-toggled.guard';
 import { WebshopOfflineComponent } from './webshop-offline/webshop-offline.component';
@@ -26,5 +27,6 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent },
   {path: 'redeem-code', component: RedeemCodeDashboardComponent, canActivate: [AdminGuard]},
   {path: 'register', component: RegisterComponent },
+  {path: 'history', component: OrderHistoryComponent, canActivate: [AdminGuard, UserGuard]},
   {path: 'checkout/:id', component: CheckoutComponent, canActivate: [AdminGuard, UserGuard, WebshopToggledGuard]}
 ];
