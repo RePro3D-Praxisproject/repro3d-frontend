@@ -10,7 +10,7 @@
         <div *ngIf="oi.job.printer !== null">
             <button class="btn btn-primary" *ngIf="oi.job.status.status == 'In Progress' && !isWebcamOn" (click)="toggleWebcam()">Webcam Feed</button>
             <div>
-                <img class="rounded d-block img-thumbnail" *ngIf="isWebcamOn" [src]="API_URL + '/printer/webcam/' + oi.job.printer.printer_id">
+                <img class="rounded d-block img-thumbnail" *ngIf="isWebcamOn" [src]="API_URL + '/printer/webcam/' + oi.job.printer.printer_id" (click)="toggleWebcam()">
             </div>
         </div>
     </div>
