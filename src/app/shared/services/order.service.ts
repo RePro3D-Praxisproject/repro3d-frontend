@@ -85,9 +85,11 @@ export class OrderService {
       this.http.get<OrderResponse>(`${API_URL}/order/email?email=${localStorage.getItem('email')}`).subscribe(
         res =>  {
           this.orders = res.data;
-          for (let o of this.orders) {
-            if (o.redeemCode !== null) {
-              console.log(o.redeemCode.rcCode);
+          if (this.orders !== null) {
+            for (let o of this.orders) {
+              if (o.redeemCode !== null) {
+                console.log(o.redeemCode.rcCode);
+              }
             }
           }
         }

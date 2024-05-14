@@ -29,6 +29,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.orderService.loadAllItems();
-    this.orderService.loadAllOrders()
+    this.orderService.loadAllOrders();
   }
 }
