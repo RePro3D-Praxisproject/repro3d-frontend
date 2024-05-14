@@ -82,7 +82,7 @@ export class OrderService {
     }
 
     public loadAllOrders(): void {
-      this.http.get<OrderResponse>(`${API_URL}/order/email?email=mahli@posteo.net`).subscribe(
+      this.http.get<OrderResponse>(`${API_URL}/order/email?email=${localStorage.getItem('email')}`).subscribe(
         res =>  {
           this.orders = res.data;
           for (let o of this.orders) {
