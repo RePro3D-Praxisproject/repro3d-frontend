@@ -27,6 +27,6 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent },
   {path: 'redeem-code', component: RedeemCodeDashboardComponent, canActivate: [AdminGuard]},
   {path: 'register', component: RegisterComponent },
-  {path: 'history', component: OrderHistoryComponent, canActivate: [AdminGuard, UserGuard]},
-  {path: 'checkout/:id', component: CheckoutComponent, canActivate: [AdminGuard, UserGuard, WebshopToggledGuard]}
+  {path: 'history', component: OrderHistoryComponent, canActivate: [UserGuard]},
+  {path: 'checkout/:id', component: CheckoutComponent, canActivate: [UserGuard, WebshopToggledGuard]}
 ];
