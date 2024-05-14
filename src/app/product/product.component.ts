@@ -5,6 +5,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute, RouterLink, RouterLinkActive} from "@angular/router";
 import { Item } from '../shared/interfaces/item';
 import { OrderService } from '../shared/services/order.service';
+import { AuthService } from '../shared/services/auth.service';
 
 
 
@@ -29,7 +30,8 @@ export class ProductComponent implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
-    private orderService: OrderService
+    private orderService: OrderService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
