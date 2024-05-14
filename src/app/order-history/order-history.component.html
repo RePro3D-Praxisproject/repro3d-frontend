@@ -1,5 +1,6 @@
-<ul class="list-group">
+<ul *ngIf="this.orderService.orders" class="list-group">
    
       <app-order-items *ngFor="let order of this.orderService.orders;" [order]="order"></app-order-items>
     
 </ul>
+<h1 *ngIf="!this.orderService.orders">No previous orders available</h1>
