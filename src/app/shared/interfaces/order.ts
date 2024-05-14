@@ -1,5 +1,5 @@
+import { Item } from "./item";
 import { User } from "./user";
-import {RedeemCode} from "./redeem-codes";
 
 export interface OrderResponse {
   success: string;
@@ -14,4 +14,16 @@ export interface Order {
   redeemCode: RedeemCode | null;
 }
 
+export interface OrderWithItems {
+  order_id: number;
+  orderDate: Date;
+  user: User;
+  redeemCode: RedeemCode | null;
+  items: Item[];
+}
 
+export interface RedeemCode {
+  rc_id: number,
+  rcCode: string,
+  used: boolean
+}

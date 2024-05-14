@@ -5,6 +5,8 @@ import { API_URL } from '../constants/apiurl.constant';
 import { AuthService } from './auth.service';
 import { Observable, of } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
+import { Order, OrderResponse } from '../interfaces/order';
+import { OrderItems } from '../interfaces/order-items';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +16,7 @@ export class OrderService {
     constructor(private http: HttpClient, private authService: AuthService) {}
 
     public products: Item[] = [];
+    public orders: Order[] = [];
     public itemsPerPage: number = 10;
     public currentPage: number = 1;
     public totalItems: number = 0; 
@@ -32,6 +35,10 @@ export class OrderService {
           this.loadAllItems();
         }
       );
+    }
+
+    public getOrdersByEmail(email: String): Observable<any> {
+      return this.http.get<OrderResponse>(`${API_URL}/order/email?email=${email}`);
     }
 
     /**
@@ -74,6 +81,19 @@ export class OrderService {
       )
     }
 
+    public loadAllOrders(): void {
+      this.http.get<OrderResponse>(`${API_URL}/order/email?email=mahli@posteo.net`).subscribe(
+        res =>  {
+          this.orders = res.data;
+          for (let o of this.orders) {
+            if (o.redeemCode !== null) {
+              console.log(o.redeemCode.rcCode);
+            }
+          }
+        }
+      )
+    }
+
     public getItemByIdAsync(id: number): Observable<any> {
       return this.http.get<ItemResponse>(`${API_URL}/item/${id}`);
     }
@@ -97,5 +117,9 @@ export class OrderService {
         items: products
       }
       return this.http.post<any>(`${API_URL}/order/place`, requestBody);
+    }
+
+    getOrderItemsByOrder(order: Order): Observable<any> {
+      return this.http.get<any>(`${API_URL}/order-item/by-order/${order.order_id}`);
     }
 }
