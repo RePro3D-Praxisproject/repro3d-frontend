@@ -25,7 +25,7 @@
       <a class="nav-link"  routerLink="/history" routerLinkActive="active">Order History</a>
     </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" *ngIf="authService.isLoggedIn() && authService.getMyRole()!.roleId === 1" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Extras
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
