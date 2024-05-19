@@ -52,7 +52,7 @@ export class CheckoutComponent implements OnInit {
         }, 3000);
       },
       error => {
-        this.errorMsg = error.error.message;
+        this.errorMsg = "Redeem code is invalid.";
       }
     )
   }
