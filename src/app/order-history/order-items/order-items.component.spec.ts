@@ -47,7 +47,7 @@ describe('OrderItemsComponent', () => {
       end_date: null
     },
     order: {
-      order_id: 0,
+      orderId: 0,
       orderDate: new Date(),
       user: {
         userId: null,

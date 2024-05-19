@@ -15,7 +15,7 @@ export interface Order {
 }
 
 export interface OrderWithItems {
-  order_id: number;
+  orderId: number;
   orderDate: Date;
   user: User;
   redeemCode: RedeemCode | null;
