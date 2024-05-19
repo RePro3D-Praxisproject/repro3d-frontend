@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import {OrderService} from "../shared/services/order.service";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProductComponent', () => {
   let component: ProductComponent;
@@ -26,7 +27,7 @@ describe('ProductComponent', () => {
 
     await TestBed.configureTestingModule({
 
-      imports: [RouterTestingModule, ProductComponent],
+      imports: [RouterTestingModule, ProductComponent, HttpClientTestingModule],
       providers: [
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: OrderService, useValue: mockOrderService }

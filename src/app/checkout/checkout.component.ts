@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Item } from '../shared/interfaces/item';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../shared/services/order.service';
 import { NgIf } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,7 +27,8 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public orderService: OrderService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,9 +47,12 @@ export class CheckoutComponent implements OnInit {
     this.orderService.createOrder([this.product], this.checkoutForm.getRawValue().redeem_code!).subscribe(
       _ => {
         this.successMsg = "Order successfully placed."
+        setTimeout(() => {
+          this.router.navigate(['history']);
+        }, 3000);
       },
       error => {
-        this.errorMsg = error.error.message;
+        this.errorMsg = "Redeem code is invalid.";
       }
     )
   }

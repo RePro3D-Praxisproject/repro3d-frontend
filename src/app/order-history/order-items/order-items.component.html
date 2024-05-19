@@ -1,0 +1,21 @@
+<li class="list-group-item d-flex justify-content-between align-items-start" >
+<div class="ms-2 me-auto">
+    <div class="fw-bold"><a>Order ID #{{ order.orderId }} {{ order.orderDate.toString().slice(0, 10) }}</a></div>
+    <div *ngFor="let oi of orderItems">
+        <hr>
+        <p>Product: <a [routerLink]="['/product-detail', oi.item.item_id]">{{ oi.item.name }}</a></p>
+        <p>Printing Job: 
+            Started <i>{{ oi.job.printer === null ? "" : "on " + oi.job.printer.name }}</i> at <i>{{ oi.job.start_date.slice(0, 10) }}</i> - 
+            Status: <i>{{ oi.job.status.status }}</i></p>
+        <div *ngIf="oi.job.printer !== null">
+            <button class="btn btn-primary" *ngIf="oi.job.status.status == 'In Progress' && !isWebcamOn" (click)="toggleWebcam()">Webcam Feed</button>
+            <div>
+                <img class="rounded d-block img-thumbnail" *ngIf="isWebcamOn" [src]="API_URL + '/printer/webcam/' + oi.job.printer.printer_id" (click)="toggleWebcam()">
+            </div>
+        </div>
+    </div>
+</div>
+<span class="badge bg-primary rounded-pill"><i>Redeem Code:</i> {{ order.redeemCode !== null ? order.redeemCode.rcCode : "DELETED" }}</span>
+
+
+</li>

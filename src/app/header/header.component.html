@@ -15,13 +15,17 @@
   <div class="collapse navbar-collapse" [class.show]="navbarOpen" id="navbarSupportedContent">
   <ul class="navbar-nav mr-auto me-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/" routerLinkActive="active">Home</a>
+        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/products" routerLinkActive="active">Models</a>
       </li>
       <li class="nav-item dropdown" *ngIf="authService.isLoggedIn() && authService.getMyRole()?.roleId === 1">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <li *ngIf="authService.isLoggedIn()" class="nav-item">
+      <a class="nav-link"  routerLink="/history" routerLinkActive="active">Order History</a>
+    </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" *ngIf="authService.isLoggedIn() && authService.getMyRole()!.roleId === 1" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Extras
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
