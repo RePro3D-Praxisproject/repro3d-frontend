@@ -28,6 +28,7 @@ export class OrderItemsComponent implements OnInit {
     this.orderService.getOrderItemsByOrder(this.order).subscribe(
       res => {
         this.orderItems = res.data;
+        console.log(this.orderItems)
         if (this.orderItems != null) {
           for (let orderItem of this.orderItems) {
             this.orderService.getItemByIdAsync(orderItem.item.item_id).subscribe(

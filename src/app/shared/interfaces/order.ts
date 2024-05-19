@@ -8,7 +8,7 @@ export interface OrderResponse {
 }
 
 export interface Order {
-  order_id: number;
+  orderId: number;
   orderDate: Date;
   user: User;
   redeemCode: RedeemCode | null;

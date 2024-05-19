@@ -122,6 +122,6 @@ export class OrderService {
     }
 
     getOrderItemsByOrder(order: Order): Observable<any> {
-      return this.http.get<any>(`${API_URL}/order-item/by-order/${order.order_id}`);
+      return this.http.get<any>(`${API_URL}/order-item/by-order/${order.orderId}`);
     }
 }
