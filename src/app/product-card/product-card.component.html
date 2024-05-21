@@ -1,13 +1,28 @@
-
 <div class="card" style="width: 18rem;">
+  <!-- Product image -->
   <img class="card-img-top" [src]="product.image_url" alt="Card image cap">
+  
+  <!-- Card body containing product details -->
   <div class="card-body">
+    <!-- Product name as the card title -->
     <h5 class="card-title">{{product.name}}</h5>
+    
+    <!-- Product price -->
     <p class="card-text"><strong>Price:</strong> {{product.cost}} Euro</p>
+    
+    <!-- Product build time -->
     <p class="card-text"><strong>Build time:</strong> {{product.est_time}}</p>
+    
+    <!-- Product material -->
     <p class="card-text"><strong>Material:</strong> {{product.material}}</p>
+    
+    <!-- Product dimensions -->
     <p class="card-text"><strong>Dimensions:</strong> {{product.dimensions}}</p>
+    
+    <!-- Checkout button, visible only if the user is logged in -->
     <a *ngIf="this.authService.isLoggedIn()" [href]="'/checkout/'+product.item_id" class="btn btn-primary">Proceed to checkout</a>
-    <a  class="btn btn-light" [routerLink]="['/product-detail', product.item_id]">more</a>
+    
+    <!-- More details button, links to product details page -->
+    <a class="btn btn-light" [routerLink]="['/product-detail', product.item_id]">more</a>
   </div>
 </div>

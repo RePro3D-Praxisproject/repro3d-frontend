@@ -1,20 +1,30 @@
 <div class="nav-container">
-    <select class="form-select" [(ngModel)]="this.orderService.itemsPerPage" (change)="onItemsPerPageChange(this.orderService.itemsPerPage)">
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="50">50</option>
-    </select>
 
-        <ul class="pagination">
-          <li id="prev" class="page-item" >
-            <button [class.disabled]="this.orderService.currentPage === 1" class="page-link" (click)="this.orderService.currentPage = this.orderService.currentPage > 1 ? this.orderService.currentPage - 1 : 1">Previous</button>
-          </li>
-          <li class="page-item" [class.disabled]="this.orderService.currentPage === (this.orderService.totalItems / this.orderService.itemsPerPage)">
-            <button class="page-link" (click)="this.orderService.currentPage = this.orderService.currentPage < this.orderService.totalItems / this.orderService.itemsPerPage ? this.orderService.currentPage + 1 : this.orderService.currentPage">Next</button>
-          </li>
-        </ul>
+  <!-- Dropdown for selecting the number of items per page -->
+  <select class="form-select" [(ngModel)]="this.orderService.itemsPerPage" (change)="onItemsPerPageChange(this.orderService.itemsPerPage)">
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+  </select>
+
+  <!-- Pagination controls -->
+  <ul class="pagination">
+      
+      <!-- Previous page button -->
+      <li id="prev" class="page-item">
+          <button [class.disabled]="this.orderService.currentPage === 1" class="page-link" (click)="this.orderService.currentPage = this.orderService.currentPage > 1 ? this.orderService.currentPage - 1 : 1">Previous</button>
+      </li>
+      
+      <!-- Next page button -->
+      <li class="page-item" [class.disabled]="this.orderService.currentPage === (this.orderService.totalItems / this.orderService.itemsPerPage)">
+          <button class="page-link" (click)="this.orderService.currentPage = this.orderService.currentPage < this.orderService.totalItems / this.orderService.itemsPerPage ? this.orderService.currentPage + 1 : this.orderService.currentPage">Next</button>
+      </li>
+  </ul>
 
 </div>
+
+<!-- Container for displaying product cards -->
 <div class="cards-container">
-    <app-product-card *ngFor="let product of this.orderService.products| slice: (this.orderService.currentPage-1) * this.orderService.itemsPerPage : this.orderService.currentPage * this.orderService.itemsPerPage" [product]="product"></app-product-card>
+  <!-- Loop through the products and display them as cards, slicing the array to show only the items for the current page -->
+  <app-product-card *ngFor="let product of this.orderService.products | slice: (this.orderService.currentPage - 1) * this.orderService.itemsPerPage : this.orderService.currentPage * this.orderService.itemsPerPage" [product]="product"></app-product-card>
 </div>

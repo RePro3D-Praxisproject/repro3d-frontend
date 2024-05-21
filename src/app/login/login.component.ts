@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
+/**
+ * Component for the login page.
+ * Handles user login form submission and authentication.
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -14,10 +18,19 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 })
 export class LoginComponent implements OnInit {
 
+  /** Form group for the login form. */
   public readonly loginFormGroup: FormGroup;
 
+  /** Indicates if the login attempt has failed. */
   public loginFailed: boolean;
 
+  /**
+   * Constructs the LoginComponent.
+   * 
+   * @param {FormBuilder} formBuilder - The form builder for creating forms.
+   * @param {AuthService} authService - The authentication service.
+   * @param {Router} router - The router for navigation.
+   */
   constructor(private readonly formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginFormGroup = this.formBuilder.group({
       username: ['', Validators.required],
@@ -26,6 +39,12 @@ export class LoginComponent implements OnInit {
     this.loginFailed = false;
   }
 
+  /**
+   * Handles the form submission for login.
+   * Validates the form and attempts to log in the user.
+   * On success, stores user data in local storage and navigates to the home page.
+   * On failure, sets the loginFailed flag and logs out the user.
+   */
   public async onSubmit() {
     if (this.loginFormGroup.invalid) {
       alert('Invalid input');
@@ -45,14 +64,15 @@ export class LoginComponent implements OnInit {
         }
       );
     }
-      
   }
 
+  /**
+   * Initializes the component.
+   * If the user is already logged in, navigates to the home page.
+   */
   ngOnInit(): void {
-      if (this.authService.isLoggedIn()) {
-        this.router.navigate(['/']);
-      }
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/']);
+    }
   }
-
-
 }
