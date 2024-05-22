@@ -3,24 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { API_URL } from '../constants/apiurl.constant';
+import { ConfigResponse } from '../interfaces/config-response';
 
-/**
- * Interface representing the response structure for the webshop configuration.
- */
-interface ConfigResponse {
-  /** Indicates whether the request was successful. */
-  success: boolean;
-
-  /** Message providing additional information about the response. */
-  message: string;
-
-  /** Configuration data including id, key, and value. */
-  data: {
-    id: number;
-    key: string;
-    value: string;
-  };
-}
 
 @Injectable({
   providedIn: 'root'
