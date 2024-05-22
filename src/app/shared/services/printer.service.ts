@@ -1,22 +1,29 @@
-import {Injectable} from '@angular/core';
-//import {HttpClient} from "@angular/common/http";
-//import {Observable, of} from "rxjs";
-import {Printer, PrinterResponse} from "../interfaces/printer";
-import { Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Printer, PrinterResponse } from "../interfaces/printer";
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../constants/apiurl.constant';
-
 
 @Injectable({
   providedIn: 'root',
 })
 export class PrinterService {
 
-  constructor(private http: HttpClient) {}
+  /** Array to hold the list of printers. */
   public printers: Printer[] = [];
 
+  /**
+   * Constructs the PrinterService.
+   * 
+   * @param {HttpClient} http - The HTTP client for making requests.
+   */
+  constructor(private http: HttpClient) {}
 
-
+  /**
+   * Creates a new printer.
+   * 
+   * @param {Printer} printer - The new printer to be created.
+   */
   public createPrinter(printer: Printer): void {
     this.http.post(`${API_URL}/printer`, printer).subscribe(
       _ => {
@@ -25,24 +32,44 @@ export class PrinterService {
     );
   }
 
+  /**
+   * Returns the list of all printers.
+   * 
+   * @returns {Printer[]} - Array of all printers.
+   */
   public getAllPrinters(): Printer[] {
     return this.printers;
   }
 
+  /**
+   * Loads all printers from the API and updates the local array.
+   */
   public loadAllPrinters(): void {
     this.http.get<PrinterResponse>(`${API_URL}/printer`).subscribe(
-      printers =>  {
+      printers => {
         this.printers = printers.data;
-        console.log(this.printers)
+        console.log(this.printers);
       }
-    )
+    );
   }
 
+  /**
+   * Retrieves a printer by its ID.
+   * 
+   * @param {number} id - The ID of the printer.
+   * @returns {Observable<Printer>} - Observable containing the printer data.
+   */
   public getPrinterById(id: number): Observable<Printer> {
     return this.http.get<Printer>(`${API_URL}/printer/${id}`);
   }
 
-  public updatePrinter(id: number | undefined, printer: Printer) {
+  /**
+   * Updates an existing printer.
+   * 
+   * @param {number | undefined} id - The ID of the printer.
+   * @param {Printer} printer - The updated printer data.
+   */
+  public updatePrinter(id: number | undefined, printer: Printer): void {
     this.http.put(`${API_URL}/printer/${id}`, printer).subscribe(
       _ => {
         this.loadAllPrinters();
@@ -50,6 +77,11 @@ export class PrinterService {
     );
   }
 
+  /**
+   * Deletes a printer by its ID.
+   * 
+   * @param {number | undefined} id - The ID of the printer.
+   */
   public deletePrinter(id: number | undefined): void {
     this.http.delete(`${API_URL}/printer/${id}`).subscribe(
       _ => {
@@ -57,34 +89,4 @@ export class PrinterService {
       }
     );
   }
-
-
-
-/* 
-  public createPrinter(newPrinter: Printer): void {
-    newPrinter.printer_id = this.printers.length + 1;
-    this.printers.push(newPrinter);
-  }
-
-  public getAllPrinters(): Printer[] {
-    return this.printers;
-  }
-
-  public getPrinterById(id: number): Printer | undefined {
-    return this.printers.find(printer => printer.printer_id === id);
-  }
-
-  public updatePrinter(updatedPrinter: Printer): void {
-    const index = this.printers.findIndex(p => p.printer_id === updatedPrinter.printer_id);
-    if (index !== -1) {
-      this.printers[index] = updatedPrinter;
-    }
-  }
-
-  public deletePrinter(id: number | undefined): void {
-    const index = this.printers.findIndex(printer => printer.printer_id === id);
-    if (index > -1) {
-      this.printers.splice(index, 1);
-    }
-  } */
 }

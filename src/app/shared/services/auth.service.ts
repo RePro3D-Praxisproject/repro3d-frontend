@@ -15,9 +15,9 @@ export class AuthService {
 
   /**
    * Logs the user in with email and password.
-   * @param email Emails of the user. Functions as a username.
+   * @param email Email of the user. Functions as a username.
    * @param password Password of the user.
-   * @returns {Observable} Observable of the login result.
+   * @returns {Observable<any>} Observable of the login result.
    */
   login(email: string, password: string): Observable<any> {
     const headers = new HttpHeaders({
@@ -29,13 +29,13 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
- 
+
   /**
    * Generic error handling method.
    * @param error An error object.
-   * @returns {void}
+   * @returns {Observable<never>}
    */
-  handleError(error: { error: { message: any; }; status: any; message: any; }) {
+  private handleError(error: { error: { message: any; }; status: any; message: any; }): Observable<never> {
     if (this.isLoggedIn()) this.logout();
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
@@ -52,8 +52,7 @@ export class AuthService {
   /**
    * Logs the user out, deleting the locally stored email and password.
    */
-  logout() {
-    // Remove user from local storage to log user out
+  logout(): void {
     localStorage.removeItem('email');
     localStorage.removeItem('password');
   }
@@ -61,7 +60,7 @@ export class AuthService {
   /**
    * Registers a user in the database.
    * @param user The user to register.
-   * @returns An observable boolean indicating whether the user is registered successfully or not.
+   * @returns {Observable<any>} Observable indicating whether the user is registered successfully or not.
    */
   register(user: User): Observable<any> {
     return this.http.post<any>(`${API_URL}/user`, user)
@@ -72,24 +71,21 @@ export class AuthService {
 
   /**
    * Checks if the user is logged in or not.
-   * @returns {boolean}
+   * @returns {boolean} True if the user is logged in, false otherwise.
    */
   isLoggedIn(): boolean {
-    if (localStorage.getItem('email') === null) {
-      return false;
-    }
-    return true;
+    return localStorage.getItem('email') !== null;
   }
 
+  /**
+   * Gets the role of the currently logged-in user.
+   * @returns {Role | undefined} The role of the currently logged-in user, or undefined if no user is logged in.
+   */
   getMyRole(): Role | undefined {
-    if (localStorage.getItem('userdata')) {
-      if (localStorage.getItem('userdata') !== null){
-        return JSON.parse(localStorage.getItem('userdata')!).data.role;
-      }
+    const userData = localStorage.getItem('userdata');
+    if (userData) {
+      return JSON.parse(userData).data.role;
     }
     return undefined;
   }
 }
-
-
-
