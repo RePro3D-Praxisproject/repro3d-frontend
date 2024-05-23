@@ -16,7 +16,7 @@ import { AuthService } from '../shared/services/auth.service';
   imports: [CommonModule, RouterLink, RouterLinkActive]
 })
 export class AdminDashboardComponent implements OnInit {
-  isWebshopEnabled: boolean = false;
+  public isWebshopEnabled: boolean = false;
 
   /**
    * Constructs the AdminDashboardComponent.
@@ -32,7 +32,7 @@ export class AdminDashboardComponent implements OnInit {
     public webshopService: WebshopService,
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     // Subscribes to the webshop service to get the enabled state.
     this.webshopService.loadWebshopEnabled().subscribe(); 
     this.webshopService.isEnabled.subscribe(enabled => {
@@ -44,7 +44,7 @@ export class AdminDashboardComponent implements OnInit {
    * Toggles the webshop state.
    * Shows an alert indicating the new state of the webshop.
    */
-  toggleWebshop() {
+  public toggleWebshop() {
     this.webshopService.toggleWebshop().subscribe({
       next: (enabled) => {
         alert(`Webshop is now ${enabled ? 'enabled' : 'disabled'}.`);

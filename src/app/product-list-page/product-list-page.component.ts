@@ -28,22 +28,22 @@ import { AuthService } from '../shared/services/auth.service';
 })
 export class ProductListPageComponent implements OnInit {
   /** The selected product for editing or adding. */
-  selectedProduct: Item = { item_id: 0, name: '', cost: 0, dimensions: '', material: '', description: '', est_time: 0, file_ref: "", image_url: "" };
+  public selectedProduct: Item = { item_id: 0, name: '', cost: 0, dimensions: '', material: '', description: '', est_time: 0, file_ref: "", image_url: "" };
   
   /** Flag to indicate if the modal is open. */
-  isModalOpen = false;
+  public isModalOpen = false;
 
   /** Flag to indicate if a new product is being added. */
-  isNewProduct: boolean = false;
+  public isNewProduct: boolean = false;
 
   /** Form group for editing or adding a product. */
-  productEditFormGroup: FormGroup;
+  public productEditFormGroup: FormGroup;
 
   /** Error message for form validation errors. */
-  errorMsg: string = "";
+  public errorMsg: string = "";
 
   /** List of products. */
-  products: Item[] = [];
+  public products: Item[] = [];
 
   /**
    * Constructs the ProductListPageComponent.
@@ -73,7 +73,7 @@ export class ProductListPageComponent implements OnInit {
    * Initializes the component.
    * Loads all items and fetches the product list.
    */
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.orderService.loadAllItems();
     this.fetchProducts();
   }
@@ -81,7 +81,7 @@ export class ProductListPageComponent implements OnInit {
   /**
    * Fetches the list of products from the order service.
    */
-  fetchProducts(): void {
+  public fetchProducts(): void {
     this.orderService.getAllProducts().subscribe({
       next: (data) => {
         this.products = data;
@@ -96,7 +96,7 @@ export class ProductListPageComponent implements OnInit {
    * 
    * @param {number} newSize - The new number of items to display per page.
    */
-  onItemsPerPageChange(newSize: number): void {
+  public onItemsPerPageChange(newSize: number): void {
     this.orderService.itemsPerPage = newSize;
     this.orderService.currentPage = 1; // Reset to first page
     this.fetchProducts();
@@ -107,7 +107,7 @@ export class ProductListPageComponent implements OnInit {
    * 
    * @param {Item} product - The product to edit.
    */
-  openEditModal(product: Item): void {
+  public openEditModal(product: Item): void {
     this.selectedProduct = Object.assign({}, product);
     this.isModalOpen = true;
   }
@@ -115,7 +115,7 @@ export class ProductListPageComponent implements OnInit {
   /**
    * Closes the modal.
    */
-  closeModal(): void {
+  public closeModal(): void {
     this.isModalOpen = false;
   }
 
@@ -123,7 +123,7 @@ export class ProductListPageComponent implements OnInit {
    * Saves changes to the product.
    * Handles form validation and calls the appropriate service method for adding or updating a product.
    */
-  saveChanges(): void {
+  public saveChanges(): void {
     this.errorMsg = "";
     if (!this.productEditFormGroup.valid) {
       switch ("INVALID") {
@@ -162,7 +162,7 @@ export class ProductListPageComponent implements OnInit {
    * 
    * @param {number} id - The ID of the product to delete.
    */
-  deleteItem(id: number): void {
+  public deleteItem(id: number): void {
     this.orderService.deleteItem(id);
     this.fetchProducts();
   }
@@ -172,7 +172,7 @@ export class ProductListPageComponent implements OnInit {
    * 
    * @param {boolean} open - True to open the modal, false to close it.
    */
-  toggleModal(open: boolean): void {
+  public toggleModal(open: boolean): void {
     this.isModalOpen = open;
   }
 
@@ -181,7 +181,7 @@ export class ProductListPageComponent implements OnInit {
    * 
    * @param {Event} event - The file input change event.
    */
-  handleFileInput(event: Event): void {
+  public handleFileInput(event: Event): void {
     const element = event.currentTarget as HTMLInputElement;
     let files: FileList | null = element.files;
     if (files) {
@@ -192,7 +192,7 @@ export class ProductListPageComponent implements OnInit {
   /**
    * Opens the add product modal with a new product form.
    */
-  openAddProductModal(): void {
+  public openAddProductModal(): void {
     this.selectedProduct = { item_id: 0, name: '', cost: 0, dimensions: '', material: '', description: '', est_time: 0, file_ref: "", image_url: "" };
     this.isModalOpen = true;
     this.isNewProduct = true;

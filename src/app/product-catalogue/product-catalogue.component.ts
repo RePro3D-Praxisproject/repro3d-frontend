@@ -35,7 +35,7 @@ export class ProductCatalogueComponent implements OnInit {
    * Initializes the component.
    * Loads all items using the order service.
    */
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.orderService.loadAllItems();
   }
 
@@ -45,7 +45,7 @@ export class ProductCatalogueComponent implements OnInit {
    * 
    * @param {number} newSize - The new number of items to display per page.
    */
-  onItemsPerPageChange(newSize: number): void {
+  public onItemsPerPageChange(newSize: number): void {
     this.orderService.itemsPerPage = newSize;
     this.orderService.currentPage = 1;
   }

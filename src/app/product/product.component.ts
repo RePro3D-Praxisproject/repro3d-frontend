@@ -47,7 +47,7 @@ export class ProductComponent implements OnInit {
    * Initializes the component.
    * Retrieves the product ID from the route and fetches the product details.
    */
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const productIdString = this.route.snapshot.paramMap.get('id');
     if (productIdString) {
       const productId = +productIdString;

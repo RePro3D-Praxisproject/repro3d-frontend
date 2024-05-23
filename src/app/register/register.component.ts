@@ -52,7 +52,7 @@ export class RegisterComponent {
    * Handles form submission for registration.
    * Validates the form, creates the user object, and calls the register method of the authService.
    */
-  onSubmit() {
+  public onSubmit() {
     this.registrationFailed = false;
     this.registrationSuccess = false;
 
@@ -115,7 +115,7 @@ export class RegisterComponent {
    * 
    * @returns {boolean} - True if the email is invalid, false otherwise.
    */
-  validateEmail(): boolean {
+  public validateEmail(): boolean {
     return !new RegExp("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/").test(this.registerFormGroup.getRawValue()["email"]);
   }
 }

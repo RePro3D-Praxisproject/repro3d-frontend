@@ -24,22 +24,22 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 export class PrinterManagementComponent implements OnInit {
 
   /** List of printers */
-  printers: Printer[] = [];
+  public printers: Printer[] = [];
   
   /** Flag to indicate if the add/edit modal is open */
-  isModalOpen: boolean = false;
+  public isModalOpen: boolean = false;
 
   /** Flag to indicate if the delete confirmation modal is open */
-  isDeleteModalOpen: boolean = false;
+  public isDeleteModalOpen: boolean = false;
 
   /** The currently selected printer for editing */
-  currentPrinter: Printer = new Printer();
+  public currentPrinter: Printer = new Printer();
 
   /** The ID of the currently selected printer for editing or deletion */
-  currentPrinterId: number | undefined;
+  public currentPrinterId: number | undefined;
 
   /** Error message for form validation */
-  errorMsg = "";
+  public errorMsg = "";
 
   /** Form group for the printer form */
   public printerFormGroup: FormGroup;
@@ -63,7 +63,7 @@ export class PrinterManagementComponent implements OnInit {
    * Submits the printer form.
    * Adds or updates a printer based on the current state.
    */
-  onSubmit() {
+  public onSubmit() {
     if (!this.printerFormGroup.invalid) {
       const printer: Printer = {
         name: this.printerFormGroup.getRawValue()['printerName'],
@@ -96,7 +96,7 @@ export class PrinterManagementComponent implements OnInit {
    * 
    * @param {boolean} open - True to open the modal, false to close it.
    */
-  toggleModal(open: boolean): void {
+  public toggleModal(open: boolean): void {
     this.isModalOpen = open;
   }
 
@@ -105,7 +105,7 @@ export class PrinterManagementComponent implements OnInit {
    * 
    * @param {Printer} printer - The printer to edit.
    */
-  onEditPrinter(printer: Printer) {
+  public onEditPrinter(printer: Printer) {
     this.printerFormGroup = this.formBuilder.group({
       printerName: [printer.name, [Validators.required]],
       ipAddress: [printer.ip_addr, [Validators.required, 
@@ -120,7 +120,7 @@ export class PrinterManagementComponent implements OnInit {
    * Initializes the component.
    * Loads all printers on component initialization.
    */
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.printerService.loadAllPrinters();
   }
 
@@ -129,7 +129,7 @@ export class PrinterManagementComponent implements OnInit {
    * 
    * @param {Printer} printer - The printer to add.
    */
-  addPrinter(printer: Printer) {
+  public addPrinter(printer: Printer) {
     this.printerService.createPrinter(printer);
     this.toggleModal(false);
   }
@@ -139,7 +139,7 @@ export class PrinterManagementComponent implements OnInit {
    * 
    * @param {Printer} printer - The printer to update.
    */
-  updatePrinter(printer: Printer) {
+  public updatePrinter(printer: Printer) {
     this.printerService.updatePrinter(printer.printer_id, printer);
     this.toggleModal(false);
   }
@@ -149,7 +149,7 @@ export class PrinterManagementComponent implements OnInit {
    * 
    * @param {number | undefined} id - The ID of the printer to delete.
    */
-  onDeletePrinter(id: number | undefined) {
+  public onDeletePrinter(id: number | undefined) {
     this.currentPrinterId = id;
     this.toggleDeleteModal(true);
   }
@@ -159,7 +159,7 @@ export class PrinterManagementComponent implements OnInit {
    * 
    * @param {boolean} open - True to open the modal, false to close it.
    */
-  toggleDeleteModal(open: boolean) {
+  public toggleDeleteModal(open: boolean) {
     this.isDeleteModalOpen = open;
   }
 
@@ -168,7 +168,7 @@ export class PrinterManagementComponent implements OnInit {
    * 
    * @param {number | undefined} id - The ID of the printer to delete.
    */
-  confirmDelete(id: number | undefined) {
+  public confirmDelete(id: number | undefined) {
     this.printerService.deletePrinter(id);
     this.toggleDeleteModal(false);
   }
@@ -176,7 +176,7 @@ export class PrinterManagementComponent implements OnInit {
   /**
    * Opens the add printer modal with an empty form.
    */
-  onAddPrinter(): void {
+  public onAddPrinter(): void {
     this.printerFormGroup = this.formBuilder.group({
       printerName: ['', [Validators.required]],
       ipAddress: ['', [Validators.required, 

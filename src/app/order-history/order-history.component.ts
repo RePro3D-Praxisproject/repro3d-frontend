@@ -33,7 +33,7 @@ export class OrderHistoryComponent implements OnInit {
    * Initializes the component.
    * Retrieves orders associated with the user's email and updates the orders array.
    */
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.orderService.getOrdersByEmail(localStorage.getItem("email")!).subscribe(
       res => {
         this.orders = res.data;

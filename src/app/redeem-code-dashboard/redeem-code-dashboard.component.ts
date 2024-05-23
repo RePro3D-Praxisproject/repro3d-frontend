@@ -40,7 +40,7 @@ export class RedeemCodeDashboardComponent {
    * 
    * @param {number} newSize - The new number of items to display per page.
    */
-  onItemsPerPageChange(newSize: number): void {
+  public onItemsPerPageChange(newSize: number): void {
     this.billingService.itemsPerPage = newSize;
     this.billingService.currentPage = 1;
   }

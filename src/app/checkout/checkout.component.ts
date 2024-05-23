@@ -23,21 +23,21 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class CheckoutComponent implements OnInit {
 
   /** The product to be ordered. */
-  product!: Item;
+  public product!: Item;
 
   /** User data stored in local storage. */
-  userData = JSON.parse(localStorage.getItem('userdata')!);
+  public userData = JSON.parse(localStorage.getItem('userdata')!);
 
   /** Form group for the checkout form. */
-  checkoutForm = this.formBuilder.group({
+  public checkoutForm = this.formBuilder.group({
     redeem_code: ''
   });
 
   /** Error message for invalid redeem codes. */
-  errorMsg: string = "";
+  public errorMsg: string = "";
 
   /** Success message for successfully placed orders. */
-  successMsg: string = "";
+  public successMsg: string = "";
 
   /**
    * Constructs the CheckoutComponent.
@@ -55,7 +55,7 @@ export class CheckoutComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Fetches the product details using the route parameter.
     const productId = parseInt(this.route.snapshot.paramMap.get('id')!);
     this.orderService.getItemByIdAsync(productId).subscribe(
@@ -70,7 +70,7 @@ export class CheckoutComponent implements OnInit {
    * Displays a success message and navigates to the order history page.
    * Displays an error message if the redeem code is invalid.
    */
-  placeOrder() {
+  public placeOrder() {
     this.errorMsg = "";
     this.successMsg = ""
     this.orderService.createOrder([this.product], this.checkoutForm.getRawValue().redeem_code!).subscribe(

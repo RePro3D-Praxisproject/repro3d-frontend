@@ -24,10 +24,10 @@ import { AuthResponse } from '../shared/interfaces/auth-response';
 export class HeaderComponent implements OnInit{
 
   /** Indicates whether the navigation bar is open. */
-  navbarOpen = false;
+  public navbarOpen = false;
 
   /** Indicates whether the dropdown menu is open. */
-  dropdownOpen = false;
+  public dropdownOpen = false;
 
   /**
    * Constructs the HeaderComponent.
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit{
     public authService: AuthService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Checks if the user is logged in.
     this.authService.isLoggedIn()
   }
@@ -49,14 +49,14 @@ export class HeaderComponent implements OnInit{
   /**
    * Toggles the navigation bar open/close state.
    */
-  toggleNavbar() {
+  public toggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
   }
 
   /**
    * Toggles the dropdown menu open/close state.
    */
-  toggleDropdown() {
+  public toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit{
    * 
    * @returns {AuthResponse} The user data.
    */
-  getUserData(): AuthResponse {
+  public getUserData(): AuthResponse {
     return JSON.parse(localStorage.getItem('userdata')!);
   }
 

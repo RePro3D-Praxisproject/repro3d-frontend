@@ -19,7 +19,7 @@ export class AuthService {
    * @param password Password of the user.
    * @returns {Observable<any>} Observable of the login result.
    */
-  login(email: string, password: string): Observable<any> {
+  public login(email: string, password: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa(email + ':' + password),
       'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ export class AuthService {
   /**
    * Logs the user out, deleting the locally stored email and password.
    */
-  logout(): void {
+  public logout(): void {
     localStorage.removeItem('email');
     localStorage.removeItem('password');
   }
@@ -62,7 +62,7 @@ export class AuthService {
    * @param user The user to register.
    * @returns {Observable<any>} Observable indicating whether the user is registered successfully or not.
    */
-  register(user: User): Observable<any> {
+  public register(user: User): Observable<any> {
     return this.http.post<any>(`${API_URL}/user`, user)
       .pipe(
         catchError(this.handleError)
@@ -73,7 +73,7 @@ export class AuthService {
    * Checks if the user is logged in or not.
    * @returns {boolean} True if the user is logged in, false otherwise.
    */
-  isLoggedIn(): boolean {
+  public isLoggedIn(): boolean {
     return localStorage.getItem('email') !== null;
   }
 
@@ -81,7 +81,7 @@ export class AuthService {
    * Gets the role of the currently logged-in user.
    * @returns {Role | undefined} The role of the currently logged-in user, or undefined if no user is logged in.
    */
-  getMyRole(): Role | undefined {
+  public getMyRole(): Role | undefined {
     const userData = localStorage.getItem('userdata');
     if (userData) {
       return JSON.parse(userData).data.role;
