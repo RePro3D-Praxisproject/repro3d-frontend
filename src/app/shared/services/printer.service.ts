@@ -3,6 +3,7 @@ import { Printer, PrinterResponse } from "../interfaces/printer";
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../constants/apiurl.constant';
+import { Job } from '../interfaces/job';
 
 @Injectable({
   providedIn: 'root',
@@ -88,5 +89,18 @@ export class PrinterService {
         this.loadAllPrinters();
       }
     );
+  }
+
+  /**
+   * Updates a job by its ID.
+   * 
+   * @param {Job} job - The job.
+   */
+  public updateJob(job: Job) {
+    this.http.put(`${API_URL}/job/mark-as-done/${job.job_id}`, job).subscribe(
+      _ => {
+        this.loadAllPrinters();
+      }
+    )
   }
 }

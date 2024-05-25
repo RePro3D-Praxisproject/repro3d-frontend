@@ -6,6 +6,8 @@ import { Item } from '../../shared/interfaces/item';
 import { CommonModule, NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { API_URL } from '../../shared/constants/apiurl.constant';
+import { PrinterService } from '../../shared/services/printer.service';
+import { Job } from '../../shared/interfaces/job';
 
 /**
  * Component for displaying items in an order.
@@ -41,7 +43,7 @@ export class OrderItemsComponent implements OnInit {
    * 
    * @param {OrderService} orderService - The order service to retrieve order items and item details.
    */
-  constructor(public orderService: OrderService) {}
+  constructor(public orderService: OrderService, private printerSerive: PrinterService) {}
 
   /**
    * Initializes the component.
@@ -69,7 +71,16 @@ export class OrderItemsComponent implements OnInit {
   /**
    * Toggles the state of the webcam.
    */
-  toggleWebcam(): void {
+  public toggleWebcam(): void {
     this.isWebcamOn = !this.isWebcamOn;
+  }
+
+  public confirmPickup(job: Job) 
+  { 
+    job.status = {
+      status_id: 4,
+      status: "Done"
+    };
+    this.printerSerive.updateJob(job);
   }
 }

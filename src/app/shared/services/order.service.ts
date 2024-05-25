@@ -110,7 +110,7 @@ export class OrderService {
   public loadAllOrders(): void {
     this.http.get<OrderResponse>(`${API_URL}/order/email?email=${localStorage.getItem('email')}`).subscribe(
       res => {
-        this.orders = res.data;
+        this.orders = res.data.reverse();
         if (this.orders !== null) {
           for (let o of this.orders) {
             if (o.redeemCode !== null) {
