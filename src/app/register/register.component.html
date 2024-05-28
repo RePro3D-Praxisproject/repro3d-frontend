@@ -1,44 +1,58 @@
-<div class="container mt-5 ">
-    <div class="row justify-content-center align-items-center">
-      
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            Register
-          </div>
-          <div class="card-body">
-            <form [formGroup]="this.registerFormGroup">
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="email" name="email" formControlName="email" (keyup.enter)="onSubmit()" required>
-              </div>
-              <div class="mb-3">
-                <label for="fname" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="fname" name="fname" formControlName="fname" (keyup.enter)="onSubmit()">
-              </div>
-              <div class="mb-3">
-                <label for="address" class="form-label">Billing Address</label>
-                <input type="text" class="form-control" id="address" name="address" formControlName="address" (keyup.enter)="onSubmit()">
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" formControlName="password" (keyup.enter)="onSubmit()">
-              </div>
-              <div class="mb-3">
-                <label for="password_conf" class="form-label">Password Again</label>
-                <input type="password" class="form-control" id="password_conf" name="password_conf" formControlName="password_conf" (keyup.enter)="onSubmit()">
-              </div>
-              <button type="submit" class="btn btn-primary" (click)="onSubmit()">Register</button>
-            </form>
-          </div>
+<!-- Container with top margin for the registration form -->
+<div class="container mt-5">
+  <!-- Centered row with alignment -->
+  <div class="row justify-content-center align-items-center">
+    
+    <!-- Column for the registration card, medium size 6 -->
+    <div class="col-md-6">
+      <!-- Card component for the registration form -->
+      <div class="card">
+        <!-- Card header -->
+        <div class="card-header">
+          Register
         </div>
-        <div *ngIf="this.registrationSuccess" class="alert alert-success" role="alert">
-          The registration has been completed. Proceed to logging in.
+        <!-- Card body containing the registration form -->
+        <div class="card-body">
+          <!-- Form bound to Angular form group -->
+          <form [formGroup]="this.registerFormGroup">
+            <!-- Email input field -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="text" class="form-control" id="email" name="email" formControlName="email" (keyup.enter)="onSubmit()" required>
+            </div>
+            <!-- Full Name input field -->
+            <div class="mb-3">
+              <label for="fname" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="fname" name="fname" formControlName="fname" (keyup.enter)="onSubmit()">
+            </div>
+            <!-- Billing Address input field -->
+            <div class="mb-3">
+              <label for="address" class="form-label">Billing Address</label>
+              <input type="text" class="form-control" id="address" name="address" formControlName="address" (keyup.enter)="onSubmit()">
+            </div>
+            <!-- Password input field -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" formControlName="password" (keyup.enter)="onSubmit()">
+            </div>
+            <!-- Password confirmation input field -->
+            <div class="mb-3">
+              <label for="password_conf" class="form-label">Password Again</label>
+              <input type="password" class="form-control" id="password_conf" name="password_conf" formControlName="password_conf" (keyup.enter)="onSubmit()">
+            </div>
+            <!-- Submit button for the registration form -->
+            <button type="submit" class="btn btn-primary" (click)="onSubmit()">Register</button>
+          </form>
         </div>
-        <div *ngIf="this.registrationFailed" class="alert alert-danger" role="alert">
-          {{ errorMsg }}
-        </div>
+      </div>
+      <!-- Success alert displayed if registration is successful -->
+      <div *ngIf="this.registrationSuccess" class="alert alert-success" role="alert">
+        The registration has been completed. Proceed to logging in.
+      </div>
+      <!-- Error alert displayed if registration fails -->
+      <div *ngIf="this.registrationFailed" class="alert alert-danger" role="alert">
+        {{ errorMsg }}
       </div>
     </div>
   </div>
-  
+</div>

@@ -5,6 +5,10 @@ import { OrderService } from '../shared/services/order.service';
 import { NgIf } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+/**
+ * Component for the checkout process.
+ * Handles displaying the product and placing an order.
+ */
 @Component({
   selector: 'app-checkout',
   standalone: true,
@@ -17,13 +21,33 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './checkout.component.scss'
 })
 export class CheckoutComponent implements OnInit {
-  product!: Item;
-  userData = JSON.parse(localStorage.getItem('userdata')!);
-  checkoutForm = this.formBuilder.group({
+
+  /** The product to be ordered. */
+  public product!: Item;
+
+  /** User data stored in local storage. */
+  public userData = JSON.parse(localStorage.getItem('userdata')!);
+
+  /** Form group for the checkout form. */
+  public checkoutForm = this.formBuilder.group({
     redeem_code: ''
   });
-  errorMsg: string = "";
-  successMsg: string = "";
+
+  /** Error message for invalid redeem codes. */
+  public errorMsg: string = "";
+
+  /** Success message for successfully placed orders. */
+  public successMsg: string = "";
+
+  /**
+   * Constructs the CheckoutComponent.
+   * 
+   * Injected dependencies:
+   * @param {ActivatedRoute} route - The activated route to get route parameters.
+   * @param {OrderService} orderService - The order service to manage orders.
+   * @param {FormBuilder} formBuilder - The form builder for creating forms.
+   * @param {Router} router - The router for navigation.
+   */
   constructor(
     private route: ActivatedRoute,
     public orderService: OrderService,
@@ -31,8 +55,8 @@ export class CheckoutComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    
+  public ngOnInit(): void {
+    // Fetches the product details using the route parameter.
     const productId = parseInt(this.route.snapshot.paramMap.get('id')!);
     this.orderService.getItemByIdAsync(productId).subscribe(
       p => {
@@ -41,7 +65,12 @@ export class CheckoutComponent implements OnInit {
     )
   }
 
-  placeOrder() {
+  /**
+   * Places an order for the product.
+   * Displays a success message and navigates to the order history page.
+   * Displays an error message if the redeem code is invalid.
+   */
+  public placeOrder() {
     this.errorMsg = "";
     this.successMsg = ""
     this.orderService.createOrder([this.product], this.checkoutForm.getRawValue().redeem_code!).subscribe(

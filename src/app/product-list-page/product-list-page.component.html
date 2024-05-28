@@ -1,64 +1,74 @@
-
+<!-- Container for the product management table -->
 <div class="container">
+  <!-- Page title -->
   <h2 class="page-title">Product management table</h2>
+  
+  <!-- Dropdown to select the number of items per page -->
   <select class="form-select" [(ngModel)]="this.orderService.itemsPerPage" (change)="onItemsPerPageChange(this.orderService.itemsPerPage)">
     <option value="10">10</option>
     <option value="20">20</option>
     <option value="50">50</option>
   </select>
+
+  <!-- Product table with striped rows -->
   <table class="table table-striped">
     <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Size</th>
-      <th scope="col">Material</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-    </tr>
+      <!-- Table header row -->
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Size</th>
+        <th scope="col">Material</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
     </thead>
     <tbody *ngIf="products && this.orderService.totalItems > 0">
-    <tr *ngFor="let product of this.orderService.products| slice: (this.orderService.currentPage-1) * this.orderService.itemsPerPage : this.orderService.currentPage * this.orderService.itemsPerPage">
-      <th scope="row">{{ product.item_id }}</th>
-      <td>{{ product.name }}</td>
-      <td>{{ product.cost }}</td>
-      <td>{{ product.dimensions }}</td>
-      <td>{{ product.material }}</td>
-      <td><button class="btn btn-outline-success" (click)="openEditModal(product)">Edit</button></td>
-      <td><button class="btn btn-outline-danger" (click)="deleteItem(product.item_id)">Delete</button></td>
-    </tr>
-    <tr>
-      <td colspan="7" class="text-center">
-        <button class="btn btn-outline-primary" (click)="openAddProductModal()">Add Product</button>
-      </td>
-    </tr>
+      <!-- Table rows for each product, sliced according to pagination -->
+      <tr *ngFor="let product of this.orderService.products | slice: (this.orderService.currentPage-1) * this.orderService.itemsPerPage : this.orderService.currentPage * this.orderService.itemsPerPage">
+        <th scope="row">{{ product.item_id }}</th>
+        <td>{{ product.name }}</td>
+        <td>{{ product.cost }}</td>
+        <td>{{ product.dimensions }}</td>
+        <td>{{ product.material }}</td>
+        <td><button class="btn btn-outline-success" (click)="openEditModal(product)">Edit</button></td>
+        <td><button class="btn btn-outline-danger" (click)="deleteItem(product.item_id)">Delete</button></td>
+      </tr>
+      <!-- Row for the Add Product button -->
+      <tr>
+        <td colspan="7" class="text-center">
+          <button class="btn btn-outline-primary" (click)="openAddProductModal()">Add Product</button>
+        </td>
+      </tr>
     </tbody>
   </table>
+
+  <!-- Pagination controls -->
   <nav aria-label="Page navigation">
     <ul class="pagination">
+      <!-- Previous page button -->
       <li class="page-item" [class.disabled]="this.orderService.currentPage === 1">
         <button class="page-link" (click)="this.orderService.currentPage = this.orderService.currentPage > 1 ? this.orderService.currentPage - 1 : 1">Previous</button>
       </li>
+      <!-- Next page button -->
       <li class="page-item" [class.disabled]="this.orderService.currentPage === (this.orderService.totalItems / this.orderService.itemsPerPage)">
-        <button class="page-link" (click)="this.orderService.currentPage = this.orderService.currentPage < this.orderService.totalItems / this.orderService.itemsPerPage ? this.orderService.currentPage + 1 : this.orderService.currentPage">Next</button>
+        <button class="page-link" (click)="this.orderService.currentPage = this.orderService.currentPage < (this.orderService.totalItems / this.orderService.itemsPerPage) ? this.orderService.currentPage + 1 : this.orderService.currentPage">Next</button>
       </li>
     </ul>
   </nav>
-  
 </div>
 
-
-
-
-<!-- Modal -->
+<!-- Modal for adding/editing products -->
 <div class="modal" tabindex="-1" role="dialog" *ngIf="isModalOpen" style="display: block;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <!-- Modal header -->
       <div class="modal-header">
-        <h5 class="modal-title" id="editProductModalLabel">{{isNewProduct ? 'Add New Product' : 'Edit Product'}}</h5>
+        <h5 class="modal-title" id="editProductModalLabel">{{ isNewProduct ? 'Add New Product' : 'Edit Product' }}</h5>
         <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
       </div>
+      <!-- Modal body with form for product details -->
       <div class="modal-body">
         <form [formGroup]="this.productEditFormGroup">
           <div class="form-group">
@@ -71,9 +81,7 @@
           </div>
           <div class="form-group">
             <label for="productSize">Dimensions (L x W x H in mm)</label>
-            <input type="text" class="form-control" id="productSize" formControlName="productSize" [(ngModel)]="selectedProduct.dimensions" pattern="^\d+\s*\s*x\s*\d+\s*\s*x\s*\d+\s*$"
-            title="Format: ? mm x ? mm x ? mm" 
-            placeholder="e.g., 120 x 60 x 40" name="dimensions">
+            <input type="text" class="form-control" id="productSize" formControlName="productSize" [(ngModel)]="selectedProduct.dimensions" pattern="^\d+\s*\s*x\s*\d+\s*\s*x\s*\d+\s*$" title="Format: ? mm x ? mm x ? mm" placeholder="e.g., 120 x 60 x 40" name="dimensions">
           </div>
           <div class="form-group">
             <label for="productMaterial">Material</label>
@@ -88,19 +96,20 @@
             <input type="text" class="form-control" id="productImage" formControlName="productImage" [(ngModel)]="selectedProduct.image_url" name="material">
           </div>
           <div class="form-group">
-            <label for="productImage">File Reference</label>
+            <label for="productFileRef">File Reference</label>
             <input type="text" class="form-control" id="productFileRef" formControlName="productFileRef" [(ngModel)]="selectedProduct.file_ref" name="material">
           </div>
         </form>
       </div>
+      <!-- Modal footer with close and save buttons -->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
         <button type="button" class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
       </div>
+      <!-- Error message display -->
       <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
         {{ errorMsg }}
       </div>
     </div>
   </div>
 </div>
-

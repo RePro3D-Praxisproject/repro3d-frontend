@@ -1,40 +1,58 @@
+<!-- Button to generate a new redeem code -->
 <button class="btn btn-primary mb-3" (click)="this.billingService.generateRedeemCode()">Generate Redeem Code</button>
+
+<!-- Dropdown to select the number of items per page -->
 <select class="form-select" [(ngModel)]="this.billingService.itemsPerPage" (change)="onItemsPerPageChange(this.billingService.itemsPerPage)">
   <option value="10">10</option>
   <option value="20">20</option>
   <option value="50">50</option>
 </select>
+
+<!-- Pagination controls -->
 <ul class="pagination">
-  <li id="prev" class="page-item" >
-    <button [class.disabled]="this.billingService.currentPage === 1" class="page-link" (click)="this.billingService.currentPage = this.billingService.currentPage > 1 ? this.billingService.currentPage - 1 : 1">Previous</button>
+  <!-- Previous page button -->
+  <li id="prev" class="page-item">
+    <button [class.disabled]="this.billingService.currentPage === 1" class="page-link" 
+            (click)="this.billingService.currentPage = this.billingService.currentPage > 1 ? this.billingService.currentPage - 1 : 1">
+      Previous
+    </button>
   </li>
+  <!-- Next page button -->
   <li class="page-item" [class.disabled]="this.billingService.currentPage === (this.billingService.totalItems / this.billingService.itemsPerPage)">
-    <button class="page-link" (click)="this.billingService.currentPage = this.billingService.currentPage < this.billingService.totalItems / this.billingService.itemsPerPage ? this.billingService.currentPage + 1 : this.billingService.currentPage">Next</button>
+    <button class="page-link" 
+            (click)="this.billingService.currentPage = this.billingService.currentPage < (this.billingService.totalItems / this.billingService.itemsPerPage) ? this.billingService.currentPage + 1 : this.billingService.currentPage">
+      Next
+    </button>
   </li>
 </ul>
+
+<!-- Table for displaying redeem codes -->
 <div class="table table-sm">
   <table class="table table-sm">
     <thead>
-    <tr>
-      <th scope="col">Redeem Code</th>
-      <th scope="col">Status</th>
-      <th scope="col">Actions</th>
-    </tr>
+      <tr>
+        <th scope="col">Redeem Code</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let redeemCode of (this.billingService.redeemCodes| slice: (this.billingService.currentPage-1) * this.billingService.itemsPerPage : this.billingService.currentPage * this.billingService.itemsPerPage)">
-      <td>{{ redeemCode.rcCode }}</td>
-      <td>{{ redeemCode.used ? 'Invalid' : 'Valid' }}</td>
-      <td>
-        <button class="btn btn-sm" [ngClass]="redeemCode.used ? 'btn-success' : 'btn-secondary'"
-          (click)="this.billingService.toggleValidation(redeemCode)">
-          {{ redeemCode.used ? 'Validate' : 'Invalidate' }}
-        </button>
-        <button class="btn btn-sm btn-danger" (click)="this.billingService.deleteRedeemCode(redeemCode)">
-          Delete
-        </button>
-      </td>
-    </tr>
+      <!-- Loop through the redeem codes, slicing the array to show only the items for the current page -->
+      <tr *ngFor="let redeemCode of this.billingService.redeemCodes | slice: (this.billingService.currentPage-1) * this.billingService.itemsPerPage : this.billingService.currentPage * this.billingService.itemsPerPage">
+        <td>{{ redeemCode.rcCode }}</td>
+        <td>{{ redeemCode.used ? 'Invalid' : 'Valid' }}</td>
+        <td>
+          <!-- Button to toggle validation status of the redeem code -->
+          <button class="btn btn-sm" [ngClass]="redeemCode.used ? 'btn-success' : 'btn-secondary'"
+                  (click)="this.billingService.toggleValidation(redeemCode)">
+            {{ redeemCode.used ? 'Validate' : 'Invalidate' }}
+          </button>
+          <!-- Button to delete the redeem code -->
+          <button class="btn btn-sm btn-danger" (click)="this.billingService.deleteRedeemCode(redeemCode)">
+            Delete
+          </button>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

@@ -1,28 +1,38 @@
 <h3>Printer management</h3>
-
+<!-- Container for Printer Management Table -->
 <div class="container">
+  <!-- Responsive table with small-sized rows -->
   <table class="table table-sm table-responsive">
     <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Printer Name</th>
-      <th scope="col">IP</th>
-      <th scope="col">APIKey</th>
-      <th scope="col">Edit</th>
-      <th scope="col">Delete</th>
-    </tr>
+      <!-- Table header -->
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Printer Name</th>
+        <th scope="col">IP</th>
+        <th scope="col">APIKey</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let printer of this.printerService.getAllPrinters(); let i = index">
-      <th scope="row">{{ i + 1 }}</th>
-      <td>{{ printer.name }}</td>
-      <td>{{ printer.ip_addr }}</td>
-      <td>{{ printer.apikey }}</td>
-      <td><button class="btn btn-outline-success" (click)="onEditPrinter(printer)">Edit</button></td>
-      <td><button class="btn btn-outline-danger" (click)="onDeletePrinter(printer.printer_id)">Delete</button></td>
-    </tr>
+      <!-- Loop through printers and display each in a row -->
+      <tr *ngFor="let printer of this.printerService.getAllPrinters(); let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ printer.name }}</td>
+        <td>{{ printer.ip_addr }}</td>
+        <td>{{ printer.apikey }}</td>
+        <td>
+          <!-- Edit button -->
+          <button class="btn btn-outline-success" (click)="onEditPrinter(printer)">Edit</button>
+        </td>
+        <td>
+          <!-- Delete button -->
+          <button class="btn btn-outline-danger" (click)="onDeletePrinter(printer.printer_id)">Delete</button>
+        </td>
+      </tr>
     </tbody>
   </table>
+  <!-- Button to add a new printer -->
   <div class="text-center">
     <button class="btn btn-outline-primary" (click)="onAddPrinter()">Add Printer</button>
   </div>
@@ -33,12 +43,15 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <!-- Modal title changes based on whether adding or editing a printer -->
         <h5 class="modal-title" id="addPrinterModalLabel">{{ currentPrinter.printer_id ? 'Edit Printer' : 'Add Printer' }}</h5>
+        <!-- Close button for the modal -->
         <button type="button" class="close" (click)="toggleModal(false)" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+        <!-- Form for adding/editing printer details -->
         <form [formGroup]="this.printerFormGroup">
           <div class="form-group">
             <label for="printer-name" class="col-form-label">Printer Name:</label>
@@ -54,9 +67,12 @@
             <input type="text" class="form-control" id="printer-apikey" name="apikey" formControlName="apiKey" required>
           </div>
           <div class="modal-footer">
+            <!-- Close button for the modal -->
             <button type="button" class="btn btn-secondary" (click)="toggleModal(false)">Close</button>
+            <!-- Submit button for adding/updating printer -->
             <button type="submit" class="btn btn-primary" (click)="onSubmit()">{{ currentPrinterId ? 'Update Printer' : 'Add Printer' }}</button>
           </div>
+          <!-- Error message display -->
           <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
             {{ errorMsg }}
           </div>
@@ -71,7 +87,9 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <!-- Modal title for delete confirmation -->
         <h5 class="modal-title" id="deletePrinterModalLabel">Confirm Delete</h5>
+        <!-- Close button for the modal -->
         <button type="button" class="close" (click)="toggleDeleteModal(false)" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -80,7 +98,9 @@
         Are you sure you want to delete this printer?
       </div>
       <div class="modal-footer">
+        <!-- Cancel button for the delete confirmation modal -->
         <button type="button" class="btn btn-secondary" (click)="toggleDeleteModal(false)">Cancel</button>
+        <!-- Confirm delete button -->
         <button type="button" class="btn btn-danger" (click)="confirmDelete(currentPrinterId)">Delete</button>
       </div>
     </div>
